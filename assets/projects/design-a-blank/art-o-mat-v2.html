@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ART-O-MAT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Special+Elite&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ─── CUSTOM PROPERTIES ─── */
+    :root {
+      --pop-red: #E3242B;
+      --pop-yellow: #FFD700;
+      --pop-blue: #1E90FF;
+      --pop-pink: #FF69B4;
+      --pop-black: #111;
+      --pop-white: #FAFAF0;
+      --pop-cyan: #00CED1;
+      --font-display: 'Bangers', cursive;
+      --font-body: 'Oswald', sans-serif;
+      --font-label: 'Special Elite', cursive;
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── HALFTONE DOT PATTERN BACKGROUND ─── */
+    body {
+      background-color: var(--pop-yellow);
+      background-image:
+        radial-gradient(circle, var(--pop-black) 1px, transparent 1px);
+      background-size: 8px 8px;
+      font-family: var(--font-body);
+      /* Fill viewport */
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      padding: 1rem;
+    }
+
+    /* ─── HEADER ─── */
+    .header {
+      text-align: center;
+      padding: 1rem 1rem 0.5rem;
+    }
+    .header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      color: var(--pop-red);
+      letter-spacing: 0.05em;
+      text-shadow:
+        3px 3px 0 var(--pop-black),
+        -1px -1px 0 var(--pop-black),
+        1px -1px 0 var(--pop-black),
+        -1px 1px 0 var(--pop-black),
+        1px 1px 0 var(--pop-black);
+      transform: rotate(-2deg);
+      line-height: 1;
+    }
+    /* Semi-transparent red background for readability */
+    .header .subtitle {
+      font-family: var(--font-label);
+      font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+      color: var(--pop-white);
+      background: rgba(227, 36, 43, 0.85);
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      margin-top: 0.5rem;
+      transform: rotate(1deg);
+    }
+
+    /* ─── VENDING MACHINE — fills available space ─── */
+    .machine {
+      background: var(--pop-red);
+      border: 6px solid var(--pop-black);
+      border-radius: 20px 20px 8px 8px;
+      width: min(500px, 95vw);
+      flex: 1;
+      max-height: 680px;
+      margin: 0.75rem auto;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow:
+        8px 8px 0 var(--pop-black),
+        inset 0 0 40px rgba(0,0,0,0.15);
+    }
+
+    /* ─── DISPLAY WINDOW ─── */
+    .display-window {
+      background: var(--pop-white);
+      border: 4px solid var(--pop-black);
+      border-radius: 12px;
+      margin: 1rem 1.25rem 0.75rem;
+      flex: 1;
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background-image:
+        radial-gradient(circle, rgba(0,0,0,0.05) 1px, transparent 1px);
+      background-size: 4px 4px;
+    }
+
+    /* Placeholder text before vending */
+    .display-placeholder {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--pop-black);
+      opacity: 0.3;
+      text-align: center;
+      padding: 1rem;
+      transition: opacity 0.3s;
+    }
+
+    /* ─── ARTWORK CARD — drops into display ─── */
+    .artwork-card {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      transform: translateY(-120%);
+    }
+    .artwork-card.dropped {
+      animation: dropIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @keyframes dropIn {
+      0%   { transform: translateY(-120%); opacity: 0; }
+      60%  { transform: translateY(8px); opacity: 1; }
+      80%  { transform: translateY(-4px); }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    /* CSS painting canvas inside the display */
+    .artwork-canvas-wrap {
+      width: min(200px, 50vw);
+      aspect-ratio: 4 / 5;
+      border: 4px solid var(--pop-black);
+      box-shadow: 3px 3px 0 var(--pop-black);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .artwork-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--pop-black);
+      margin-top: 0.6rem;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .artwork-artist {
+      font-family: var(--font-label);
+      font-size: 0.8rem;
+      color: #555;
+      margin-top: 0.2rem;
+    }
+    .artwork-year {
+      font-family: var(--font-label);
+      font-size: 0.7rem;
+      color: #888;
+      margin-top: 0.1rem;
+    }
+
+    /* ─── CONTROLS PANEL ─── */
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 0.75rem 1.25rem 1rem;
+    }
+
+    .coin-slot-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .coin-slot {
+      width: 50px;
+      height: 8px;
+      background: var(--pop-black);
+      border-radius: 4px;
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.2);
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .coin-label {
+      font-family: var(--font-label);
+      font-size: 0.65rem;
+      color: var(--pop-yellow);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .coin-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--pop-yellow);
+      border: 3px solid var(--pop-black);
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      color: var(--pop-black);
+      cursor: pointer;
+      box-shadow: 3px 3px 0 var(--pop-black);
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .coin-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 var(--pop-black);
+    }
+    .coin-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .crank-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .crank-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--pop-cyan);
+      border: 4px solid var(--pop-black);
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      color: var(--pop-black);
+      cursor: pointer;
+      box-shadow: 4px 4px 0 var(--pop-black);
+      transition: transform 0.3s;
+      position: relative;
+    }
+    .crank-btn::after {
+      content: "";
+      position: absolute;
+      right: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 8px;
+      background: var(--pop-black);
+      border-radius: 0 4px 4px 0;
+    }
+    .crank-btn.cranking {
+      animation: crankSpin 0.5s ease-in-out;
+    }
+    @keyframes crankSpin {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .crank-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .crank-label {
+      font-family: var(--font-label);
+      font-size: 0.65rem;
+      color: var(--pop-yellow);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── STATUS STRIP ─── */
+    .status-strip {
+      background: var(--pop-black);
+      color: var(--pop-yellow);
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      text-align: center;
+      padding: 0.4rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-radius: 0 0 14px 14px;
+    }
+
+    /* ─── COLLECTION TRAY ─── */
+    .tray-section {
+      width: min(500px, 95vw);
+      margin: 0.5rem auto 0;
+      text-align: center;
+    }
+    .tray-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--pop-black);
+      /* Semi-transparent red for readability */
+      background: rgba(227, 36, 43, 0.85);
+      color: var(--pop-white);
+      display: inline-block;
+      padding: 0.15rem 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+    .tray {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      justify-content: center;
+    }
+    .tray-item {
+      background: var(--pop-white);
+      border: 3px solid var(--pop-black);
+      border-radius: 4px;
+      width: 72px;
+      box-shadow: 2px 2px 0 var(--pop-black);
+      animation: popIn 0.3s ease-out;
+      overflow: hidden;
+    }
+    @keyframes popIn {
+      0%   { transform: scale(0); }
+      80%  { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    .tray-item .tray-canvas {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      position: relative;
+      overflow: hidden;
+    }
+    .tray-item .tray-artist {
+      font-family: var(--font-label);
+      font-size: 0.5rem;
+      color: #555;
+      padding: 0.2rem;
+      line-height: 1.2;
+    }
+
+    /* ─── SPEED LINES — decorative background ─── */
+    .speed-lines {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .speed-lines::before {
+      content: "";
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: repeating-conic-gradient(
+        transparent 0deg, transparent 8deg,
+        rgba(255,255,255,0.04) 8deg, rgba(255,255,255,0.04) 10deg
+      );
+      animation: slowSpin 120s linear infinite;
+    }
+    @keyframes slowSpin { to { transform: rotate(360deg); } }
+
+    /* Coin inserted indicator */
+    .coin-slot-area.inserted .coin-slot {
+      background: var(--pop-yellow);
+      box-shadow: 0 0 12px var(--pop-yellow);
+    }
+
+    footer {
+      padding: 0.5rem;
+      text-align: center;
+      font-family: var(--font-label);
+      font-size: 0.6rem;
+      /* Semi-transparent red for readability */
+      background: rgba(227, 36, 43, 0.85);
+      color: var(--pop-white);
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       CSS PAINTING STYLES — from art-o-mat-gallery
+       ═══════════════════════════════════════════ */
+
+    /* ─── DEGAS ─── */
+    .degas-dance {
+      background: linear-gradient(175deg, #E8DCC8 0%, #D4C5A9 60%, #B89F78 100%);
+    }
+    .degas-dance::before {
+      content: "";
+      position: absolute;
+      width: 30%; height: 65%; top: 15%; left: 35%;
+      background: radial-gradient(ellipse at 50% 30%,
+        #f5e6d8 0%, #e8cbb8 30%, #d4a88c 50%, transparent 70%);
+      filter: blur(4px);
+    }
+    .degas-dance::after {
+      content: "";
+      position: absolute;
+      width: 45%; height: 20%; top: 48%; left: 28%;
+      background: radial-gradient(ellipse,
+        rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.3) 40%, transparent 70%);
+      filter: blur(6px);
+      border-radius: 50%;
+    }
+    .degas-dance .layer {
+      position: absolute;
+      width: 20%; height: 55%; top: 20%; right: 15%;
+      background: radial-gradient(ellipse at 50% 30%,
+        #f0ddd0 0%, #d4a88c 40%, transparent 70%);
+      filter: blur(5px);
+      transform: rotate(-3deg);
+    }
+    .degas-dance .layer::after {
+      content: "";
+      position: absolute;
+      width: 160%; height: 25%; top: 55%; left: -30%;
+      background: radial-gradient(ellipse,
+        rgba(255,255,255,0.6) 0%, transparent 65%);
+      filter: blur(8px);
+      border-radius: 50%;
+    }
+    .degas-dance .light {
+      position: absolute;
+      top: 0; left: 0; width: 50%; height: 40%;
+      background: radial-gradient(ellipse at 0% 0%,
+        rgba(255,248,220,0.5) 0%, transparent 70%);
+    }
+
+    .degas-tub {
+      background: linear-gradient(180deg, #C9B99A 0%, #B8A888 100%);
+    }
+    .degas-tub::before {
+      content: "";
+      position: absolute;
+      width: 75%; height: 60%; top: 25%; left: 12%;
+      background: radial-gradient(ellipse,
+        #d4dde6 0%, #b8c5d4 40%, #8a9aaa 70%, transparent 85%);
+      border-radius: 50%;
+      filter: blur(3px);
+    }
+    .degas-tub::after {
+      content: "";
+      position: absolute;
+      width: 40%; height: 35%; top: 32%; left: 28%;
+      background: radial-gradient(ellipse at 60% 40%,
+        #e8c4a8 0%, #d4a88c 40%, #c49478 60%, transparent 80%);
+      border-radius: 45% 55% 50% 50%;
+      filter: blur(4px);
+      transform: rotate(-15deg);
+    }
+
+    .degas-horses {
+      background: linear-gradient(180deg, #b8c8d8 0%, #d4dce4 40%, #8aaa78 40%, #6a8a58 100%);
+    }
+    .degas-horses::before {
+      content: "";
+      position: absolute;
+      width: 55%; height: 30%; top: 38%; left: 10%;
+      background:
+        radial-gradient(ellipse at 20% 50%, #4a3828 0%, #4a3828 30%, transparent 45%),
+        radial-gradient(ellipse at 50% 50%, #5a4838 0%, #5a4838 25%, transparent 40%),
+        radial-gradient(ellipse at 80% 50%, #3a2818 0%, #3a2818 20%, transparent 35%);
+      filter: blur(2px);
+      transform: skewX(-5deg);
+    }
+    .degas-horses::after {
+      content: "";
+      position: absolute;
+      width: 100%; height: 2px; top: 62%; left: 0;
+      background: rgba(80,60,40,0.4);
+    }
+
+    /* ─── PICASSO ─── */
+    .picasso-guitarist {
+      background: #2a3f5a;
+    }
+    .picasso-guitarist::before {
+      content: "";
+      position: absolute;
+      width: 35%; height: 70%; top: 15%; left: 30%;
+      background: #3a5f8a;
+      border: 3px solid #1a1a1a;
+      transform: rotate(-5deg);
+      border-radius: 5% 5% 0 0;
+    }
+    .picasso-guitarist::after {
+      content: "";
+      position: absolute;
+      width: 25%; height: 30%; top: 45%; left: 22%;
+      background: #8B6914;
+      border: 3px solid #1a1a1a;
+      border-radius: 50%;
+    }
+    .picasso-guitarist .head {
+      position: absolute;
+      width: 18%; height: 14%; top: 8%; left: 38%;
+      background: #4a7aaa;
+      border: 3px solid #1a1a1a;
+      border-radius: 50% 50% 45% 45%;
+      transform: rotate(-8deg);
+    }
+    .picasso-guitarist .neck {
+      position: absolute;
+      width: 4%; height: 35%; top: 35%; left: 18%;
+      background: #6B4226;
+      border: 2px solid #1a1a1a;
+      transform: rotate(15deg);
+    }
+
+    .picasso-mirror {
+      background: #D4A843;
+    }
+    .picasso-mirror::before {
+      content: "";
+      position: absolute;
+      width: 35%; height: 50%; top: 10%; left: 10%;
+      background: linear-gradient(90deg, #e8c44a 50%, #d44a4a 50%);
+      border: 4px solid #1a1a1a;
+      border-radius: 50% 50% 45% 45%;
+    }
+    .picasso-mirror::after {
+      content: "";
+      position: absolute;
+      width: 35%; height: 50%; top: 10%; right: 10%;
+      background: linear-gradient(90deg, #6a2a6a 50%, #2a2a4a 50%);
+      border: 4px solid #1a1a1a;
+      border-radius: 50% 50% 45% 45%;
+    }
+    .picasso-mirror .stripes {
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(90deg,
+        transparent 0px, transparent 18px,
+        rgba(0,0,0,0.15) 18px, rgba(0,0,0,0.15) 20px);
+      z-index: 0;
+    }
+    .picasso-mirror .body {
+      position: absolute;
+      width: 25%; height: 30%; top: 55%; left: 15%;
+      background: #e8c44a;
+      border: 3px solid #1a1a1a;
+      border-radius: 30%;
+    }
+
+    .picasso-weeping {
+      background: #C4D44A;
+    }
+    .picasso-weeping::before {
+      content: "";
+      position: absolute;
+      width: 50%; height: 55%; top: 10%; left: 25%;
+      background: conic-gradient(from 0deg at 50% 50%,
+        #e8e44a 0deg, #4a8a4a 90deg, #d44a4a 180deg, #4a4ad4 270deg, #e8e44a 360deg);
+      border: 4px solid #1a1a1a;
+      clip-path: polygon(50% 0%, 95% 25%, 85% 90%, 15% 90%, 5% 25%);
+    }
+    .picasso-weeping::after {
+      content: "";
+      position: absolute;
+      width: 8%; height: 20%; top: 45%; left: 38%;
+      background: #4a4ad4;
+      border: 2px solid #1a1a1a;
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+    .picasso-weeping .tear2 {
+      position: absolute;
+      width: 8%; height: 18%; top: 48%; left: 55%;
+      background: #4a6ad4;
+      border: 2px solid #1a1a1a;
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+    .picasso-weeping .hands {
+      position: absolute;
+      width: 55%; height: 20%; bottom: 10%; left: 22%;
+      background: #e8d44a;
+      border: 3px solid #1a1a1a;
+      border-radius: 50% 50% 30% 30%;
+    }
+
+    /* ─── JENNY SAVILLE ─── */
+    .saville-propped {
+      background: #c4a090;
+    }
+    .saville-propped::before {
+      content: "";
+      position: absolute;
+      width: 80%; height: 85%; top: 8%; left: 10%;
+      background:
+        radial-gradient(ellipse at 40% 30%, #f0c8b0 0%, transparent 40%),
+        radial-gradient(ellipse at 60% 50%, #e8a090 0%, transparent 45%),
+        radial-gradient(ellipse at 35% 70%, #d4887a 0%, transparent 40%),
+        radial-gradient(ellipse at 70% 25%, #f5ddd0 0%, transparent 35%),
+        linear-gradient(170deg, #e8b8a0, #c48878);
+      border-radius: 40% 45% 50% 48%;
+    }
+    .saville-propped::after {
+      content: "";
+      position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(45deg,
+          transparent, transparent 2px,
+          rgba(180,120,90,0.15) 2px, rgba(180,120,90,0.15) 3px),
+        repeating-linear-gradient(-30deg,
+          transparent, transparent 3px,
+          rgba(200,150,120,0.1) 3px, rgba(200,150,120,0.1) 4px);
+    }
+    .saville-propped .marks {
+      position: absolute;
+      top: 55%; left: 20%; width: 60%; height: 25%;
+      border-top: 1px solid rgba(120,60,40,0.3);
+      border-bottom: 1px solid rgba(120,60,40,0.2);
+    }
+    .saville-propped .marks::before {
+      content: "";
+      position: absolute;
+      top: 40%; left: 10%; width: 80%; height: 1px;
+      background: rgba(120,60,40,0.25);
+      transform: rotate(-2deg);
+    }
+
+    .saville-strategy {
+      background: #b8a090;
+    }
+    .saville-strategy::before {
+      content: "";
+      position: absolute;
+      width: 55%; height: 80%; top: 10%; left: 5%;
+      background:
+        radial-gradient(ellipse at 50% 40%, #f0c8b0 0%, transparent 50%),
+        radial-gradient(ellipse at 30% 70%, #d49888 0%, transparent 40%),
+        linear-gradient(160deg, #e8b8a8, #c49080);
+      border-radius: 45% 50% 48% 42%;
+      filter: blur(1px);
+    }
+    .saville-strategy::after {
+      content: "";
+      position: absolute;
+      width: 50%; height: 75%; top: 15%; right: 5%;
+      background:
+        radial-gradient(ellipse at 50% 35%, #f5d8c8 0%, transparent 45%),
+        radial-gradient(ellipse at 60% 65%, #d4887a 0%, transparent 40%),
+        linear-gradient(190deg, #e8c0a8, #b88070);
+      border-radius: 48% 42% 45% 50%;
+      filter: blur(1px);
+      opacity: 0.85;
+    }
+    .saville-strategy .texture {
+      position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(60deg,
+          transparent, transparent 1px,
+          rgba(160,100,80,0.12) 1px, rgba(160,100,80,0.12) 2px),
+        repeating-linear-gradient(-45deg,
+          transparent, transparent 2px,
+          rgba(200,140,110,0.08) 2px, rgba(200,140,110,0.08) 3px);
+    }
+
+    .saville-shift {
+      background: #a0a8b8;
+    }
+    .saville-shift::before {
+      content: "";
+      position: absolute;
+      width: 75%; height: 80%; top: 10%; left: 12%;
+      background:
+        radial-gradient(ellipse at 45% 35%, #d8c0c0 0%, transparent 40%),
+        radial-gradient(ellipse at 55% 60%, #c0a0a8 0%, transparent 45%),
+        radial-gradient(ellipse at 35% 75%, #a88898 0%, transparent 35%),
+        radial-gradient(ellipse at 65% 20%, #e0d0d0 0%, transparent 30%),
+        linear-gradient(175deg, #c8b0b8, #9088a0);
+      border-radius: 42% 48% 50% 45%;
+    }
+    .saville-shift::after {
+      content: "";
+      position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(35deg,
+          transparent, transparent 2px,
+          rgba(100,80,120,0.1) 2px, rgba(100,80,120,0.1) 3px),
+        repeating-linear-gradient(-50deg,
+          transparent, transparent 3px,
+          rgba(140,110,130,0.08) 3px, rgba(140,110,130,0.08) 4px);
+    }
+    .saville-shift .bruise {
+      position: absolute;
+      width: 30%; height: 25%; top: 40%; left: 30%;
+      background: radial-gradient(ellipse,
+        rgba(100,60,90,0.35) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    /* ─── YAYOI KUSAMA ─── */
+    .kusama-nets {
+      background: #1a1a2a;
+    }
+    .kusama-nets::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 25% 25%, transparent 8px, rgba(220,220,240,0.15) 8px, rgba(220,220,240,0.15) 10px, transparent 10px),
+        radial-gradient(circle at 75% 25%, transparent 8px, rgba(220,220,240,0.12) 8px, rgba(220,220,240,0.12) 10px, transparent 10px),
+        radial-gradient(circle at 25% 75%, transparent 8px, rgba(220,220,240,0.12) 8px, rgba(220,220,240,0.12) 10px, transparent 10px),
+        radial-gradient(circle at 75% 75%, transparent 8px, rgba(220,220,240,0.15) 8px, rgba(220,220,240,0.15) 10px, transparent 10px),
+        radial-gradient(circle at 50% 50%, transparent 8px, rgba(200,200,220,0.1) 8px, rgba(200,200,220,0.1) 10px, transparent 10px);
+      background-size: 22px 22px;
+    }
+    .kusama-nets::after {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle, transparent 6px, rgba(200,200,230,0.08) 6px, rgba(200,200,230,0.08) 8px, transparent 8px);
+      background-size: 14px 14px;
+      background-position: 7px 7px;
+    }
+
+    .kusama-pumpkin {
+      background: #FFD700;
+    }
+    .kusama-pumpkin::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(circle, #111 4px, transparent 4px);
+      background-size: 16px 16px;
+    }
+    .kusama-pumpkin::after {
+      content: "";
+      position: absolute;
+      width: 45%; height: 50%; top: 30%; left: 27.5%;
+      background:
+        radial-gradient(ellipse at 30% 50%, #e8a800 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 50%, #e8a800 0%, transparent 50%),
+        radial-gradient(ellipse, #FFB800 0%, #e89000 60%, #c87000 100%);
+      border-radius: 45% 45% 48% 48%;
+      border: 3px solid #111;
+    }
+    .kusama-pumpkin .stem {
+      position: absolute;
+      width: 6%; height: 10%; top: 22%; left: 47%;
+      background: #111;
+      border-radius: 30% 30% 0 0;
+    }
+    .kusama-pumpkin .pumpkin-dots {
+      position: absolute;
+      width: 45%; height: 50%; top: 30%; left: 27.5%;
+      background: radial-gradient(circle, #111 2.5px, transparent 2.5px);
+      background-size: 12px 12px;
+      background-position: 3px 3px;
+      border-radius: 45% 45% 48% 48%;
+      z-index: 1;
+    }
+
+    .kusama-dots {
+      background: #FF1493;
+    }
+    .kusama-dots::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle 12px, #FFD700 95%, transparent 100%) 0 0 / 40px 40px,
+        radial-gradient(circle 8px, #FF4500 95%, transparent 100%) 20px 20px / 40px 40px;
+    }
+    .kusama-dots::after {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle 3px, rgba(255,255,255,0.7) 95%, transparent 100%) 10px 5px / 25px 25px;
+    }
+    .kusama-dots .layer2 {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle 5px, rgba(0,0,0,0.4) 95%, transparent 100%) 5px 15px / 30px 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="speed-lines"></div>
+
+  <!-- ─── HEADER ─── -->
+  <div class="header">
+    <h1>ART-O-MAT</h1>
+    <div class="subtitle">Insert coin. Crank handle. Collect a mystery masterpiece.</div>
+  </div>
+
+  <!-- ─── VENDING MACHINE ─── -->
+  <div class="machine">
+    <div class="display-window" id="displayWindow">
+      <div class="display-placeholder" id="placeholder">INSERT COIN<br>& CRANK</div>
+      <div class="artwork-card" id="artworkCard">
+        <div class="artwork-canvas-wrap" id="artworkCanvas"></div>
+        <div class="artwork-title" id="artworkTitle"></div>
+        <div class="artwork-artist" id="artworkArtist"></div>
+        <div class="artwork-year" id="artworkYear"></div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="coin-slot-area" id="coinSlotArea">
+        <div class="coin-slot"></div>
+        <button class="coin-btn" id="coinBtn">25¢</button>
+        <div class="coin-label">Insert Coin</div>
+      </div>
+      <div class="crank-area">
+        <button class="crank-btn" id="crankBtn" disabled>VEND</button>
+        <div class="crank-label">Crank It</div>
+      </div>
+    </div>
+
+    <div class="status-strip" id="statusStrip">— ready —</div>
+  </div>
+
+  <!-- ─── COLLECTION TRAY ─── -->
+  <div class="tray-section">
+    <div class="tray-title">Your Collection</div>
+    <div class="tray" id="tray"></div>
+  </div>
+
+  <footer>art-o-mat · mystery masterpieces from the masters · no refunds</footer>
+
+  <script>
+    // ─── ARTWORK DATABASE ───
+    // Each entry has a CSS class for the painting, inner HTML for child elements,
+    // plus title, artist, and year metadata
+    const artworks = [
+      // Degas
+      { css: "degas-dance", inner: '<div class="layer"></div><div class="light"></div>',
+        title: "The Dance Class", artist: "Edgar Degas", year: "1874" },
+      { css: "degas-tub", inner: '',
+        title: "The Tub", artist: "Edgar Degas", year: "1886" },
+      { css: "degas-horses", inner: '',
+        title: "Racehorses at Longchamp", artist: "Edgar Degas", year: "1871" },
+      // Picasso
+      { css: "picasso-guitarist", inner: '<div class="head"></div><div class="neck"></div>',
+        title: "The Old Guitarist", artist: "Pablo Picasso", year: "1904" },
+      { css: "picasso-mirror", inner: '<div class="stripes"></div><div class="body"></div>',
+        title: "Girl Before a Mirror", artist: "Pablo Picasso", year: "1932" },
+      { css: "picasso-weeping", inner: '<div class="tear2"></div><div class="hands"></div>',
+        title: "The Weeping Woman", artist: "Pablo Picasso", year: "1937" },
+      // Jenny Saville
+      { css: "saville-propped", inner: '<div class="marks"></div>',
+        title: "Propped", artist: "Jenny Saville", year: "1992" },
+      { css: "saville-strategy", inner: '<div class="texture"></div>',
+        title: "Strategy", artist: "Jenny Saville", year: "1994" },
+      { css: "saville-shift", inner: '<div class="bruise"></div>',
+        title: "Shift", artist: "Jenny Saville", year: "1996" },
+      // Kusama
+      { css: "kusama-nets", inner: '',
+        title: "Infinity Nets", artist: "Yayoi Kusama", year: "1958" },
+      { css: "kusama-pumpkin", inner: '<div class="stem"></div><div class="pumpkin-dots"></div>',
+        title: "Pumpkin", artist: "Yayoi Kusama", year: "1994" },
+      { css: "kusama-dots", inner: '<div class="layer2"></div>',
+        title: "Dots Obsession", artist: "Yayoi Kusama", year: "2003" },
+    ];
+
+    let lastVended = -1;
+    let coinInserted = false;
+
+    const coinBtn = document.getElementById('coinBtn');
+    const crankBtn = document.getElementById('crankBtn');
+    const placeholder = document.getElementById('placeholder');
+    const artworkCard = document.getElementById('artworkCard');
+    const artworkCanvas = document.getElementById('artworkCanvas');
+    const artworkTitle = document.getElementById('artworkTitle');
+    const artworkArtist = document.getElementById('artworkArtist');
+    const artworkYear = document.getElementById('artworkYear');
+    const statusStrip = document.getElementById('statusStrip');
+    const coinSlotArea = document.getElementById('coinSlotArea');
+    const tray = document.getElementById('tray');
+
+    // ─── INSERT COIN ───
+    coinBtn.addEventListener('click', () => {
+      if (coinInserted) return;
+      coinInserted = true;
+      coinSlotArea.classList.add('inserted');
+      coinBtn.disabled = true;
+      crankBtn.disabled = false;
+      statusStrip.textContent = '— coin accepted · crank to vend —';
+      coinBtn.style.transform = 'translateY(4px) scale(0.9)';
+      setTimeout(() => { coinBtn.style.transform = ''; }, 150);
+    });
+
+    // ─── CRANK TO VEND ───
+    crankBtn.addEventListener('click', () => {
+      if (!coinInserted) return;
+      crankBtn.classList.add('cranking');
+      crankBtn.disabled = true;
+      statusStrip.textContent = '— vending... —';
+
+      // Pick random artwork, avoid immediate repeat
+      let idx;
+      do { idx = Math.floor(Math.random() * artworks.length); }
+      while (idx === lastVended && artworks.length > 1);
+      lastVended = idx;
+      const art = artworks[idx];
+
+      setTimeout(() => {
+        crankBtn.classList.remove('cranking');
+        placeholder.style.opacity = '0';
+
+        // Reset card position
+        artworkCard.classList.remove('dropped');
+        artworkCard.style.opacity = '0';
+        artworkCard.style.transform = 'translateY(-120%)';
+
+        // Build the CSS painting inside the canvas wrap
+        artworkCanvas.className = 'artwork-canvas-wrap ' + art.css;
+        artworkCanvas.innerHTML = art.inner;
+        artworkTitle.textContent = art.title;
+        artworkArtist.textContent = art.artist;
+        artworkYear.textContent = art.year;
+
+        // Trigger drop animation
+        void artworkCard.offsetWidth;
+        artworkCard.classList.add('dropped');
+
+        statusStrip.textContent = `— ${art.artist} · ${art.title} —`;
+
+        // Add mini painting to collection tray
+        addToTray(art);
+
+        // Reset for next coin
+        coinInserted = false;
+        coinSlotArea.classList.remove('inserted');
+        coinBtn.disabled = false;
+      }, 600);
+    });
+
+    // ─── ADD TO COLLECTION TRAY ───
+    function addToTray(art) {
+      const item = document.createElement('div');
+      item.className = 'tray-item';
+      // Mini version of the CSS painting
+      const miniCanvas = document.createElement('div');
+      miniCanvas.className = 'tray-canvas ' + art.css;
+      miniCanvas.innerHTML = art.inner;
+      const label = document.createElement('div');
+      label.className = 'tray-artist';
+      label.textContent = art.artist;
+      item.appendChild(miniCanvas);
+      item.appendChild(label);
+      tray.appendChild(item);
+    }
+  </script>
+</body>
+</html>

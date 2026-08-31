@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-subtitle="Syllabus" data-docname="art3041-syllabus" data-frame="on"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ART 3041 — Syllabus</title>
+
+<link rel="stylesheet" href="shared/font.css">
+<link rel="stylesheet" href="shared/core.css">
+<style>
+
+/* When the rail collapses into the band header, its last line carries no trailing margin, so the gap
+   down to the main body is main's collapsed padding-top alone (--s2), not the note margin and the
+   padding stacked. */
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main ol,.main dd,.main dt,.main .note,.main .sec,.main .tag,
+.rail .sec,.rail .note,
+.full .sec,.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+/* --- The information grid -----------------------------------------------------
+   Label and value on two tracks. Carries the course facts, the meeting format, the grade split and
+   the grade meanings — everywhere a short term names a longer one. */
+
+.info{
+  display:grid;
+  grid-template-columns:minmax(6rem,9rem) minmax(0,1fr);
+  gap:var(--s1) var(--s3);
+  align-items:baseline;
+  margin:0 0 var(--s3);
+  max-width:var(--measure);
+}
+
+.info:last-child{margin-bottom:0;}
+
+.quote{
+  margin:var(--s4) 0;
+  padding:0 var(--s3);
+  max-width:var(--measure);
+  font-size:0.875rem;
+  letter-spacing:-0.01em;
+  font-variation-settings:"wdth" 100,"wght" 400,"ROND" 0;
+}
+.quote p{max-width:none;}
+.quote > :last-child{margin-bottom:0;}
+
+/* --- Introductory statement ----------------------------------------------------
+   A modal sheet over the field. It lives inside .page so measureLinks decorates the
+   links in it; contenteditable="false" so those links stay clickable while the
+   document itself is editable. */
+
+.sheet{
+  width:min(48rem,calc(100vw - 2rem));
+  max-height:min(85vh,54rem);
+  padding:var(--s4);
+  background:var(--bg);color:var(--fg);
+  border:1px solid var(--line);
+  overflow-y:auto;
+  overscroll-behavior:contain;
+}
+
+.sheet::backdrop{background:rgba(0,0,0,.55);}
+[data-theme="dark"] .sheet::backdrop{background:rgba(0,0,0,.8);}
+
+.sheet-head{
+  display:flex;align-items:baseline;justify-content:space-between;gap:var(--s3);
+  margin-bottom:var(--s4);padding-bottom:var(--s2);
+  border-bottom:2px solid var(--line);
+}
+
+.sheet-head .sec{margin:0;}
+.sheet p,.sheet .info{max-width:var(--measure);}
+.sheet .info{margin:var(--s4) 0;}
+.sheet > :last-child{margin-bottom:0;}
+
+/* The button opens the statement, so it reads as its own step rather than as the first line of
+   the section that follows it. */
+.main > .btn-outline{margin-bottom:var(--s4);}
+
+.info dd{margin:0;min-width:0;width:fit-content;overflow-wrap:break-word;}
+
+/* The label is quiet by default — the accent is already carrying seventeen section numbers. Only the
+   grade split takes it, where the percentage is the whole point. */
+
+.info dt{
+  font-size:0.875rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--dim);
+  font-variation-settings:"wdth" 100,"wght" 400,"ROND" 55;
+  line-height:1.45;
+}
+
+.info dt.tag{color:var(--accent);}
+
+/* A single letter or a percentage does not need a nine-rem track. */
+
+.info.narrow{grid-template-columns:minmax(0,4.5rem) minmax(0,1fr);}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}   /* no rail column, no boundary */
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}   /* field is hidden here, so nothing sits at a crossing */
+}
+
+@media (max-width:599px){
+  /* A word-length label and its value will not both fit, so the label sits above its value. A grade
+     or a percentage still will, so .narrow keeps its two tracks. */
+  .info{grid-template-columns:1fr;gap:0;}
+  .info dd{margin:0 0 var(--s2);}
+  .info dd:last-child{margin-bottom:0;}
+  .info.narrow{grid-template-columns:minmax(0,3.25rem) minmax(0,1fr);gap:var(--s1) var(--s2);}
+  .info.narrow dd{margin:0;}
+  .sheet{width:calc(100vw - 1.5rem);padding:var(--s3);}
+  .sheet-head{flex-direction:column;align-items:flex-start;gap:var(--s2);}
+  /* Mobile: tighten the side padding to 12px — the field 12px off the screen edge, the type 12px inside it. */
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+</style>
+<link rel="stylesheet" href="shared/print.css">
+</head>
+<body>
+
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <svg class="cols" contenteditable="false" aria-hidden="true"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true"><polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline><g id="frame-dots"></g></svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1><span>A.I. for Designers</span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;">ART 3041 · Special Topic · <a href="https://www.citytech.cuny.edu/registrar/docs/fall_2026_meeting_grid.pdf">Fall 2026</a> · Syllabus</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>Course information</p>
+      <p class="note">This syllabus will change as the semester runs. Check the course site each week.</p>
+    </div>
+    <div class="main">
+      <dl class="info">
+        <dt>Course</dt>
+        <dd>ART 3041-WWA (38308) · Special Topic: A.I. for Designers</dd>
+        <dt>Department</dt>
+        <dd>Art</dd>
+        <dt>College</dt>
+        <dd>Baruch College</dd>
+        <dt>Semester</dt>
+        <dd><a href="https://www.citytech.cuny.edu/registrar/docs/fall_2026_meeting_grid.pdf">Fall 2026</a> · classes begin Fri Aug 28 · last class Mon Dec 14</dd>
+        <dt>Room</dt>
+        <dd>B&nbsp;—&nbsp;Vert 8-165</dd>
+        <dt>Schedule</dt>
+        <dd>Mondays 2:55–4:35pm (online-synchronous)<br>Wednesdays 2:55–4:35pm (in-person)</dd>
+        <dt>Professor</dt>
+        <dd>Broderick Shoemaker</dd>
+        <dt>Email</dt>
+        <dd><a href="mailto:bshoemaker@ccny.cuny.edu">bshoemaker@ccny.cuny.edu</a></dd>
+        <dt>Office hours</dt>
+        <dd>Wednesdays after class, 4:35pm, and by appointment</dd>
+        <dt>Meet with me</dt>
+        <dd><a href="https://calendly.com/bshoemaker-1/15min">calendly.com/bshoemaker-1/15min</a></dd>
+        <dt>Course site</dt>
+        <dd><a href="https://aifordesigners.net">aifordesigners.net</a></dd>
+      </dl>
+      <p class="note">When you book a meeting, describe the question and send your files in their current state. Most questions can be answered over email. If none of the times work, email me with times that do.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">02</span>Course introduction</p>
+      <p class="note">Whatever your stance on it, it is valuable to know about this technology and how to use it.</p>
+    </div>
+    <div class="main">
+      <button class="btn-outline" type="button" contenteditable="false" onclick="openIntro()">Introductory statement</button>
+
+      <p>“In this new world, creation is cheap, craft is automatable, and everyone is a beginner. The ultimate differentiator will be the creator’s perspective, taste, and judgment. The software design education for our current moment must prioritize this above all else.”</p>
+      <p class="note">AI Software Design Studio (Fall 2024), RISD — Kelin Carolyn Zhang</p>
+      <p>Technologists are decrying the disappearance of the apprentice. Entry level jobs will vanish, these workers’ tasks subsumed by artificial intelligence technologies. A unique opportunity presents itself in this level playing field: students, recent graduates and seasoned professionals are all approaching these technologies at the same time, with the same level of expertise.</p>
+      <p>Understanding how A.I. tools work and how to integrate them (or not) into your workflow and creative practice as an artist/designer is critical to positioning yourself within the workforce and the larger design world. The way that students interact with these tools will facilitate executive level thinking that I hope will make one more prepared for the post-college workforce.</p>
+      <p>Students have a unique opportunity to explore these technologies, their ethics and their creative potentials with their classmates and professors and generate (pun intended) new ways of utilizing and approaching the paradigms. As a workshop, the course will change as we tackle the topics and discover new avenues and ideas.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">03</span>Additional details description</p>
+    </div>
+    <div class="main">
+      <p>ART 3041, Topics in AI and Design Studio, is a workshop and forum. Students begin the semester codifying their own design principles and embedding them into their a.i. tool(s) of choice. Baruch uses Microsoft Copilot, but you can use others as well. Students will assume the role of creative director and collaborator with these A.I. tools, utilizing and working with them in various creative projects.</p>
+      <p>Students will gain an understanding of the history behind machine learning and the quest for “artificial intelligence”. This historical perspective naturally leads to a consideration of larger issues. A.I. technologies are displacing human-centered work, straining the energy grid and dividing our vision of the future. These ethical, social and environmental topics will be discussed and addressed through student work, writing, reading and discussion.</p>
+      <p>Whatever conclusion one reaches about these technologies, this professor recognizes the university as a place to study and gain knowledge about them before going out into a work force that demands familiarity.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">04</span>Course objectives</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li>Learn the history of A.I.</li>
+        <li>Understand how you want to use A.I. in your own practice</li>
+        <li>Understand how to get the most out of these tools</li>
+        <li>Develop the judgment to evaluate two outputs and articulate why one is better</li>
+        <li>Become proficient in what these tools currently offer, so that you are positioned to keep pace with a technology that keeps accelerating</li>
+        <li>Explore, experiment with and test this technology</li>
+        <li>Discuss and grapple with historical and contemporary issues of A.I., including ethical, personal, economic, philosophical and political</li>
+        <li>Make something you are excited about</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">05</span>Format</p>
+      <p class="note">Two meetings a week. There will be crossover; this is a general guideline for those who want to know.</p>
+    </div>
+    <div class="main">
+      <dl class="info">
+        <dt>Mondays</dt>
+        <dd>Online. Tech demos, design challenges, brief discussions, and the introduction of projects and homework.</dd>
+        <dt>Wednesdays</dt>
+        <dd>In person. Discussions, work sessions, small crits and feedback from me.</dd>
+      </dl>
+      <p>Online classes are held at the scheduled time. Use a computer, turn your camera on and come ready to share your screen. If any of that is a problem for you, email me and we will work something out.</p>
+      <p>Your camera has to be on for an online class. If it is off, you are not counted as present.</p>
+      <p>Week by week, the plan is on the course site. That will change as the semester runs, and the site is updated every week to reflect where we actually are.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">06</span>Projects / General Schedule</p>
+      <p class="note">As things of interest come up, the schedule and the projects will change. I have left flexibility in the schedule for exploration.</p></div><div class="main">
+      <ul>
+        <li>Design a ____ — 2 weeks</li>
+        <li>Image generation/Photoshop generative — 2 weeks</li>
+        <li>Typography — 2–3 weeks</li>
+        <li>Crea(i)tive director — 3 weeks, graded</li>
+        <li>Experimental interface (with Figma) — 4 weeks, graded, and the final project</li>
+      </ul>
+      <p>Not yet placed: professional documents, your own course website and style guide, something with video, and a small group project.</p>
+      <p>If you want to try something outside the box, or different from the specified assignment, I am completely open to that. This is new, exciting technology and I am looking forward to learning from you as much as you will learn from me. I hope.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">07</span>Grading</p>
+      <p class="note">Two graded projects, because this course is so much about experimentation and self-discovery.</p>
+    </div>
+    <div class="main">
+      <dl class="info narrow">
+        <dt class="tag">30%</dt>
+        <dd>Final project — experimental interface</dd>
+        <dt class="tag">30%</dt>
+        <dd>Crea(i)tive director</dd>
+        <dt class="tag">40%</dt>
+        <dd>Other projects/homework and professionalism</dd>
+      </dl>
+      <p>General effort and continual improvement are taken into account as well.</p>
+      <p>Not turning in a graded project results in a failing grade for the course.</p>
+      <p>Professionalism is the plain stuff: no phone during class, taking part, showing up on time.</p>
+      <p class="note">Incomplete grades are given only for a family emergency or a documented illness that interferes with finishing the course. You have to submit the required paperwork by the college’s deadline, along with a written list of the work that is missing and a timetable for when it will be done.</p>
+      <p class="note">After two absences your grade is affected. See <strong>11 Attendance</strong>.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">08</span>Homework</p>
+      <p class="note">You can miss two.</p>
+    </div>
+    <div class="main">
+      <p>You will have homework every week. Some of it stands on its own and some of it counts toward a project grade — sketches, research, a working draft. Each regular homework counts equally toward your grade.</p>
+      <p>You can miss two homework assignments before grade reductions.</p>
+      <p>If you cannot do an assignment for a valid personal reason, tell me. That is all it takes.</p>
+      <p>Homework is checked ten minutes before class. If you miss a class you are still responsible for the assignment that was due, and for the one assigned that day.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">09</span>What the grades mean</p>
+    </div>
+    <div class="main">
+      <dl class="info narrow">
+        <dt>A</dt>
+        <dd>Exceptional. No technical errors. Uses the tools at a professional level. Demonstrates understanding and rigorous implementation of the concepts. Highly original work.</dd>
+        <dt>A−</dt>
+        <dd>Very good. Minor technical problems. Demonstrates awareness and thorough exploration of the concepts.</dd>
+        <dt>B</dt>
+        <dd>Above average. Exceeds expectations. Few technical errors. Uses a variety of tools. Demonstrates awareness of the concepts.</dd>
+        <dt>C</dt>
+        <dd>Below average, but meets expectations. More technical errors than expected. Does not use the full range of tools. Does not address the concepts in a meaningful way.</dd>
+        <dt>D</dt>
+        <dd>Barely acceptable. Many technical errors. Projects are incomplete. Lack of original thought.</dd>
+        <dt>F</dt>
+        <dd>Failing. Does not meet minimum standards. No technical competence.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">10</span>Participation</p>
+      <p class="note">I am not going to bug you about it. Just know it is being noted.</p>
+    </div>
+    <div class="main">
+      <p>Come prepared to ask questions, talk about your work, critique other people’s work and help your classmates when you can.</p>
+      <p>Class time is for working. I expect you to follow along on your own computer while we are in class, and I will break the class into groups where you share your screen.</p>
+      <p>Do not use your phone during class. If you need it, step outside at any time.</p>
+      <p>Cameras on for online classes. I notice when someone turns their camera off, stops participating, or is clearly not engaged, and it affects the final grade. I will not issue warnings about it.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">11</span>Attendance</p>
+      <p class="note">Check the academic calendar for day changes.</p>
+    </div>
+    <div class="main">
+      <p>Attendance and participation are critical. Each class builds on the last and gives you things the homework cannot.</p>
+      <ul>
+        <li>Two unexcused absences reduces your grade by a half step — B to B−, C to C−.</li>
+        <li>Three latenesses count as one absence. More than thirty minutes late is an absence.</li>
+        <li>Missing three classes can fail you out of the course.</li>
+        <li>Attending an online class means having your camera on.</li>
+      </ul>
+      <p>If you do miss a class, you still owe the assignment. To catch up, talk to me, talk to your classmates and check the course site.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">12</span>Communication</p>
+      <p class="note">It is critical that we communicate.</p>
+    </div>
+    <div class="main">
+      <p>The email address you give me on the first day is how I will reach you about everything in this course. Check it.</p>
+      <p>Tell me before the deadline if you cannot post your homework, take part, or make a meeting. Not after.</p>
+      <p>If you want extra help, want to try something different, or want to push a piece further, come to office hours or <a href="https://calendly.com/bshoemaker-1/15min">book a time</a>. A one-to-one meeting does wonders for a lingering question.</p>
+      <p>I update the course site each week with the assignment and with links and tutorials. Check it every week.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">13</span>Materials</p>
+      <p class="note">Back up your work. You are responsible for keeping copies of it.</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li>A computer you can work on in class, in person and online</li>
+        <li>Portable storage, or a cloud drive, for backups</li>
+        <li>A sketchbook, a pencil and a pen — still the professional starting point for design work</li>
+        <li>Something that captures images: a phone camera is fine</li>
+        <li>Accounts on the platforms we use. We set these up in class.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">14</span>Academic integrity</p>
+    </div>
+    <div class="main">
+      <p>Students are expected to read and understand CUNY’s academic integrity policy. Members of the CUNY community are expected to be honest and forthright in their academic work. Students who violate the policy will be referred to the Office of the Provost.</p>
+      <p>If you cheat or plagiarize by using someone else’s work or ideas, you defeat the purpose of your education. Academic dishonesty is also prohibited across the City University of New York and is punishable by failing grades, suspension and expulsion.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">15</span>A.I. in this course</p>
+      <p class="note">It is the subject. Use it.</p>
+    </div>
+    <div class="main">
+      <p>In my other courses A.I. is off limits until we get to it. Here it is the material, so there is no version of this class where using it is cheating. With that said — do not use it to write your emails and paper over your own voice.</p>
+      <p>Two things still hold. Document what you used and how you used it — which tool, which prompts, what you kept and what you threw out. And be able to explain your own project. If you cannot explain it, you did not direct it.</p>
+      <p>Turning in another student’s work as your own is still plagiarism, in any course.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">16</span>Students with disabilities</p>
+    </div>
+    <div class="main">
+      <p>If you need accommodations because of a documented disability, notify me. Student Disability Services coordinates and implements accommodations, and ensures equal access and full participation in the college’s programs, services and activities.</p>
+      <dl class="info">
+        <dt>Office</dt>
+        <dd><a href="https://studentaffairs.baruch.cuny.edu/student-disability-services/">Student Disability Services</a></dd>
+        <dt>Where</dt>
+        <dd>Newman Vertical Campus, room 2-272 · 55 Lexington Avenue</dd>
+        <dt>Hours</dt>
+        <dd>Monday to Friday, 9am to 5pm</dd>
+        <dt>Email</dt>
+        <dd><a href="mailto:disability.services@baruch.cuny.edu">disability.services@baruch.cuny.edu</a></dd>
+        <dt>Phone</dt>
+        <dd>(646) 312-4590</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">17</span>Support outside of class</p>
+    </div>
+    <div class="main">
+      <p>If you are having difficulty getting food every day, or you lack a stable and safe place to live, there is help. None of it costs anything and none of it goes through me.</p>
+      <dl class="info">
+        <dt>Food pantry</dt>
+        <dd>The <a href="https://studentaffairs.baruch.cuny.edu/dean-of-students/bearcat-food-pantry/">Bearcat Food Pantry</a>, in the BOSS — NVC room 1-116, ground floor. By appointment, with a valid CUNY ID.</dd>
+        <dt>Grab &amp; go</dt>
+        <dd>A bag of three small meals, no appointment. Pick one up from the Dean of Students, the Office of Student Life or the Student Health Care Center.</dd>
+        <dt>Food benefits</dt>
+        <dd>CUNY’s Student Food Navigator helps with groceries and benefits eligibility. Text FOOD to (855) 230-6746.</dd>
+        <dt>Emergency</dt>
+        <dd>For financial, health and housing needs, the Office of the Dean of Students runs an emergency fund — <a href="mailto:deanofstudents@baruch.cuny.edu">deanofstudents@baruch.cuny.edu</a>, (646) 312-4570.</dd>
+      </dl>
+      <p>You can also come to me and I will point you to it.</p>
+    </div>
+  </div>
+
+  <dialog class="sheet" id="intro-sheet" contenteditable="false" aria-labelledby="intro-title">
+    <div class="sheet-head">
+      <p class="sec" id="intro-title">Introductory statement</p>
+      <button class="btn-outline" type="button" onclick="closeIntro()">Close</button>
+    </div>
+
+    <p>As an introductory statement to this course I want to say that I&rsquo;ve found that it&rsquo;s impossible not to become philosophical about the subject of teaching a.i. because much of its proposal is one of automation, of replacing &ldquo;work&rdquo; and &ldquo;effort&rdquo;. These things, the work, the effort, the process, are ironically the very things that not only turn a.i. into a useful tool, but also reject the idea of a tool that could somehow replace these activities. If you&rsquo;re going to succeed in your work (in life), you need to enjoy the process. Or at least that is my proposal to all of you. With that being said I want to say a few words that I&rsquo;ll return to throughout the semester:</p>
+
+    <dl class="info">
+      <dt>Imagine</dt>
+      <dd>Daydream or philosophize or think deeply and if your wildest imagination comes up with an idea, perhaps &ldquo;a.i.&rdquo; can enable you to bring it to life whereas before there might have been some difficult-to-surmount roadblocks.</dd>
+      <dt>Articulate</dt>
+      <dd>You might have an idea in your mind&rsquo;s eye, but can you spell it out for others? In the case of this course, that requires you to be as specific as possible when you work with a.i. tools. The better your plan, the better the work it will do. Also, at its base you&rsquo;re still working with a machine. They take things literally, or work better when you spell things out literally. It&rsquo;s worth watching a bit of <a href="https://www.youtube.com/watch?v=okkIyWhN0iQ">this video</a> about instructing someone to make a PB&amp;J sandwich.</dd>
+      <dt>Taste</dt>
+      <dd>What makes something good? An ever moving target but it&rsquo;s one that separates the amateurs from the pros and it will separate the slop work from the great work in this class and beyond. What do you like and why? Can you articulate that?</dd>
+    </dl>
+
+    <p>A quote to end on:</p>
+
+    <blockquote class="quote">
+      <p>&ldquo;This emphasis on pleasure runs counter to the dominant story we are currently being sold about creative work. There is, says Shallcrass, &lsquo;so much talk about automation&rsquo; and artificial intelligence: a discourse that frames making as a chore and human involvement as a problem to be solved. To automate is to assume that the output is what matters, and the process merely what it takes to get there. But, he asks, what about those of us who enjoy our work&mdash;who find meaning in the production of letterforms, or music, or films? Shallcrass made Constrictor because the process of making the letterforms contributed to his understanding of them. The joy is not incidental to the work, it is the work.&rdquo;</p>
+
+      <p class="note">Frere-Jones Type &mdash; <a href="https://frerejones.com/blog/designing-constrictor">Designing Constrictor</a></p>
+    </blockquote>
+
+    <p>I like this quote because it speaks to the joy of making. I derive joy from making and also from experiencing work where I sense the presence of that joy and of the human (hand/mind/voice/eye) being behind it.</p>
+  </dialog>
+
+</main>
+
+<script src="shared/core.js"></script>
+
+<script>
+// The sheet is display:none until it opens, so its links have no box to measure until then.
+function openIntro(){
+  var d=document.getElementById('intro-sheet'); if(!d) return;
+  d.showModal();
+  if(window.measureLinks) measureLinks();
+}
+function closeIntro(){
+  var d=document.getElementById('intro-sheet'); if(d) d.close();
+}
+
+// A click on the backdrop lands on the dialog itself, not on anything inside it.
+document.getElementById('intro-sheet').addEventListener('click', function(e){
+  if(e.target===this) this.close();
+});
+</script>
+
+
+</body></html>

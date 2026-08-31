@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-frame="on" class="fonts-ready" data-subtitle="ART 3041" data-docname="art3041-style-guide-for-your-ai" style=""><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ART 3041 — A Style Guide for Your AI</title>
+
+<link rel="stylesheet" href="../../../shared/font.css">
+<link rel="stylesheet" href="../../../shared/core.css">
+<style>
+
+/* When the rail collapses into the band header, its last line carries no trailing margin, so the gap
+   down to the main body is main's collapsed padding-top alone (--s2), not the note margin and the
+   padding stacked. */
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main ol,.main blockquote,.main .note,.main .sec,
+.rail .sec,.rail .note,
+.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}   /* no rail column, no boundary */
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}   /* field is hidden here, so nothing sits at a crossing */
+}
+
+@media (max-width:599px){
+  /* Mobile: tighten the side padding to 12px — the field 12px off the screen edge, the type 12px inside it. */
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+
+/* A quotation from outside the course — set off by the field's own line, no new colour. */
+
+blockquote{margin:0 0 var(--s3);padding-left:var(--s3);border-left:1px solid var(--line);}
+
+blockquote p:last-child{margin-bottom:0;}
+
+/* --- Ordered steps on the field --- */
+
+ol{margin:0 0 var(--s3);width:fit-content;padding-left:1.4em;}
+
+.main ol li{margin:0 0 var(--s2);}
+
+.main ol li::marker{color:var(--accent);}
+
+/* --- The cue: the one step that leaves this document ------------------------
+   The mark is drawn where the reader already is: beside the step in the rail on a wide screen, above
+   it on a phone where the rail has stacked away. Absolute against the step itself, so it tracks the
+   step wherever the step lands. */
+
+.cue{position:relative;font-variation-settings:"wdth" 100,"wght" 500,"ROND" 55;}
+
+.cue a{white-space:nowrap;}
+
+.cue-mark{color:var(--accent);}
+
+/* Both marks hang off the step, not off this span — so the span stays unpositioned. */
+
+.cue-mark svg{position:absolute;overflow:visible;pointer-events:none;}
+
+/* Backed off by the main's own left padding plus the list's, so the point lands on the rail boundary
+   rather than on the step's number. */
+
+.cue-mark .cue-h{display:block;right:calc(100% + var(--s3) + 1.4em);top:50%;transform:translateY(-50%);width:36px;height:26px;}
+
+/* A cue on a bare paragraph has no list indent to clear, so it drops the list's allowance. */
+
+p.cue .cue-mark .cue-h{right:calc(100% + var(--s3));}
+
+.cue-mark .cue-v{display:none;left:0.1em;bottom:calc(100% + 0.35em);width:26px;height:36px;}
+
+@media (max-width:767px){
+  .cue-mark .cue-h{display:none;}
+  .cue-mark .cue-v{display:block;}
+  .main ol li.cue,.main p.cue{margin-top:calc(var(--s3) + 36px);}   /* room for the mark standing above the step */
+}
+
+/* --- Blocks of text to copy ------------------------------
+   A code block is the one place a long unbreakable line can widen its grid track and push the page
+   wider than the phone; it scrolls inside itself instead. */
+
+.code-head{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s2);margin:0 0 var(--s1);}
+
+.code-head .label{font-size:0.8rem;color:var(--dim);}
+
+.code{margin:0 0 var(--s3);padding:var(--s2);border:1px solid var(--line);background:var(--bg);
+  overflow-x:auto;min-width:0;white-space:pre;
+  font-family:ui-monospace,Menlo,monospace;font-size:0.8rem;line-height:1.5;color:var(--fg);}
+</style>
+<link rel="stylesheet" href="../../../shared/print.css">
+</head>
+<body>
+
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <svg class="cols" contenteditable="false" aria-hidden="true" viewBox="0 0 1200 2913"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true" viewBox="0 0 1200 2913"><polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline><g id="frame-dots"></g></svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1 style=""><span>A Style Guide for Your A.I.</span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;">A set of instructions to hand off to a.i. so that it creates consistent documents · ART 3041</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>What you're making</p>
+      <p class="note">Rules first, then the page.</p>
+    </div>
+    <div class="main">
+      <p>You already have a landing page online on GitHub Pages (<strong>index.html</strong>). In week 1 you wrote down the rules it is supposed to follow. There were a few stylistic decisions like tone and typography, but it was not fully thought-out or comprehensive.</p>
+      <p>The first thing you should do when constructing this style guide is take this file — or select all on this page — and paste it into Copilot and say something like: “I have to create a style guide for working with you/a.i., here's what my professor has outlined, let's chat about this, what do I have to do?”</p>
+      <p>Here's a definition from <a href="https://www.figma.com/resource-library/what-is-a-style-guide/" target="_blank" rel="noopener" style="">Figma</a>:</p>
+      <blockquote>
+        <p>“A brand style guide maintains brand consistency and coherence,” explains Leandro. “It gives you helpful templates and guidance on how to use brand elements, including fonts, typography, logo, color palette, and imagery. It's also a key tool to guide messaging and content creation, providing valuable insights into your company's brand voice, tone, and writing style.”</p>
+      </blockquote>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">02</span>Write the style guide</p>
+      <p class="note">The part you write yourself, with a.i. assistance.</p>
+    </div>
+    <div class="main">
+      <p>I'm not going to hand hold across this entire process, because I want you to ask a.i. for help, see what it returns, and see how it can guide you through it.</p>
+      <p>In week one you answered a few questions about how your page should look. That was a brief for one page. This is a system — it'll hold up across the semester and beyond.</p>
+      <p>Write it as instructions, addressed to the A.I. Specific enough that somebody else could follow it without asking you a question.</p>
+      <ul>
+        <li><strong>Typography.</strong> Which typeface(s)? Serif or sans-serif? Do you have a particular font you love? Go do some research at <a href="https://fonts.adobe.com" target="_blank" rel="noopener" style="">fonts.adobe.com</a> and <a href="https://fonts.google.com" target="_blank" rel="noopener" style="">fonts.google.com</a>. A good rule of thumb if you want something dynamic: a heading/display font and a more legible body font. How big are your headings? And what size should the body font be?</li>
+        <li><strong>Color.</strong> Name them if you want, but be sure to include hex codes. Here's a <a href="https://htmlcolorcodes.com/color-picker/" target="_blank" rel="noopener" style="">color&nbsp;picker</a>. How many, and what each one is for — background, text, one accent.</li>
+        <li><strong>Space.</strong> Tight or open? How much room around things. How many columns on desktop? How many on tablet? How many on mobile? Ask A.I. about laying out webpages.</li>
+        <li><strong>Images.</strong> Should images get an overlay, or some other sort of treatment?</li>
+      </ul>
+      <p class="note">Vague rules produce vague pages!</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">03</span>Put it in your custom instructions</p>
+      <p class="note">So you stop repeating yourself.</p>
+    </div>
+    <div class="main">
+      <ol>
+        <li class="cue">Open your <a href="../../course-setup/copilot.html" target="_blank" rel="noopener" style="">Copilot custom instructions</a>.<span class="cue-mark" contenteditable="false" aria-hidden="true" style="opacity: 1; color: rgb(46, 155, 79);">
+          <svg class="cue-h" viewBox="0 0 36 26"><polygon class="cue-head" fill="currentColor" points="0,1 0,25 34,13"></polygon></svg>
+          <svg class="cue-v" viewBox="0 0 26 36"><polygon class="cue-head" fill="currentColor" points="1,0 25,0 13,34"></polygon></svg>
+        </span></li>
+        <li>Delete the <strong>Tone</strong> and <strong>Words to avoid</strong> lines you filled in earlier.</li>
+        <li>Paste in your new style guide instructions.</li>
+        <li>Add this line to the end, exactly as written: <strong>Do not display code. Always give me a fully updated and downloadable file complete with all HTML/CSS/JS.</strong></li>
+        <li>Save it, then open a brand new chat.</li>
+      </ol>
+      <p class="note">Custom instructions apply to every conversation, not just the next one. Once the style guide is in there you stop re-explaining your design decisions every time you start a chat — which is the whole reason to write it down.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">04</span>REmake index.html: Begin with a hero image</p>
+      <p class="note">Generated, not found.</p>
+    </div>
+    <div class="main">
+      <p>Your page needs one image, across the top. This is called a "hero image". Generate the image using a.i. Copilot can generate images, but sometimes it won't. If that's the case use ChatGPT, Gemini or something else. There are a lot of free options.&nbsp;</p>
+      <p>It has to relate to your life somehow. That is as specific as I am going to be — your commute, your apartment, something you own, something you do, what you're into right now, somewhere you go. Take it where you want. In your prompt for the image generation also specify the look/feel. This should "match" the style of the page. Again, what this means is up to you, but you'll know it when you find something that works well.&nbsp;</p>
+      <p class="cue">Rename the file <strong>hero.jpg</strong> or <strong>hero.png</strong>, depending on what filetype it saved as.<span class="cue-mark" contenteditable="false" aria-hidden="true" style="opacity: 1; color: rgb(46, 155, 79);">
+        <svg class="cue-h" viewBox="0 0 36 26"><polygon class="cue-head" fill="currentColor" points="0,1 0,25 34,13"></polygon></svg>
+        <svg class="cue-v" viewBox="0 0 26 36"><polygon class="cue-head" fill="currentColor" points="1,0 25,0 13,34"></polygon></svg>
+      </span></p>
+      <p class="note">If Copilot will not generate images for you, use a free alternative: Google Gemini or ChatGPT.</p>
+      <p>Things worth putting in the prompt:</p>
+      <ul>
+        <li><strong>A style.</strong> “Vintage.” “High res.” “Dark academic.” “Chillwave.” “Like Picasso painted it in 2024.”</li>
+        <li><strong>Text or no text.</strong> Say which. If you want lettering, expect to fight for it.</li>
+        <li><strong>Realistic or not.</strong> Say which.</li>
+        <li><strong>The camera and the angle</strong>, if it is a photograph. “35mm, shot from below.”</li>
+        <li><strong>Colors</strong> for the image.</li>
+      </ul>
+      <p class="note">The first image will not be the one. Same as the page: say what is wrong with it and ask again.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">05</span>Rebuild index.html</p>
+      <p class="note">Fill in the brackets with your own answers.</p>
+    </div>
+    <div class="main">
+      <div class="code-head">
+        <span class="label">Paste into Copilot</span>
+        <button class="btn-outline copy" type="button" contenteditable="false" data-for="prompt">Copy</button>
+      </div>
+      <pre class="code" id="prompt">My style guide is in your custom instructions.
+But I'm also going to paste it here:
+
+<span class="fill">[paste your style guide]</span>
+
+Here is my page as it is now:
+
+<span class="fill">[paste your current index.html]</span>
+
+Rebuild the page so it follows the style guide, and add two things:
+- A background that moves. Written in CSS or JavaScript, inside
+  the file. Not a video, not an image.
+- A hero image across the top of the page, named hero.jpg.
+
+Keep the rules from before:
+- One HTML file. The CSS and the JavaScript go inside it.
+- Nothing loaded from outside except the image.
+- It has to work on a phone as well as a laptop.
+- Keep my Work list and the links I have already filled in.
+
+Give me the whole file in one code block so I can copy it.</pre>
+      <p class="note">Name the image file in the prompt and then actually name it that. If your prompt says <strong>hero.jpg</strong> and you upload <strong>IMG_4471.png</strong>, the page loads with a broken image and nothing tells you why.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">06</span>Put it online</p>
+      <p class="note">Two files this time.</p>
+    </div>
+    <div class="main">
+      <p>Your page has always been one self-contained file. The image is the first exception — it has to live in the repository next to the HTML.</p>
+      <ol>
+        <li>In your repository, click <strong>Add file</strong>, then <strong>Upload files</strong>. Drag your image in and click <strong>Commit changes</strong>.</li>
+        <li>Open <strong>index.html</strong>, click the pencil to edit it, select everything, delete it, and paste the new version. Commit.</li>
+        <li>Wait about a minute and reload your live address.</li>
+      </ol>
+      <p class="note">The steps are the same ones in the <a href="../../course-setup/github-pages.html" target="_blank" rel="noopener" style="">GitHub&nbsp;Pages</a> instructions, with an upload in place of a paste.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">07</span>Check it</p>
+      <p class="note">Against the guide, not against your taste.</p>
+    </div>
+    <div class="main">
+      <p>Open the live address. Did it follow your style guide how you imagined?</p>
+      <p>Where it does not, it is one of two things: the A.I. ignored you, or you wrote the rule too loosely to follow. This is when you go back and update your style guide.</p>
+      <p class="note">Nothing to submit — the live page is the hand-in. It has to be online by the end of class.</p>
+    </div>
+  </div>
+
+</main>
+
+<script src="../../../shared/core.js"></script>
+
+<script>
+// The cue mark: a point beside the one step that leaves this document. It blinks the six on the links'
+// cadence, so it reads as one more signal rather than an icon.
+
+(function(){
+  var marks=document.querySelectorAll('.cue-mark'); if(!marks.length) return;
+  var cs=getComputedStyle(document.documentElement);
+  var COLORS=PALETTE.map(function(v){ return cs.getPropertyValue(v).trim(); });
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;  // holds the accent
+  var on=true, next=0;
+  function tick(){
+    on=!on;
+    next=on ? 600+Math.random()*1200 : 150+Math.random()*400;    // mostly lit, brief blinks off
+    var c=on ? COLORS[(Math.random()*COLORS.length)|0] : null;
+    marks.forEach(function(m){ m.style.color=c||m.style.color; m.style.opacity=on?1:0.15; });
+    setTimeout(tick, next);
+  }
+  tick();
+})();
+
+// Copy buttons: hand the paired block's text to the clipboard and say so in the label.
+
+(function(){
+  var btns=document.querySelectorAll('.copy'); if(!btns.length) return;
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      var pre=document.getElementById(b.getAttribute('data-for')); if(!pre) return;
+      var label=b.textContent;
+      function said(word){ b.textContent=word; setTimeout(function(){ b.textContent=label; }, 1400); }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(pre.textContent).then(function(){ said('Copied'); }, function(){ said('Select it and copy'); });
+      } else { said('Select it and copy'); }
+    });
+  });
+})();
+</script>
+
+
+</body></html>

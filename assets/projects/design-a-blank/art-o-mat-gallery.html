@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSS Paintings Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1a1a1a;
+      color: #e8e8e8;
+      font-family: 'DM Mono', monospace;
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+
+    /* ─── GALLERY HEADER ─── */
+    .gallery-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+    }
+    .gallery-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .gallery-header p {
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+    /* ─── ARTIST SECTION ─── */
+    .artist-section {
+      max-width: 1100px;
+      margin: 0 auto 4rem;
+    }
+    .artist-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .artist-style {
+      font-size: 0.7rem;
+      color: #888;
+      margin-bottom: 1.5rem;
+      max-width: 600px;
+      line-height: 1.5;
+    }
+
+    /* ─── PAINTING ROW — 3 across on desktop ─── */
+    .painting-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 700px) {
+      .painting-row { grid-template-columns: 1fr 1fr 1fr; }
+    }
+
+    /* ─── PAINTING FRAME ─── */
+    .frame {
+      background: #111;
+      border: 2px solid #333;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .canvas {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #222;
+    }
+    .painting-label {
+      margin-top: 0.75rem;
+      text-align: center;
+    }
+    .painting-title {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: #ccc;
+    }
+    .painting-year {
+      font-size: 0.65rem;
+      color: #666;
+      margin-top: 0.2rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       DEGAS — soft pastels, warm light, blur, motion
+       ═══════════════════════════════════════════ */
+
+    /* The Dance Class — warm studio, ballet figures suggested by soft shapes */
+    .degas-dance {
+      background:
+        /* Warm studio floor */
+        linear-gradient(175deg, #E8DCC8 0%, #D4C5A9 60%, #B89F78 100%);
+    }
+    .degas-dance::before {
+      /* Ballet figure — soft blurred vertical form */
+      content: "";
+      position: absolute;
+      width: 30%;
+      height: 65%;
+      top: 15%;
+      left: 35%;
+      background: radial-gradient(ellipse at 50% 30%,
+        #f5e6d8 0%, #e8cbb8 30%, #d4a88c 50%, transparent 70%);
+      filter: blur(4px);
+    }
+    .degas-dance::after {
+      /* Tutu — white gauzy shape at waist level */
+      content: "";
+      position: absolute;
+      width: 45%;
+      height: 20%;
+      top: 48%;
+      left: 28%;
+      background: radial-gradient(ellipse,
+        rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.3) 40%, transparent 70%);
+      filter: blur(6px);
+      border-radius: 50%;
+    }
+    /* Extra dancer shapes via box-shadows on inner elements */
+    .degas-dance .layer {
+      position: absolute;
+      width: 20%;
+      height: 55%;
+      top: 20%;
+      right: 15%;
+      background: radial-gradient(ellipse at 50% 30%,
+        #f0ddd0 0%, #d4a88c 40%, transparent 70%);
+      filter: blur(5px);
+      transform: rotate(-3deg);
+    }
+    .degas-dance .layer::after {
+      content: "";
+      position: absolute;
+      width: 160%;
+      height: 25%;
+      top: 55%;
+      left: -30%;
+      background: radial-gradient(ellipse,
+        rgba(255,255,255,0.6) 0%, transparent 65%);
+      filter: blur(8px);
+      border-radius: 50%;
+    }
+    /* Warm light from window — top left glow */
+    .degas-dance .light {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 40%;
+      background: radial-gradient(ellipse at 0% 0%,
+        rgba(255,248,220,0.5) 0%, transparent 70%);
+    }
+
+    /* The Tub — overhead view, warm skin against cool porcelain */
+    .degas-tub {
+      background: linear-gradient(180deg, #C9B99A 0%, #B8A888 100%);
+    }
+    .degas-tub::before {
+      /* The tub — elliptical cool shape */
+      content: "";
+      position: absolute;
+      width: 75%;
+      height: 60%;
+      top: 25%;
+      left: 12%;
+      background: radial-gradient(ellipse,
+        #d4dde6 0%, #b8c5d4 40%, #8a9aaa 70%, transparent 85%);
+      border-radius: 50%;
+      filter: blur(3px);
+    }
+    .degas-tub::after {
+      /* Figure — warm form curled in tub */
+      content: "";
+      position: absolute;
+      width: 40%;
+      height: 35%;
+      top: 32%;
+      left: 28%;
+      background: radial-gradient(ellipse at 60% 40%,
+        #e8c4a8 0%, #d4a88c 40%, #c49478 60%, transparent 80%);
+      border-radius: 45% 55% 50% 50%;
+      filter: blur(4px);
+      transform: rotate(-15deg);
+    }
+
+    /* Racehorses at Longchamp — landscape, green field, diagonal motion */
+    .degas-horses {
+      background:
+        /* Sky */
+        linear-gradient(180deg, #b8c8d8 0%, #d4dce4 40%, #8aaa78 40%, #6a8a58 100%);
+    }
+    .degas-horses::before {
+      /* Cluster of horse/rider forms — dark shapes in motion */
+      content: "";
+      position: absolute;
+      width: 55%;
+      height: 30%;
+      top: 38%;
+      left: 10%;
+      background:
+        radial-gradient(ellipse at 20% 50%, #4a3828 0%, #4a3828 30%, transparent 45%),
+        radial-gradient(ellipse at 50% 50%, #5a4838 0%, #5a4838 25%, transparent 40%),
+        radial-gradient(ellipse at 80% 50%, #3a2818 0%, #3a2818 20%, transparent 35%);
+      filter: blur(2px);
+      transform: skewX(-5deg);
+    }
+    .degas-horses::after {
+      /* Fence line — horizontal stripe */
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      top: 62%;
+      left: 0;
+      background: rgba(80,60,40,0.4);
+    }
+
+    /* ═══════════════════════════════════════════
+       PICASSO — bold outlines, flat geometry, fragmented
+       ═══════════════════════════════════════════ */
+
+    /* The Old Guitarist — blue period, angular figure */
+    .picasso-guitarist {
+      background: #2a3f5a;
+    }
+    .picasso-guitarist::before {
+      /* Angular body — tilted rectangle */
+      content: "";
+      position: absolute;
+      width: 35%;
+      height: 70%;
+      top: 15%;
+      left: 30%;
+      background: #3a5f8a;
+      border: 3px solid #1a1a1a;
+      transform: rotate(-5deg);
+      border-radius: 5% 5% 0 0;
+    }
+    .picasso-guitarist::after {
+      /* Guitar — brown circle + neck */
+      content: "";
+      position: absolute;
+      width: 25%;
+      height: 30%;
+      top: 45%;
+      left: 22%;
+      background: #8B6914;
+      border: 3px solid #1a1a1a;
+      border-radius: 50%;
+    }
+    .picasso-guitarist .head {
+      position: absolute;
+      width: 18%;
+      height: 14%;
+      top: 8%;
+      left: 38%;
+      background: #4a7aaa;
+      border: 3px solid #1a1a1a;
+      border-radius: 50% 50% 45% 45%;
+      transform: rotate(-8deg);
+    }
+    .picasso-guitarist .neck {
+      position: absolute;
+      width: 4%;
+      height: 35%;
+      top: 35%;
+      left: 18%;
+      background: #6B4226;
+      border: 2px solid #1a1a1a;
+      transform: rotate(15deg);
+    }
+
+    /* Girl Before a Mirror — split face, bold colors, pattern */
+    .picasso-mirror {
+      background: #D4A843;
+    }
+    .picasso-mirror::before {
+      /* Left face — warm side */
+      content: "";
+      position: absolute;
+      width: 35%;
+      height: 50%;
+      top: 10%;
+      left: 10%;
+      background:
+        linear-gradient(90deg, #e8c44a 50%, #d44a4a 50%);
+      border: 4px solid #1a1a1a;
+      border-radius: 50% 50% 45% 45%;
+    }
+    .picasso-mirror::after {
+      /* Mirror — dark reflection */
+      content: "";
+      position: absolute;
+      width: 35%;
+      height: 50%;
+      top: 10%;
+      right: 10%;
+      background:
+        linear-gradient(90deg, #6a2a6a 50%, #2a2a4a 50%);
+      border: 4px solid #1a1a1a;
+      border-radius: 50% 50% 45% 45%;
+    }
+    /* Striped background pattern */
+    .picasso-mirror .stripes {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        transparent 18px,
+        rgba(0,0,0,0.15) 18px,
+        rgba(0,0,0,0.15) 20px
+      );
+      z-index: 0;
+    }
+    .picasso-mirror .body {
+      position: absolute;
+      width: 25%;
+      height: 30%;
+      top: 55%;
+      left: 15%;
+      background: #e8c44a;
+      border: 3px solid #1a1a1a;
+      border-radius: 30%;
+    }
+
+    /* Weeping Woman — green/yellow face, angular tears */
+    .picasso-weeping {
+      background: #C4D44A;
+    }
+    .picasso-weeping::before {
+      /* Face — angular, split color */
+      content: "";
+      position: absolute;
+      width: 50%;
+      height: 55%;
+      top: 10%;
+      left: 25%;
+      background:
+        conic-gradient(from 0deg at 50% 50%,
+          #e8e44a 0deg, #4a8a4a 90deg, #d44a4a 180deg, #4a4ad4 270deg, #e8e44a 360deg);
+      border: 4px solid #1a1a1a;
+      clip-path: polygon(50% 0%, 95% 25%, 85% 90%, 15% 90%, 5% 25%);
+    }
+    .picasso-weeping::after {
+      /* Tears — blue angular drops */
+      content: "";
+      position: absolute;
+      width: 8%;
+      height: 20%;
+      top: 45%;
+      left: 38%;
+      background: #4a4ad4;
+      border: 2px solid #1a1a1a;
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+    .picasso-weeping .tear2 {
+      position: absolute;
+      width: 8%;
+      height: 18%;
+      top: 48%;
+      left: 55%;
+      background: #4a6ad4;
+      border: 2px solid #1a1a1a;
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+    .picasso-weeping .hands {
+      position: absolute;
+      width: 55%;
+      height: 20%;
+      bottom: 10%;
+      left: 22%;
+      background: #e8d44a;
+      border: 3px solid #1a1a1a;
+      border-radius: 50% 50% 30% 30%;
+    }
+
+    /* ═══════════════════════════════════════════
+       JENNY SAVILLE — flesh, impasto, layered skin tones
+       ═══════════════════════════════════════════ */
+
+    /* Propped — monumental flesh, close-cropped torso */
+    .saville-propped {
+      background: #c4a090;
+    }
+    .saville-propped::before {
+      /* Flesh mass — layered skin tones */
+      content: "";
+      position: absolute;
+      width: 80%;
+      height: 85%;
+      top: 8%;
+      left: 10%;
+      background:
+        radial-gradient(ellipse at 40% 30%, #f0c8b0 0%, transparent 40%),
+        radial-gradient(ellipse at 60% 50%, #e8a090 0%, transparent 45%),
+        radial-gradient(ellipse at 35% 70%, #d4887a 0%, transparent 40%),
+        radial-gradient(ellipse at 70% 25%, #f5ddd0 0%, transparent 35%),
+        linear-gradient(170deg, #e8b8a0, #c48878);
+      border-radius: 40% 45% 50% 48%;
+    }
+    .saville-propped::after {
+      /* Impasto texture — grain overlay */
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(45deg,
+          transparent, transparent 2px,
+          rgba(180,120,90,0.15) 2px, rgba(180,120,90,0.15) 3px),
+        repeating-linear-gradient(-30deg,
+          transparent, transparent 3px,
+          rgba(200,150,120,0.1) 3px, rgba(200,150,120,0.1) 4px);
+    }
+    /* Scratched text marks — Saville often inscribes text into flesh */
+    .saville-propped .marks {
+      position: absolute;
+      top: 55%;
+      left: 20%;
+      width: 60%;
+      height: 25%;
+      border-top: 1px solid rgba(120,60,40,0.3);
+      border-bottom: 1px solid rgba(120,60,40,0.2);
+    }
+    .saville-propped .marks::before {
+      content: "";
+      position: absolute;
+      top: 40%;
+      left: 10%;
+      width: 80%;
+      height: 1px;
+      background: rgba(120,60,40,0.25);
+      transform: rotate(-2deg);
+    }
+
+    /* Strategy — multiple bodies, overlapping flesh */
+    .saville-strategy {
+      background: #b8a090;
+    }
+    .saville-strategy::before {
+      /* Body mass 1 */
+      content: "";
+      position: absolute;
+      width: 55%;
+      height: 80%;
+      top: 10%;
+      left: 5%;
+      background:
+        radial-gradient(ellipse at 50% 40%, #f0c8b0 0%, transparent 50%),
+        radial-gradient(ellipse at 30% 70%, #d49888 0%, transparent 40%),
+        linear-gradient(160deg, #e8b8a8, #c49080);
+      border-radius: 45% 50% 48% 42%;
+      filter: blur(1px);
+    }
+    .saville-strategy::after {
+      /* Body mass 2 — overlapping */
+      content: "";
+      position: absolute;
+      width: 50%;
+      height: 75%;
+      top: 15%;
+      right: 5%;
+      background:
+        radial-gradient(ellipse at 50% 35%, #f5d8c8 0%, transparent 45%),
+        radial-gradient(ellipse at 60% 65%, #d4887a 0%, transparent 40%),
+        linear-gradient(190deg, #e8c0a8, #b88070);
+      border-radius: 48% 42% 45% 50%;
+      filter: blur(1px);
+      opacity: 0.85;
+    }
+    /* Impasto texture */
+    .saville-strategy .texture {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(60deg,
+          transparent, transparent 1px,
+          rgba(160,100,80,0.12) 1px, rgba(160,100,80,0.12) 2px),
+        repeating-linear-gradient(-45deg,
+          transparent, transparent 2px,
+          rgba(200,140,110,0.08) 2px, rgba(200,140,110,0.08) 3px);
+    }
+
+    /* Shift — blue undertones in flesh, cooler palette */
+    .saville-shift {
+      background: #a0a8b8;
+    }
+    .saville-shift::before {
+      content: "";
+      position: absolute;
+      width: 75%;
+      height: 80%;
+      top: 10%;
+      left: 12%;
+      background:
+        radial-gradient(ellipse at 45% 35%, #d8c0c0 0%, transparent 40%),
+        radial-gradient(ellipse at 55% 60%, #c0a0a8 0%, transparent 45%),
+        radial-gradient(ellipse at 35% 75%, #a88898 0%, transparent 35%),
+        radial-gradient(ellipse at 65% 20%, #e0d0d0 0%, transparent 30%),
+        linear-gradient(175deg, #c8b0b8, #9088a0);
+      border-radius: 42% 48% 50% 45%;
+    }
+    .saville-shift::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(35deg,
+          transparent, transparent 2px,
+          rgba(100,80,120,0.1) 2px, rgba(100,80,120,0.1) 3px),
+        repeating-linear-gradient(-50deg,
+          transparent, transparent 3px,
+          rgba(140,110,130,0.08) 3px, rgba(140,110,130,0.08) 4px);
+    }
+    .saville-shift .bruise {
+      position: absolute;
+      width: 30%;
+      height: 25%;
+      top: 40%;
+      left: 30%;
+      background: radial-gradient(ellipse,
+        rgba(100,60,90,0.35) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    /* ═══════════════════════════════════════════
+       YAYOI KUSAMA — dots, infinity, vivid fields
+       ═══════════════════════════════════════════ */
+
+    /* Infinity Nets — dense net pattern on dark field */
+    .kusama-nets {
+      background: #1a1a2a;
+    }
+    .kusama-nets::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      /* Dense overlapping arcs creating a net-like pattern */
+      background:
+        radial-gradient(circle at 25% 25%, transparent 8px, rgba(220,220,240,0.15) 8px, rgba(220,220,240,0.15) 10px, transparent 10px),
+        radial-gradient(circle at 75% 25%, transparent 8px, rgba(220,220,240,0.12) 8px, rgba(220,220,240,0.12) 10px, transparent 10px),
+        radial-gradient(circle at 25% 75%, transparent 8px, rgba(220,220,240,0.12) 8px, rgba(220,220,240,0.12) 10px, transparent 10px),
+        radial-gradient(circle at 75% 75%, transparent 8px, rgba(220,220,240,0.15) 8px, rgba(220,220,240,0.15) 10px, transparent 10px),
+        radial-gradient(circle at 50% 50%, transparent 8px, rgba(200,200,220,0.1) 8px, rgba(200,200,220,0.1) 10px, transparent 10px);
+      background-size: 22px 22px;
+    }
+    .kusama-nets::after {
+      /* Second layer — offset for density */
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle, transparent 6px, rgba(200,200,230,0.08) 6px, rgba(200,200,230,0.08) 8px, transparent 8px);
+      background-size: 14px 14px;
+      background-position: 7px 7px;
+    }
+
+    /* Pumpkin — yellow field, black dots, pumpkin form */
+    .kusama-pumpkin {
+      background: #FFD700;
+    }
+    .kusama-pumpkin::before {
+      /* Polka dot field */
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle, #111 4px, transparent 4px);
+      background-size: 16px 16px;
+    }
+    .kusama-pumpkin::after {
+      /* Pumpkin shape — center */
+      content: "";
+      position: absolute;
+      width: 45%;
+      height: 50%;
+      top: 30%;
+      left: 27.5%;
+      background:
+        radial-gradient(ellipse at 30% 50%, #e8a800 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 50%, #e8a800 0%, transparent 50%),
+        radial-gradient(ellipse, #FFB800 0%, #e89000 60%, #c87000 100%);
+      border-radius: 45% 45% 48% 48%;
+      border: 3px solid #111;
+    }
+    .kusama-pumpkin .stem {
+      position: absolute;
+      width: 6%;
+      height: 10%;
+      top: 22%;
+      left: 47%;
+      background: #111;
+      border-radius: 30% 30% 0 0;
+    }
+    .kusama-pumpkin .pumpkin-dots {
+      position: absolute;
+      width: 45%;
+      height: 50%;
+      top: 30%;
+      left: 27.5%;
+      background:
+        radial-gradient(circle, #111 2.5px, transparent 2.5px);
+      background-size: 12px 12px;
+      background-position: 3px 3px;
+      border-radius: 45% 45% 48% 48%;
+      z-index: 1;
+    }
+
+    /* Dots Obsession — hot pink field, multicolor dots, layered */
+    .kusama-dots {
+      background: #FF1493;
+    }
+    .kusama-dots::before {
+      /* Large dots layer */
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle 12px, #FFD700 95%, transparent 100%) 0 0 / 40px 40px,
+        radial-gradient(circle 8px, #FF4500 95%, transparent 100%) 20px 20px / 40px 40px;
+    }
+    .kusama-dots::after {
+      /* Small dots layer — white */
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle 3px, rgba(255,255,255,0.7) 95%, transparent 100%) 10px 5px / 25px 25px;
+    }
+    .kusama-dots .layer2 {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle 5px, rgba(0,0,0,0.4) 95%, transparent 100%) 5px 15px / 30px 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="gallery-header">
+    <h1>12 CSS Paintings</h1>
+    <p>No images. Just gradients, shapes, and code. 3 paintings × 4 artists.</p>
+  </div>
+
+  <!-- ═══ EDGAR DEGAS ═══ -->
+  <div class="artist-section">
+    <div class="artist-name">Edgar Degas</div>
+    <div class="artist-style">Soft pastels, warm ochres and pinks, blurred motion, diagonal compositions. Movement caught mid-gesture.</div>
+    <div class="painting-row">
+
+      <div class="frame">
+        <div class="canvas degas-dance">
+          <div class="layer"></div>
+          <div class="light"></div>
+        </div>
+        <div class="painting-label">
+          <div class="painting-title">The Dance Class</div>
+          <div class="painting-year">1874</div>
+        </div>
+      </div>
+
+      <div class="frame">
+        <div class="canvas degas-tub"></div>
+        <div class="painting-label">
+          <div class="painting-title">The Tub</div>
+          <div class="painting-year">1886</div>
+        </div>
+      </div>
+
+      <div class="frame">
+        <div class="canvas degas-horses"></div>
+        <div class="painting-label">
+          <div class="painting-title">Racehorses at Longchamp</div>
+          <div class="painting-year">1871</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ PABLO PICASSO ═══ -->
+  <div class="artist-section">
+    <div class="artist-name">Pablo Picasso</div>
+    <div class="artist-style">Bold black outlines, fragmented geometry, flat planes of color, multiple perspectives at once.</div>
+    <div class="painting-row">
+
+      <div class="frame">
+        <div class="canvas picasso-guitarist">
+          <div class="head"></div>
+          <div class="neck"></div>
+        </div>
+        <div class="painting-label">
+          <div class="painting-title">The Old Guitarist</div>
+          <div class="painting-year">1904</div>
+        </div>
+      </div>
+
+      <div class="frame">
+        <div class="canvas picasso-mirror">
+          <div class="stripes"></div>
+          <div class="body"></div>
+        </div>
+        <div class="painting-label">
+          <div class="painting-title">Girl Before a Mirror</div>
+          <div class="painting-year">1932</div>
+        </div>
+      </div>
+
+      <div class="frame">
+        <div class="canvas picasso-weeping">
+          <div class="tear2"></div>
+          <div class="hands"></div>
+        </div>
+        <div class="painting-label">
+          <div class="painting-title">The Weeping Woman</div>
+          <div class="painting-year">1937</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ JENNY SAVILLE ═══ -->
+  <div class="artist-section">
+    <div class="artist-name">Jenny Saville</div>
+    <div class="artist-style">Flesh tones, thick impasto texture, monumental scale, layered skin tones bleeding into each other.</div>
+    <div class="painting-row">
+
+      <div class="frame">
+        <div class="canvas saville-propped">
+          <div class="marks"></div>
+        </div>
+        <div class="painting-label">
+          <div class="painting-title">Propped</div>
+          <div class="painting-year">1992</div>
+        </div>
+      </div>
+
+      <div class="frame">
+        <div class="canvas saville-strategy">
+          <div class="texture"></div>
+        </div>
+        <div class="painting-label">
+          <div class="painting-title">Strategy</div>
+          <div class="painting-year">1994</div>
+        </div>
+      </div>
+
+      <div class="frame">
+        <div class="canvas saville-shift">
+          <div class="bruise"></div>
+        </div>
+        <div class="painting-label">
+          <div class="painting-title">Shift</div>
+          <div class="painting-year">1996</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ YAYOI KUSAMA ═══ -->
+  <div class="artist-section">
+    <div class="artist-name">Yayoi Kusama</div>
+    <div class="artist-style">Polka dots, infinite repetition, vivid color fields, hot pink and yellow, layered dot grids at different scales.</div>
+    <div class="painting-row">
+
+      <div class="frame">
+        <div class="canvas kusama-nets"></div>
+        <div class="painting-label">
+          <div class="painting-title">Infinity Nets</div>
+          <div class="painting-year">1958</div>
+        </div>
+      </div>
+
+      <div class="frame">
+        <div class="canvas kusama-pumpkin">
+          <div class="stem"></div>
+          <div class="pumpkin-dots"></div>
+        </div>
+        <div class="painting-label">
+          <div class="painting-title">Pumpkin</div>
+          <div class="painting-year">1994</div>
+        </div>
+      </div>
+
+      <div class="frame">
+        <div class="canvas kusama-dots">
+          <div class="layer2"></div>
+        </div>
+        <div class="painting-label">
+          <div class="painting-title">Dots Obsession</div>
+          <div class="painting-year">2003</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

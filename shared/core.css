@@ -1,0 +1,524 @@
+/* Shared framework: tokens, the twelve-column field, the frame, links, buttons, toolbar.
+   Edit here — every document loads this file. Page-only rules stay in the page. */
+/* Google Sans Flex, latin subset, inlined. The doc makes no network request at all, so the
+   wordmark is never held waiting on a font fetch. wdth / wght / ROND stay variable; the opsz axis is
+   dropped (it carried two thirds of the file and the advance widths are unchanged without it). */
+
+:root{
+  /* Three primaries, three secondaries. One is picked at random per document. */
+  --c1:#E5006E;   /* pink */
+  --c2:#F26B00;   /* orange */
+  --c3:#F5C400;   /* yellow */
+  --c4:#2E9B4F;   /* green */
+  --c5:#1B69C8;   /* blue */
+  --c6:#6D3FC4;   /* violet */
+  --accent:var(--c5);
+  --choice:#E4002B;       /* red, fixed: the student's decision — kept out of the accent six */
+
+  --font:"Google Sans Flex","Helvetica Neue",Helvetica,Arial,sans-serif;
+
+  /* 1rem = 16px */
+  --s1:0.5rem; --s2:1rem; --s3:1.5rem; --s4:2rem; --s5:3rem; --s6:4rem;
+
+  --page:1200px;
+  --measure:40rem;        /* 62 characters at 16px */
+  --h2size:clamp(1.5rem,4vw,2.25rem);
+
+  /* How far a block's ground colour reaches before a line becomes visible again */
+  --fade:20px;
+  --hold:8px;
+}
+
+/* Light is the default; dark is the same field inverted. Nothing but these four
+   values changes between them. */
+
+[data-theme="light"]{ --bg:#FFFFFF; --fg:#000000; --line:#000000; --dim:#6E6E6E; }
+
+[data-theme="dark"] { --bg:#000000; --fg:#FFFFFF; --line:#FFFFFF; --dim:#8A8A8A; }
+
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  padding:var(--s4) var(--s3);
+  overflow-x:hidden;
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--font);
+  font-size:16px;
+  line-height:1.45;
+  font-variation-settings:"wdth" 100,"wght" 400,"ROND" 25;
+  font-optical-sizing:auto;
+  -webkit-font-smoothing:antialiased;
+}
+
+strong,b{font-variation-settings:"wdth" 100,"wght" 600,"ROND" 25;}
+
+/* --- The field ---------------------------------------------------------------
+   Twelve columns at every width. What changes on a narrow screen is how many of
+   the twelve get drawn, not how many there are. Interior lines sit behind the
+   type, which knocks them out locally; the perimeter carries the waveform and
+   sits above. Nothing is also a CSS border, so nothing doubles. */
+
+.page{
+  max-width:var(--page);
+  margin:0 auto;
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+}
+
+.frame{position:absolute;inset:0;pointer-events:none;color:var(--line);}
+
+/* These two overlays were promoted to their own compositor layer with will-change:transform, so
+   that redrawing them each frame did not re-rasterise the page text underneath. The layer is as
+   tall as the document, and when the document height changes — showing or hiding a week — Chrome
+   intermittently keeps the old tiles, which paints the previous layout's rules and text over the
+   new one. The promotion is gone. Since the wave now redraws only its visible slice at 30fps the
+   saving it bought is small, and a page that sometimes renders wrong is not worth it. */
+
+.cols{position:absolute;inset:0;pointer-events:none;color:var(--dim);overflow:visible;}
+
+.cols{z-index:0;}
+
+[data-cols="off"] .cols{display:none;}
+
+/* A node marks a field crossing. With the field off there is no crossing, so the nodes go too. */
+
+[data-cols="off"] #frame-nodes{display:none;}
+
+.frame{z-index:2;overflow:visible;}
+
+.band{
+  position:relative;
+  z-index:1;
+  grid-column:1 / -1;
+  display:grid;
+  grid-template-columns:subgrid;
+  min-width:0;                    /* a long unbreakable token must wrap, not widen the field */
+}
+
+.band::before{
+  content:"";
+  position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:var(--line);
+  z-index:3;
+  pointer-events:none;
+}
+
+.page > .band:first-of-type::before{display:none;}
+
+/* The rail/main boundary is structure, not field: drawn with the band rule, above the
+   content, so nothing knocks it out. Only on bands that have a rail. */
+
+.band:has(.rail)::after{
+  content:"";
+  position:absolute;
+  top:0;bottom:0;left:25%;width:2px;      /* the 3 of 12 boundary */
+  background:var(--line);
+  z-index:3;
+  pointer-events:none;
+}
+
+/* Standing positions */
+
+.masthead{grid-column:1 / 11;}
+
+.rail{grid-column:1 / 4;}
+
+.main{grid-column:4 / 13;}
+
+.full{grid-column:1 / -1;}
+
+/* A main is indented to 4 because a rail is standing in 1–4 beside it. With no rail in the band
+   there is nothing to stand beside, and the indent is just an empty quarter of the page — so the
+   main starts at column 1 and takes the masthead's measure, reading as a header block. */
+
+.band:not(:has(.rail)) > .main{grid-column:1 / 11;}
+
+.rail,.main,.masthead,.full{padding:var(--s3);min-width:0;}
+
+/* --- Type -------------------------------------------------------------------- */
+
+/* font-variation-settings does not cascade — any axis a rule omits resets to
+   default, so every rule below lists all three. opsz is never named, which leaves
+   it to font-optical-sizing. */
+
+/* .fit is a non-heading that shares the h1 fit mechanism, so the page keeps one real h1.
+   width:auto is load bearing: a .fit is a paragraph, and the p rule below sets width:fit-content,
+   which would make a fit-content container hold the fitted heading — the circular fit. */
+
+h1,.fit{
+  width:auto;
+  font-variation-settings:"wdth" 108,"wght" 600,"ROND" 100;
+  text-transform:uppercase;
+  line-height:0.92;
+  margin:0;
+  font-size:5rem;                 /* overwritten by fitHeadings() */
+}
+
+/* No max-width on the span. It is measured at a known font size to work out the
+   scale, and a clamped span reports the wrong width. */
+
+h1 > span,.fit > span{display:inline-block;white-space:nowrap;}
+
+h2{
+  width:fit-content;
+  overflow-wrap:break-word;
+  font-size:var(--h2size);
+  font-variation-settings:"wdth" 100,"wght" 400,"ROND" 55;
+  line-height:1.1;
+  margin:0 0 var(--s2);
+}
+
+p{margin:0 0 var(--s3);width:fit-content;overflow-wrap:break-word;}
+
+p:last-child{margin-bottom:0;}
+
+ul{margin:0 0 var(--s3);width:fit-content;padding-left:var(--s3);}
+
+li{margin:0 0 calc(var(--s1) / 2);overflow-wrap:break-word;}
+
+/* A nested list ends inside its parent item, so its --s3 bottom margin collapses out through the
+   parent li and the following item sits a full paragraph gap away instead of a list gap. */
+
+li > ul,li > ol{margin-bottom:0;}
+
+/* Links are black with a black underline that stops short of a signal point sitting at the very
+   terminus — the line ends before the dot, with a clear gap between them. The point is a solid accent
+   dot and holds still: it used to blink the six like the perimeter points, but a page with many links
+   had a dozen of them flickering at once and the eye went there instead of the text. Nothing sets
+   --dot-color/--dot-op any more; the defaults below are the treatment. On hover the flat underline runs
+   the full width and gives way to the same waveform the border runs — sine, quantised to square in
+   stretches — travelling left; the point then rides that line, travelling backwards from the terminus. */
+
+a{
+  --wave:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27360%27%20height%3D%276%27%20viewBox%3D%270%200%20360%206%27%20preserveAspectRatio%3D%27none%27%3E%3Cpath%20d%3D%27M0%2C3.0%20L2%2C3.28%20L4%2C3.55%20L6%2C3.81%20L8%2C4.06%20L10%2C4.29%20L12%2C4.49%20L14%2C4.66%20L16%2C4.8%20L18%2C4.9%20L20%2C4.97%20L22%2C5.0%20L24%2C4.99%20L26%2C4.94%20L28%2C4.85%20L30%2C4.73%20L32%2C4.58%20L34%2C4.39%20L36%2C4.18%20L38%2C3.94%20L40%2C3.68%20L42%2C3.42%20L44%2C3.14%20L46%2C2.86%20L48%2C2.58%20L50%2C2.32%20L52%2C2.06%20L54%2C1.82%20L56%2C1.61%20L58%2C1.42%20L60%2C1.27%20L62%2C1.15%20L64%2C1.06%20L66%2C1.01%20L68%2C1.0%20L70%2C1.03%20L72%2C1.1%20L74%2C1.2%20L76%2C1.34%20L78%2C1.51%20L80%2C1.71%20L82%2C1.94%20L84%2C2.19%20L86%2C2.45%20L88%2C2.72%20L90%2C1.0%20L92%2C5.0%20L94%2C5.0%20L96%2C5.0%20L98%2C5.0%20L100%2C5.0%20L102%2C5.0%20L104%2C5.0%20L106%2C5.0%20L108%2C5.0%20L110%2C5.0%20L112%2C5.0%20L114%2C5.0%20L116%2C5.0%20L118%2C5.0%20L120%2C5.0%20L122%2C5.0%20L124%2C5.0%20L126%2C5.0%20L128%2C5.0%20L130%2C5.0%20L132%2C5.0%20L134%2C5.0%20L136%2C1.0%20L138%2C1.0%20L140%2C1.0%20L142%2C1.0%20L144%2C1.0%20L146%2C1.0%20L148%2C1.0%20L150%2C1.0%20L152%2C1.0%20L154%2C1.0%20L156%2C1.0%20L158%2C1.0%20L160%2C1.0%20L162%2C1.0%20L164%2C1.0%20L166%2C1.0%20L168%2C1.0%20L170%2C1.0%20L172%2C1.0%20L174%2C1.0%20L176%2C1.0%20L178%2C1.0%20L180%2C1.0%20L182%2C5.0%20L184%2C5.0%20L186%2C5.0%20L188%2C5.0%20L190%2C5.0%20L192%2C5.0%20L194%2C5.0%20L196%2C5.0%20L198%2C5.0%20L200%2C5.0%20L202%2C5.0%20L204%2C5.0%20L206%2C5.0%20L208%2C5.0%20L210%2C5.0%20L212%2C5.0%20L214%2C5.0%20L216%2C5.0%20L218%2C5.0%20L220%2C5.0%20L222%2C5.0%20L224%2C5.0%20L226%2C1.0%20L228%2C1.0%20L230%2C1.0%20L232%2C1.0%20L234%2C1.0%20L236%2C1.0%20L238%2C1.0%20L240%2C1.0%20L242%2C1.0%20L244%2C1.0%20L246%2C1.0%20L248%2C1.0%20L250%2C1.0%20L252%2C1.0%20L254%2C1.0%20L256%2C1.0%20L258%2C1.0%20L260%2C1.0%20L262%2C1.0%20L264%2C1.0%20L266%2C1.0%20L268%2C1.0%20L270%2C3.0%20L272%2C3.28%20L274%2C3.55%20L276%2C3.81%20L278%2C4.06%20L280%2C4.29%20L282%2C4.49%20L284%2C4.66%20L286%2C4.8%20L288%2C4.9%20L290%2C4.97%20L292%2C5.0%20L294%2C4.99%20L296%2C4.94%20L298%2C4.85%20L300%2C4.73%20L302%2C4.58%20L304%2C4.39%20L306%2C4.18%20L308%2C3.94%20L310%2C3.68%20L312%2C3.42%20L314%2C3.14%20L316%2C2.86%20L318%2C2.58%20L320%2C2.32%20L322%2C2.06%20L324%2C1.82%20L326%2C1.61%20L328%2C1.42%20L330%2C1.27%20L332%2C1.15%20L334%2C1.06%20L336%2C1.01%20L338%2C1.0%20L340%2C1.03%20L342%2C1.1%20L344%2C1.2%20L346%2C1.34%20L348%2C1.51%20L350%2C1.71%20L352%2C1.94%20L354%2C2.19%20L356%2C2.45%20L358%2C2.72%20L360%2C3.0%27%20fill%3D%27none%27%20stroke%3D%27%23fff%27%20stroke-width%3D%271%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%2F%3E%3C%2Fsvg%3E");
+  position:relative;
+  color:var(--fg);
+  text-decoration:none;                 /* the line is drawn below so we control where it starts and ends */
+  --u-bottom:-2px;                      /* line vertical: a normal underline distance, low enough to clear the dot */
+  --dot-size:6px;
+  --u-gap:9px;                          /* rest: the line stops this far short of the terminus, clear of the dot */
+  --u-band:6px;                         /* hover wave band height (JS overrides to match the generated wave) */
+}
+
+/* The line: drawn, not text-decoration, so it starts at the first letter's stem (--u-left, set by
+   script) and, at rest, ends --u-gap short of the terminus so the point stands free. Flat 1px at rest;
+   on hover it runs the full width (right:0) and grows just enough to carry the travelling wave, 1px stroke. */
+
+a::before{
+  content:"";position:absolute;
+  left:var(--u-left,0);right:var(--u-gap);bottom:var(--u-bottom);height:1px;
+  background-color:currentColor;
+  transition:none;pointer-events:none;                    /* snap out: no unmasked solid collapse on mouse-off */
+}
+
+a:hover::before{
+  right:0;                                                /* the signal runs the full width, under the dot */
+  height:var(--u-band,6px);
+  bottom:calc(var(--u-bottom) + 0.5px - var(--u-band,6px)/2);   /* band centred on the rest line */
+  -webkit-mask:var(--wave) repeat-x var(--wsx,0px) center;mask:var(--wave) repeat-x var(--wsx,0px) center;
+  -webkit-mask-size:360px var(--u-band,6px);mask-size:360px var(--u-band,6px);   /* --wsx (JS) scrolls left -> right */
+  transition:height .18s, bottom .18s, right .18s;        /* animate in only; base snaps back out */
+}
+
+/* The point: at rest it sits at the terminus (outer edge on the last letter's end), centred on the line.
+   On hover the script drives --dot-x and it travels the line, so it is positioned from the left instead. */
+
+a::after{
+  content:"";position:absolute;
+  right:0;left:auto;bottom:calc(var(--u-bottom) - (var(--dot-size) - 1px)/2);
+  width:var(--dot-size);height:var(--dot-size);border-radius:50%;
+  background:var(--dot-color,var(--accent));opacity:var(--dot-op,1);pointer-events:none;
+}
+
+a:hover::after{ right:auto;left:var(--dot-x,0);transform:translateY(var(--dot-y,0)); }
+
+/* rides the wave: --dot-x/--dot-y per frame */
+
+/* --- The Signal (section 05): each waveform beside what it stands for --------- */
+
+.sig{display:flex;align-items:center;gap:var(--s3);width:fit-content;max-width:100%;flex-wrap:wrap;margin:0 0 var(--s2);
+  background:var(--bg);box-shadow:0 0 var(--fade) var(--hold) var(--bg);}
+
+.sig-name{width:5rem;flex:none;text-transform:uppercase;letter-spacing:.04em;font-size:0.9375rem;
+  font-variation-settings:"wdth" 100,"wght" 600,"ROND" 55;}
+
+.sig-glyph{width:132px;height:24px;flex:none;color:var(--fg);}
+
+.sig-mean{color:var(--dim);font-size:0.9375rem;}
+
+/* A long, live run of the signal — the same wave the border carries, with a point travelling it. */
+
+.sig-wave{display:block;width:100%;height:34px;margin:var(--s3) 0;color:var(--fg);overflow:visible;
+  background:var(--bg);box-shadow:0 0 var(--fade) var(--hold) var(--bg);}
+
+/* Mobile menu button — the three signal forms stacked (sine, square, points). */
+
+.menu-btn{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border:1px solid var(--line);
+  background:var(--bg);box-shadow:0 0 var(--fade) var(--hold) var(--bg);}
+
+.menu-glyph{display:block;width:32px;height:32px;color:var(--fg);}
+
+/* Section title, in the rail. Number and title on one line. */
+
+.sec{
+  width:fit-content;
+  margin-bottom:var(--s1);
+  display:flex;align-items:baseline;gap:var(--s2);
+  font-size:1.0625rem;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  font-variation-settings:"wdth" 100,"wght" 600,"ROND" 55;
+  line-height:1.25;
+}
+
+.sec .num{color:var(--accent);}
+
+.note{
+  width:fit-content;
+  overflow-wrap:break-word;
+  color:var(--dim);
+  font-size:0.875rem;
+  font-variation-settings:"wdth" 100,"wght" 400,"ROND" 25;
+  line-height:1.45;
+  margin:0 0 var(--s3);
+}
+
+.note:last-child{margin-bottom:0;}
+
+.rail .note{margin-bottom:var(--s2);}
+
+.spec > :first-child{margin-bottom:var(--s1);}
+
+.face{width:fit-content;margin:0 0 var(--s1);font-variation-settings:"wdth" 100,"wght" 500,"ROND" 25;}
+
+.tag{
+  display:block;width:fit-content;
+  color:var(--accent);
+  font-size:0.875rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  font-variation-settings:"wdth" 100,"wght" 400,"ROND" 55;
+  margin:0 0 var(--s1);
+}
+
+/* --- Lines in negative space only ---------------------------------------------
+   Each block of type sits on the ground colour and carries it outward, so a rule
+   runs through the empty parts of a cell and dissolves as it approaches type
+   rather than crossing it. Blur far larger than spread is what makes it a fade
+   rather than a box.
+
+   A specimen and the note explaining it are one thing, so .spec wraps the pair
+   and carries the ground for both — no line ever runs between a heading and its
+   own caption. Inside .spec nothing carries its own ground, or the two would
+   stack and darken. */
+
+.spec{margin:0 0 var(--s4);}
+
+.spec:last-child{margin-bottom:0;}
+
+/* One ground for a run of specimens, so nothing is ruled between them */
+
+.spec > :last-child{margin-bottom:0;}
+
+.set > *{min-width:0;}
+
+.fill{color:var(--choice);}
+
+/* --- Colour palette (section 04) ---------------------------------------------
+   Black and white as button-sized blocks; the six accents and the choice red as points, each labelled
+   with its hex. Both rows carry the ground so the field lines dissolve behind them. */
+
+/* Each label groups tightly with the colours it names; a bigger gap separates one group from the next,
+   so "One accent" clearly belongs to the six points, not to the red below. */
+
+.pal{margin:0 0 var(--s5);}
+
+.pal:last-child{margin-bottom:0;}
+
+.pal > p{margin-bottom:var(--s2);}
+
+.swatches,.dots{display:flex;flex-wrap:wrap;gap:var(--s3);width:fit-content;margin:0;
+  background:var(--bg);box-shadow:0 0 var(--fade) var(--hold) var(--bg);}
+
+.swatch,.swatch-pt{display:flex;flex-direction:column;gap:var(--s1);}
+
+.swatch-pt{align-items:center;}
+
+.chip{width:5.5rem;height:2.4rem;border:1px solid var(--line);}
+
+.chip-black{background:#000;}
+
+.chip-white{background:#fff;}
+
+.pt{width:1.4rem;height:1.4rem;border-radius:50%;}
+
+.hex{font-size:0.8125rem;letter-spacing:.03em;color:var(--dim);
+  font-variation-settings:"wdth" 100,"wght" 400,"ROND" 25;}
+
+/* --- Collapse ----------------------------------------------------------------
+   The field stays twelve columns. The rail stops being a column and becomes the
+   header of the band it belongs to, so a section reads title, note, body in one
+   run instead of leaving a number stranded beside empty space. */
+
+/* 768–899: the rail survives but at 3 of 12 it is too narrow for its own labels —
+   "Specifications" alone overruns the rule. Hand it the 4-of-12 boundary instead, so
+   the type stays full size and the line still lands on a real column edge. */
+
+@media (min-width:768px) and (max-width:899px){
+  .rail{grid-column:1 / 5;}
+  .main{grid-column:5 / 13;}
+  .band:has(.rail)::after{left:33.3333%;}   /* the 4 of 12 boundary */
+  .sec{flex-wrap:wrap;}                     /* number drops to its own line before a label breaks */
+}
+
+.toolbar{
+  display:flex;align-items:center;gap:var(--s2);flex-wrap:wrap;
+  padding:0 0 var(--s3);
+  /* Same track as .page, so the bar never runs wider than the field beneath it. */
+  max-width:var(--page);
+  margin:0 auto;
+}
+
+.toolbar .hint{font-size:0.75rem;color:var(--dim);}
+
+.btn{
+  display:inline-block;
+  background:var(--fg);color:var(--bg);
+  border:0;border-radius:0;
+  padding:var(--s1) var(--s2);
+  font-family:var(--font);font-size:0.9rem;
+  font-variation-settings:"wdth" 100,"wght" 400,"ROND" 55;
+  line-height:1.2;cursor:pointer;
+}
+
+.btn:hover{background:var(--accent);color:var(--bg);}
+
+.btn:focus-visible,.btn-outline:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+/* The whole page is contenteditable, so clicking to edit focuses it; suppress the browser's blue focus
+   ring so it does not draw a solid outline under the perimeter wave. */
+
+.page:focus,.page:focus-visible{outline:none;}
+
+/* --- Outline button (section 06) ---------------------------------------------
+   Black border, black text. On hover the bottom edge gives way to the travelling signal, and a point
+   circles the whole border clockwise from the bottom-right, blinking the six. --wave/--u-band come from
+   the same generator the links use; --btn-wsx (scroll) and --btn-dot-d (position round the border) are
+   driven per frame by the button script. */
+
+.btn-outline{
+  position:relative;
+  display:inline-block;
+  background:transparent;color:var(--fg);
+  border:1px solid var(--line);border-radius:0;
+  padding:var(--s1) var(--s3);
+  font-family:var(--font);font-size:0.95rem;
+  font-variation-settings:"wdth" 100,"wght" 500,"ROND" 55;
+  line-height:1.2;cursor:pointer;
+}
+
+/* On hover the whole border is drawn live in an SVG (added by script): the bottom edge runs the wave, the
+   left and right edges ride up and down to meet it, and a point circles the real border from the
+   bottom-right, against the wave. The flat CSS border is dropped so the two do not double. */
+
+.btn-outline:hover{border-color:transparent;}
+
+/* An <svg> is a replaced element: inset alone does not size it, so it falls back to the default
+   300px and pushes the page wider than the viewport on mobile. Size it to the button explicitly. */
+
+.btn-frame{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);overflow:visible;color:var(--line);opacity:0;pointer-events:none;transition:opacity .12s;}
+
+.btn-outline:hover .btn-frame{opacity:1;}
+
+/* Once the script draws the wavy, edge-connected band rules in the frame SVG, drop the flat CSS ones. */
+
+[data-frame="on"] .band::before{display:none;}
+
+/* --- Shared footer ------------------------------------------------------------
+   Built by core.js rather than copied into every document. It sits outside .page
+   so it is not part of the editable field, and carries data-nosave so it never
+   bakes into a saved copy — core.js puts it back on open. */
+.site-foot{
+  max-width:var(--page);
+  margin:var(--s5) auto 0;
+  padding:var(--s3);
+  border-top:2px solid var(--line);
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--s1) var(--s3);
+  justify-content:space-between;
+  align-items:baseline;
+}
+.site-foot p{margin:0;}
+@media (max-width:599px){
+  .site-foot{padding-left:12px;padding-right:12px;}
+}
+
+/* --- Toolbar ------------------------------------------------------------------
+   The same bar on every document. Promoted out of the nine copies. */
+/* The wordmark is a link home, but it is not decorated like one. */
+.toolbar .name{display:flex;flex-direction:column;line-height:1;gap:0.15rem;text-transform:uppercase;opacity:0;
+  text-decoration:none;color:inherit;}
+.toolbar .name::before,.toolbar .name::after{content:none;}
+
+:root.fonts-ready .toolbar .name{opacity:1;transition:opacity .18s ease;}
+
+.toolbar .brand{font-size:1.375rem;letter-spacing:.03em;color:var(--fg);
+  font-variation-settings:"wdth" 100,"wght" 600,"ROND" 55;}
+
+.toolbar .brand-sub{font-size:0.75rem;letter-spacing:.08em;color:var(--dim);}
+
+.toolbar .brand .eye{height:0.95em;width:auto;vertical-align:-0.06em;margin:0 0.04em;color:var(--fg);}
+
+.toolbar .brand .ichar{height:0.95em;width:auto;vertical-align:-0.06em;margin:0 0.02em;color:var(--fg);}
+
+.brand .bx-colon,.brand .bx-tail{display:inline-block;white-space:nowrap;width:0;vertical-align:baseline;clip-path:inset(-0.5em 0 -0.5em 0);}
+
+.brand .bx-colon>i,.brand .bx-tail>i{font-style:normal;display:inline-block;opacity:0;transition:opacity .28s ease;}
+
+.brand .bx-colon{transition:width .32s ease;}
+
+.brand .bx-tail{transition:width .5s ease;text-transform:none;}
+
+.brand .bx-colon>i{padding:0 0 0 0.15em;color:var(--accent);}
+
+.toolbar{justify-content:space-between;position:relative;}
+
+.toolbar .tools{display:flex;align-items:center;gap:var(--s2);flex-wrap:wrap;}
+
+.toolbar .nav-menu{display:none;}
+
+.theme-btn{display:inline-flex;align-items:center;justify-content:center;width:2.1rem;height:2.1rem;
+  padding:0;border:0;background:transparent;cursor:pointer;color:var(--fg);}
+
+.theme-btn svg{display:block;width:20px;height:20px;}
+
+.toolbar .nav-menu{position:relative;}
+
+.nav-wave{position:absolute;inset:0;width:100%;height:100%;overflow:visible;color:var(--line);opacity:0;pointer-events:none;}
+
+.toolbar[data-nav="open"] .nav-menu{border-bottom-color:transparent;}
+
+/* Theme-button glyph swap, and the bar's collapse into the hamburger. These lived in only
+   five of the nine documents, so the other four showed both sun and moon at once and never
+   collapsed on a phone. Shared now. */
+[data-theme="light"] .theme-btn .moon-glyph{display:none;}
+
+[data-theme="dark"]  .theme-btn .sun-glyph{display:none;}
+
+@media (max-width:600px){
+  .toolbar .nav-menu{display:inline-flex;}
+  /* Brought up snug under the 46px hamburger (which sits at the toolbar top), right-aligned to it. */
+  .toolbar .tools{display:none;position:absolute;top:3.375rem;right:0;z-index:5;
+    width:fit-content;
+    flex-direction:column;align-items:stretch;gap:var(--s2);
+    padding:var(--s3);background:var(--bg);border:1px solid var(--line);}
+  .toolbar[data-nav="open"] .tools{display:flex;}
+  /* A single line joining the hamburger's bottom-centre to the box. */
+  .toolbar[data-nav="open"] .tools::before{content:"";position:absolute;right:22px;top:-0.5rem;
+    width:1px;height:0.5rem;background:var(--line);}
+}

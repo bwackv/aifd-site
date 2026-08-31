@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-frame="on" class="fonts-ready" style="" data-subtitle="ART 3041" data-docname="art3041-landing-page"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ART 3041 — Your Course Landing Page</title>
+
+<!-- ROND must be named in this URL or roundness stays pinned at its default.
+     Axis order: lowercase axes alphabetically, then uppercase. -->
+<link rel="stylesheet" href="../../shared/font.css">
+<link rel="stylesheet" href="../../shared/core.css">
+<style>
+
+/* When the rail collapses into the band header, its last line carries no trailing margin, so the gap
+   down to the main body is main's collapsed padding-top alone (--s2), not the note margin and the
+   padding stacked. */
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main .note,.main .sec,.main .tag,
+.rail .sec,.rail .note,.rail .face,
+.candidate p,.candidate .tag,
+.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+/* --- Candidate set ------------------------------------------------------------
+   Three of main's nine columns each. Options are shown together and exactly one
+   is marked; the highlight border is the decision, so it takes the fixed colour
+   rather than the document's accent. */
+
+/* The set comes off the field: its own three columns with real gaps, its own ground so
+   the column lines do not run behind it, and padding on every side so each cell shows
+   all four of its borders instead of sitting on a field line. */
+
+.set{
+  grid-column:4 / 13;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:var(--s3);
+  padding:var(--s3);
+  background:var(--bg);
+}
+
+/* No candidate is left alone on a last row: the final one takes the whole row instead */
+
+.set > .candidate.last-item{grid-column:1 / -1;}
+
+/* No gap on the subgrid — a gap would shift the tracks off the field's own lines. The
+   space between cells is a column left empty instead. */
+
+.candidate{padding:var(--s3);border:1px solid var(--line);}
+
+/* inset shadow rather than a thicker border, so the cell does not shift */
+
+.candidate.chosen{border-color:var(--choice);box-shadow:inset 0 0 0 1px var(--choice);}
+
+.candidate.chosen .tag{color:var(--choice);}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}   /* no rail column, no boundary */
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .set{grid-column:1 / -1;grid-template-columns:repeat(2,1fr);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}   /* field is hidden here, so nothing sits at a crossing */
+}
+
+@media (max-width:599px){
+  .set{grid-template-columns:1fr;}
+  /* Mobile: tighten the side padding to 12px — the field 12px off the screen edge, the type 12px inside it. */
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+
+/* Hold the wordmark hidden until the variable font is ready, so it never flashes in the thin fallback weight. */
+
+/* The I in AIFD is a drawn eye; its pupil blinks the palette like the signal points. */
+
+/* ":D" reveal: colon + "esigners" slots stay clipped at width 0 until the animation opens them. The
+   colon hugs the D (small right gap, larger left gap to the F/4); the tail spells Designers, lowercased. */
+
+/* Reveal by animating width; clip only left/right (negative top/bottom insets) so g/y descenders are never cut. */
+
+/* colon hugs the D; drawn in the load's accent */
+
+/* --- Navbar (section 07) ------------------------------------------------------
+   The standing top bar on every page: brand on the left, tools on the right. Below the mobile
+   breakpoint the tools fold into the signal menu button (the hamburger) and drop down beneath it.
+   data-nosave, so the bar never lands in a saved file. */
+
+/* the hamburger only appears once the tools fold */
+
+/* Light/dark is a bare icon, not a labelled button — the sun by day, the moon by night. Its colour is
+   driven per frame by the blink script; CSS only chooses which glyph shows for the current theme. */
+
+/* On click (menu open) the hamburger's three dots blink the palette and its bottom border runs the
+   wave; the flat bottom edge is dropped so the two do not double. */
+
+/* --- Copilot + GitHub Pages guide: ordered steps on the field --- */
+
+ol{margin:0 0 var(--s3);width:fit-content;padding-left:1.4em;}
+
+.main ol{background:var(--bg);box-shadow:0 0 var(--fade) var(--hold) var(--bg);}
+
+.main ol li{margin:0 0 var(--s2);}
+
+.main ol li::marker{color:var(--accent);}
+
+/* --- The cue: the one step that leaves this document ------------------------
+   Step 3 sends the reader to another page, so the signal points at it. The mark is drawn where the
+   reader already is: beside the step in the rail on a wide screen, above it on a phone where the rail
+   has stacked away. Absolute against the step itself, so it tracks the step wherever the step lands. */
+
+.cue{position:relative;font-variation-settings:"wdth" 100,"wght" 500,"ROND" 55;}
+
+.cue a{white-space:nowrap;}
+
+/* the drawn underline and its point belong to one unbroken line */
+
+.cue-mark{color:var(--accent);}
+
+/* Both marks hang off the step, not off this span — so the span stays unpositioned. */
+
+.cue-mark svg{position:absolute;overflow:visible;pointer-events:none;}
+
+/* Backed off by the main's own left padding plus the list's, so the point lands on the rail boundary
+   rather than on the step's number. */
+
+.cue-mark .cue-h{display:block;right:calc(100% + var(--s3) + 1.4em);top:50%;transform:translateY(-50%);width:36px;height:26px;}
+
+.cue-mark .cue-v{display:none;left:0.1em;bottom:calc(100% + 0.35em);width:26px;height:36px;}
+
+/* 899 is where the rail stops standing beside the main and stacks above it; below that there is no
+   margin to point across, so the mark stands over the step instead. */
+
+@media (max-width:767px){
+  .cue-mark .cue-h{display:none;}
+  .cue-mark .cue-v{display:block;}
+  .main ol li.cue{margin-top:calc(var(--s3) + 36px);}   /* room for the mark standing above the step */
+}
+
+/* Screenshots of the GitHub UI, inlined as data URIs so the doc stays a single self-contained file. */
+
+.shot{margin:var(--s2) 0 0;}
+
+.shot img{display:block;width:100%;max-width:var(--shot-w,418px);height:auto;border:1px solid var(--line);}
+
+/* --- Landing-page guide: blocks of text to copy ------------------------------
+   A code block is the one place a long unbreakable line can widen its grid track and push the page
+   wider than the phone; it scrolls inside itself instead. */
+
+.code-head{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s2);margin:0 0 var(--s1);}
+
+.code-head .label{font-size:0.8rem;color:var(--dim);}
+
+.code{margin:0 0 var(--s3);padding:var(--s2);border:1px solid var(--line);background:var(--bg);
+  overflow-x:auto;min-width:0;white-space:pre;
+  font-family:ui-monospace,Menlo,monospace;font-size:0.8rem;line-height:1.5;color:var(--fg);}
+</style>
+<link rel="stylesheet" href="../../shared/print.css">
+</head>
+<body>
+
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <svg class="cols" contenteditable="false" aria-hidden="true" viewBox="0 0 790 3327"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true" viewBox="0 0 790 3327"><polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline><g id="frame-dots"></g></svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1 style=""><span>creating Your Course Landing Page</span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;">Using Copilot to create a GitHub Pages landing page · ART 3041</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>What you're making</p>
+      <p class="note">One file, named index.html. <a href="example-landing-page.html" style="">Click here</a> for an example.</p>
+    </div>
+    <div class="main">
+      <p>You're making your course landing page for the semester. The file must be named/saved as: <strong>index.html</strong>. Your course landing page provides your information + links to all of your course work in Art 3041: AiFD.</p>
+      <p>You are not typing the HTML yourself. You are telling Copilot what to build, then checking what comes back, noting what you want changed, handing it back to Copilot until you get what you want. This type of working process approximates how you will work with a.i. throughout the semester.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">02</span>The prompt</p>
+      <p class="note">Answer the <span class="fill">red</span> parts first, then paste.</p>
+    </div>
+    <div class="main">
+      <p>This is what you hand Copilot. Everything in <span class="fill">red brackets</span> is yours to decide — write those answers out in a notes program first, then swap them into the block below. Everything else stays as it is.</p>
+      <ul>
+        <li><span class="fill">[your name]</span> — spelled the way you want it read.</li>
+        <li><span class="fill">[your email]</span> — the address you want on a public page.</li>
+        <li><span class="fill">[how it should look]</span> — plain, loud, quiet, technical, funny. Name it in your own words, and name colors: dark blue and magenta, gray scale, etc. Find a website you like and describe that, or a style you're into right now (&ldquo;grunge&rdquo;, &ldquo;cyberwave&rdquo;, &ldquo;art deco&rdquo;). You can say &ldquo;make it as if Beyonc&eacute; made it.&rdquo; No wrong answer.</li>
+        <li><span class="fill">[typography]</span> — serif or sans-serif, and anything else you want about the type.</li>
+      </ul>
+      <p class="note">The project list is already filled in for you. It will grow through the semester; you'll rename and add to it later.</p>
+      <div class="code-head">
+        <span class="label">Paste into Copilot</span>
+        <button class="btn-outline copy" type="button" contenteditable="false" data-for="prompt">Copy</button>
+      </div>
+      <pre class="code" id="prompt">Build me a single web page. Give me back one complete HTML file
+named index.html
+
+Rules:
+- One file only. The CSS and the JavaScript go inside the HTML file.
+- No links to outside files, fonts, or libraries.
+- It has to work on a phone as well as a laptop.
+- Use my real text. No placeholder text.
+
+The page:
+- Heading: A.I. FOR DESIGNERS &mdash; <span class="fill">[your name]</span>
+- Under it: ART 3041 &middot; Fall 2026
+- Under that: <span class="fill">[your email]</span>, as a mailto link
+- Then a list titled Work, numbered 01 to 07:
+    01 Custom Instructions
+    02 A Style Guide for Your AI
+    03 Design a ___
+    04 Commute Story
+    05 Become a Crea(i)tive Director
+    06 Experimental AI Interface
+    07 Open
+  Each row is a link with nothing in it yet. I will fill
+  them in as the semester goes.
+
+How it should look: <span class="fill">[how it should look]</span>
+
+Typography specifications: <span class="fill">[typography]</span>
+
+Give me the whole file in one code block so I can copy it.</pre>
+      <p class="note">The first two rules are the ones that matter for publishing: one file, nothing loaded from outside. A page that depends on other files will not work when you paste it into GitHub.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">03</span>If it stalls</p>
+      <p class="note">A page that already works.</p>
+    </div>
+    <div class="main">
+      <p>If Copilot hands you something broken, or you would rather be online first and design after, use this. Paste it, publish it, then go back to Copilot and change it.</p>
+      <div class="code-head">
+        <span class="label">index.html</span>
+        <button class="btn-outline copy" type="button" contenteditable="false" data-for="starter">Copy</button>
+      </div>
+      <pre class="code" id="starter">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;A.I. for Designers — Your Name&lt;/title&gt;
+&lt;style&gt;
+  body{
+    font-family: system-ui, sans-serif;
+    max-width: 40rem;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+    line-height: 1.5;
+  }
+  h1    { font-size: 2rem; margin: 0; }
+  .meta { color: #666; margin: .4rem 0 0; }
+  ol    { padding-left: 2.5rem; list-style: decimal-leading-zero; }
+  li    { margin: .5rem 0; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;A.I. for Designers — Your Name&lt;/h1&gt;
+  &lt;p class="meta"&gt;ART 3041 · Fall 2026&lt;/p&gt;
+  &lt;p class="meta"&gt;&lt;a href="mailto:you@example.com"&gt;you@example.com&lt;/a&gt;&lt;/p&gt;
+
+  &lt;h2&gt;Work&lt;/h2&gt;
+  &lt;ol&gt;
+    &lt;li&gt;Custom Instructions&lt;/li&gt;
+    &lt;li&gt;A Style Guide for Your AI&lt;/li&gt;
+    &lt;li&gt;Design a ___&lt;/li&gt;
+    &lt;li&gt;Commute Story&lt;/li&gt;
+    &lt;li&gt;Become a Crea(i)tive Director&lt;/li&gt;
+    &lt;li&gt;Experimental AI Interface&lt;/li&gt;
+    &lt;li&gt;Open&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">04</span>Check it</p>
+      <p class="note">Before you publish.</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li>Open <strong>index.html</strong> by double clicking it.</li>
+        <li>Is it one file? If Copilot mentions a styles.css or a script.js, ask again for one file.</li>
+        <li>Narrow the window until it is phone width. Does it still read?</li>
+      </ul>
+
+      <h2>Then change it</h2>
+      <ul>
+        <li>One change at a time.</li>
+        <li>Say what is wrong, not that it should be better. “The course name is smaller than the course number” beats “make it nicer”. The body text is too large, reduce it. Change X color. Add borders around Y. Etc. Really go in with an eye for detail and list out changes you want.</li>
+        <li>Ask for the whole file back each time, not a snippet to splice in.</li>
+        <li>If a change makes it worse, say so and go back to the version you had.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">05</span>Put it online</p>
+    </div>
+    <div class="main">
+      <p>Now follow the&nbsp;<a href="github-pages.html" style="">GitHub Pages Setup Instructions</a>&nbsp;set up instructions.&nbsp;</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec">Example</p>
+    </div>
+    <div class="main">
+      <p><a href="example-landing-page.html" style="">Click here</a> for an example of a finished landing page.</p>
+    </div>
+  </div>
+
+</main>
+
+<script src="../../shared/core.js"></script>
+
+<script>
+
+// safety: never leave the wordmark hidden if the font never resolves
+
+// The cue mark: a point beside the one step that leaves this document. It blinks the six on the links'
+
+// cadence, so it reads as one more signal rather than an icon.
+
+(function(){
+  var marks=document.querySelectorAll('.cue-mark'); if(!marks.length) return;
+  var cs=getComputedStyle(document.documentElement);
+  var COLORS=PALETTE.map(function(v){ return cs.getPropertyValue(v).trim(); });
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;  // holds the accent
+  var on=true, next=0;
+  function tick(){
+    on=!on;
+    next=on ? 600+Math.random()*1200 : 150+Math.random()*400;    // mostly lit, brief blinks off
+    var c=on ? COLORS[(Math.random()*COLORS.length)|0] : null;
+    marks.forEach(function(m){ m.style.color=c||m.style.color; m.style.opacity=on?1:0.15; });
+    setTimeout(tick, next);
+  }
+  tick();
+})();
+
+// Turn the editable template off so the links become clickable, and back on to edit the text.
+
+// While contenteditable is on, a click places the caret instead of following a link.
+
+// Copy buttons: hand the paired block's text to the clipboard and say so in the label.
+
+(function(){
+  var btns=document.querySelectorAll('.copy'); if(!btns.length) return;
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      var pre=document.getElementById(b.getAttribute('data-for')); if(!pre) return;
+      var label=b.textContent;
+      function said(word){ b.textContent=word; setTimeout(function(){ b.textContent=label; }, 1400); }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(pre.textContent).then(function(){ said('Copied'); }, function(){ said('Select it and copy'); });
+      } else { said('Select it and copy'); }
+    });
+  });
+})();
+</script>
+
+</body></html>

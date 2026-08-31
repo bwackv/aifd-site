@@ -1,0 +1,174 @@
+/* The paper form of the document system. Linked LAST in every head — after core.css and after the
+   page's own <style> — so a print rule beats both without needing !important for the ordinary cases.
+
+   One principle runs through the whole file: NOTHING STRUCTURAL MAY BE A BACKGROUND. Chrome prints
+   with "Background graphics" off by default, which drops every `background` in the document — and the
+   field's rules, the link underline and the link point are all backgrounds on screen. Each one is
+   redrawn here as a border, which prints either way. That is also what keeps the accent: it survives
+   as a text colour on the section numbers and tags, and as a border-colour on the link point, so the
+   sheet looks the same whether or not the box is ticked. */
+
+/* The printed masthead has no screen form. */
+
+.print-head{display:none;}
+
+@media print{
+
+  @page{ size:letter; margin:0.5in 0.45in; }
+
+  /* Paper reads closer than a screen does, so the whole document steps down a size. The --s1..--s6
+     spacing scale is in rem and follows the root with it; body's size is an absolute 16px in
+     core.css, so it has to be told to follow the root too. */
+
+  html{font-size:12px;}
+
+  body{font-size:1rem;line-height:1.4;padding:0;}
+
+  /* Paper is white whatever the screen was, and the grey darkens for toner. */
+
+  :root,[data-theme="light"],[data-theme="dark"]{
+    --bg:#FFFFFF; --fg:#000000; --line:#000000; --dim:#4A4A4A;
+    --h2size:1.5rem;           /* the screen value is a 4vw clamp, and vw means nothing here */
+    /* Paper is tighter than the screen. Stepping the scale here moves the paragraph gaps and the
+       standing-position padding together, which is what decides whether a tail paragraph fits. */
+    --s3:1.25rem; --s4:1.75rem; --s5:2.5rem; --s6:3rem;
+  }
+
+  .sec{font-size:0.9375rem;}
+
+  .note,.tag,.hex{font-size:0.8125rem;}
+
+  /* Everything the script draws against the viewport, and everything that is a control rather than
+     content. The frame and the column lines are sized to the screen's scroll height — on paper they
+     would be one long shape sliced across the page breaks. */
+
+  .toolbar,.frame,.cols,.sig-wave,.btn-frame,.menu-btn{display:none !important;}
+
+  /* The field's structure is CSS, not script, so it stays — but as borders. A border also fragments
+     correctly when a band splits across two pages, which the absolutely positioned rule does not. */
+
+  .band::before{display:none;}
+
+  .band{border-top:2px solid var(--line);}
+
+  .page > .band:first-of-type{border-top:0;}
+
+  /* --- The two columns, rebuilt for paper ----------------------------------------
+     .page is a twelve-column grid and every .band a subgrid of it. A grid row cannot be broken
+     across two sheets without Chrome mis-placing what is in it: the rail lands on top of the main
+     and the previous band's text runs through both. So the standing positions are rebuilt out of
+     block flow and one float, which fragments the way paper needs — the rail sits in the first
+     quarter, the main takes the rest and carries on alone onto the next sheet, still carrying the
+     divider. Same proportions, same 3-of-12 boundary. */
+
+  .page{display:block;max-width:none;}
+
+  .band{display:block;position:relative;}
+
+  /* The rail divider was an absolutely positioned rule on this pseudo-element; on paper the line is
+     a border on .main instead, which frees ::after to clear the float. */
+
+  .band:has(.rail)::after{
+    content:"";display:block;clear:both;
+    position:static;width:auto;height:0;background:none;
+  }
+
+  .rail{float:left;width:25%;}
+
+  .main{margin-left:25%;}
+
+  .band:has(.rail) .main{border-left:2px solid var(--line);}   /* the 3-of-12 boundary, same line */
+
+  .band:not(:has(.rail)) > .main{margin-left:0;}
+
+  .masthead{width:83.333%;}
+
+  .full{margin-left:0;width:100%;}
+
+  /* The knockout haloes exist to clear the drawn field out from behind the type. No field, no halo. */
+
+  *{box-shadow:none !important;}
+
+  /* fitHeadings() writes an inline font-size measured against the screen's column width, so paper has
+     to override it outright. */
+
+  h1{font-size:3rem !important;}
+
+  .fit{font-size:1.75rem !important;}
+
+  /* --- Links --------------------------------------------------------------------
+     The treatment is kept, rebuilt on borders. The line still stops short of the point and the point
+     still sits at the terminus; what changes is that the line starts at the anchor's own left edge
+     rather than at the first letter's stem, because --u-left was measured at screen width. */
+
+  a{color:var(--fg);}
+
+  a::before{
+    left:0 !important;                       /* the measured stem offset is stale on paper */
+    height:0;background:none;
+    border-top:1px solid currentColor;
+  }
+
+  /* A ring with no interior is a filled dot at this size, and a border prints where a background
+     does not. opacity stays forced: a doc saved before the dot stopped blinking still carries an
+     inline --dot-op, and it could have been caught mid-blink. */
+
+  a::after{
+    background:none;opacity:1 !important;
+    width:0;height:0;
+    border:calc(var(--dot-size) / 2) solid var(--dot-color,var(--accent));
+    border-radius:50%;
+  }
+
+  /* --- The exceptions ------------------------------------------------------------
+     A colour swatch IS its background, so these few are told to print regardless. */
+
+  .chip,.pt,.btn{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+
+  /* --- Paper breaks -------------------------------------------------------------- */
+
+  /* A heading never sits at the foot of a page with nothing under it. */
+
+  h1,h2,.sec,dt,.face,.tag,.print-head{break-after:avoid;}
+
+  .rail,li,dd,.spec,.sig,.swatch,.swatch-pt,.set > *{break-inside:avoid;}
+
+  /* Never fewer than two lines of a paragraph either side of a break. This is the guard against a
+     single line stranded at the top of a sheet, and it only works if nothing else forces a break —
+     a break-before:avoid on the same block makes Chrome drop widows to satisfy the harder rule. */
+
+  p,li,dd{orphans:2;widows:2;}
+
+  /* A section's closing paragraph is short by nature, so it moves whole rather than splitting. */
+
+  .main > p:last-child,.rail > p:last-child,.full > p:last-child{break-inside:avoid;}
+
+  .site-foot{break-before:avoid;}
+
+  /* --- The printed masthead -------------------------------------------------------
+     The wordmark held in its A(eye)4D state, then the course line spread to the right edge. Built by
+     buildPrintHead() in core.js, which reads the doc's own name off data-subtitle. */
+
+  .print-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:var(--s2);
+    margin:0 0 var(--s3);
+    padding:0 0 var(--s2);
+    border-bottom:2px solid var(--line);
+    color:var(--fg);
+    font-size:0.8125rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    font-variation-settings:"wdth" 100,"wght" 500,"ROND" 55;
+  }
+
+  .print-head .print-mark{
+    font-size:1.5rem;
+    letter-spacing:.02em;
+    font-variation-settings:"wdth" 108,"wght" 600,"ROND" 55;
+  }
+
+  .print-head .eye{height:0.95em;width:auto;vertical-align:-0.06em;margin:0 0.04em;}
+}

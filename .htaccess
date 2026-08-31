@@ -1,0 +1,20 @@
+# The host sends Expires + Cache-Control: max-age=15552000 by default — six months — so a page
+# a student loads once is frozen for the rest of the semester. These pages change weekly.
+
+<IfModule mod_expires.c>
+  ExpiresActive Off
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header unset Expires
+
+  # Pages: always ask the server. A 304 costs nothing when nothing changed.
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  # The framework and images may be held for an hour, then revalidated.
+  <FilesMatch "\.(css|js|woff2?|png|jpe?g|gif|svg|ico)$">
+    Header set Cache-Control "public, max-age=3600, must-revalidate"
+  </FilesMatch>
+</IfModule>

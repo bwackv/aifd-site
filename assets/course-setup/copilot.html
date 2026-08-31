@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-frame="on" class="fonts-ready" style="" data-subtitle="ART 3041" data-docname="art3041-copilot"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ART 3041 — Copilot</title>
+
+<!-- ROND must be named in this URL or roundness stays pinned at its default.
+     Axis order: lowercase axes alphabetically, then uppercase. -->
+<link rel="stylesheet" href="../../shared/font.css">
+<link rel="stylesheet" href="../../shared/core.css">
+<style>
+
+/* When the rail collapses into the band header, its last line carries no trailing margin, so the gap
+   down to the main body is main's collapsed padding-top alone (--s2), not the note margin and the
+   padding stacked. */
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main .note,.main .sec,.main .tag,
+.rail .sec,.rail .note,.rail .face,
+.candidate p,.candidate .tag,
+.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+/* --- Candidate set ------------------------------------------------------------
+   Three of main's nine columns each. Options are shown together and exactly one
+   is marked; the highlight border is the decision, so it takes the fixed colour
+   rather than the document's accent. */
+
+/* The set comes off the field: its own three columns with real gaps, its own ground so
+   the column lines do not run behind it, and padding on every side so each cell shows
+   all four of its borders instead of sitting on a field line. */
+
+.set{
+  grid-column:4 / 13;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:var(--s3);
+  padding:var(--s3);
+  background:var(--bg);
+}
+
+/* No candidate is left alone on a last row: the final one takes the whole row instead */
+
+.set > .candidate.last-item{grid-column:1 / -1;}
+
+/* No gap on the subgrid — a gap would shift the tracks off the field's own lines. The
+   space between cells is a column left empty instead. */
+
+.candidate{padding:var(--s3);border:1px solid var(--line);}
+
+/* inset shadow rather than a thicker border, so the cell does not shift */
+
+.candidate.chosen{border-color:var(--choice);box-shadow:inset 0 0 0 1px var(--choice);}
+
+.candidate.chosen .tag{color:var(--choice);}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}   /* no rail column, no boundary */
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .set{grid-column:1 / -1;grid-template-columns:repeat(2,1fr);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}   /* field is hidden here, so nothing sits at a crossing */
+}
+
+@media (max-width:599px){
+  .set{grid-template-columns:1fr;}
+  /* Mobile: tighten the side padding to 12px — the field 12px off the screen edge, the type 12px inside it. */
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+
+/* Hold the wordmark hidden until the variable font is ready, so it never flashes in the thin fallback weight. */
+
+/* The I in AIFD is a drawn eye; its pupil blinks the palette like the signal points. */
+
+/* ":D" reveal: colon + "esigners" slots stay clipped at width 0 until the animation opens them. The
+   colon hugs the D (small right gap, larger left gap to the F/4); the tail spells Designers, lowercased. */
+
+/* Reveal by animating width; clip only left/right (negative top/bottom insets) so g/y descenders are never cut. */
+
+/* colon hugs the D; drawn in the load's accent */
+
+/* --- Navbar (section 07) ------------------------------------------------------
+   The standing top bar on every page: brand on the left, tools on the right. Below the mobile
+   breakpoint the tools fold into the signal menu button (the hamburger) and drop down beneath it.
+   data-nosave, so the bar never lands in a saved file. */
+
+/* the hamburger only appears once the tools fold */
+
+/* Light/dark is a bare icon, not a labelled button — the sun by day, the moon by night. Its colour is
+   driven per frame by the blink script; CSS only chooses which glyph shows for the current theme. */
+
+/* On click (menu open) the hamburger's three dots blink the palette and its bottom border runs the
+   wave; the flat bottom edge is dropped so the two do not double. */
+
+/* --- Copilot + GitHub Pages guide: ordered steps on the field --- */
+
+ol{margin:0 0 var(--s3);width:fit-content;padding-left:1.4em;}
+
+.main ol{background:var(--bg);box-shadow:0 0 var(--fade) var(--hold) var(--bg);}
+
+.main ol li{margin:0 0 var(--s2);}
+
+.main ol li::marker{color:var(--accent);}
+</style>
+<link rel="stylesheet" href="../../shared/print.css">
+</head>
+<body>
+
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <svg class="cols" contenteditable="false" aria-hidden="true" viewBox="0 0 1147 1289"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true" viewBox="0 0 1147 1289"><polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline><g id="frame-dots"></g></svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1 style=""><span>Copilot</span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;">Sign In &amp; Set Up · ART 3041</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>Copilot</p>
+      <p class="note">Sign in with your CUNY Login, set it up, then write your own custom instructions.</p>
+    </div>
+    <div class="main">
+      <h2>Sign in</h2>
+      <ol>
+        <li>Go to <a href="https://copilot.cloud.microsoft" target="_blank" rel="noopener">copilot.cloud.microsoft</a>.</li>
+        <li>Enter your CUNY Login — <strong>firstname.lastname##@login.cuny.edu</strong>, not your Baruch email.</li>
+        <li>Enter your CUNY Login password.</li>
+        <li>Approve the sign-in in the Microsoft Authenticator app on your phone.</li>
+        <li>At <em>Stay signed in?</em>, check <strong>Don't show this again</strong> and click <strong>Yes</strong>.</li>
+      </ol>
+
+      <h2>Set up</h2>
+      <ol>
+        <li>Open <strong>Settings</strong>.</li>
+        <li>Go to <strong>Personalization</strong>.</li>
+        <li>Turn on <strong>Custom instructions</strong>.</li>
+        <li>Turn on <strong>Saved memories</strong>.</li>
+        <li>Click <strong>Edit instructions</strong>.</li>
+      </ol>
+
+      <h2>Custom instructions</h2>
+      <p class="note">Class time is set aside to write your own. A starting set:</p>
+      <ul>
+        <li>Ask questions and propose a plan before producing anything.</li>
+        <li>Offer alternatives instead of agreeing by default.</li>
+        <li>State your uncertainty level, and name the tradeoff when there is one.</li>
+        <li>Ask before assuming a missing detail.</li>
+        <li>Don't invent facts or sources. Check every URL before linking it.</li>
+        <li>Always comment code with plain-English descriptions of what it's doing.</li>
+        <li>Always put HTML, CSS, and JavaScript in one HTML file.</li>
+        <li>Use bullet points for summaries.</li><li>Don't write essays/overly-winded responses.&nbsp;</li>
+        <li>Tone: <span class="fill">[student defines]</span>.</li>
+        <li>Words to avoid: <span class="fill">[student defines]</span>.</li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+
+<script src="../../shared/core.js"></script>
+
+<script>
+// Light unless the toggle says otherwise. Which glyph shows (sun/moon) is CSS, keyed to data-theme.
+
+// The icon takes one of the six palette colours and holds it — a fresh pick each time the theme flips.
+
+// Fold the tools into the hamburger, and back.
+
+// The brand plays with its letters. Each swap (on load and on any link hover or click) picks one of six
+
+// static states — AIFD, A(eye)FD, A(eye)4D, AI4D, AiFD, Ai4D — OR, about one time in seven, the
+
+// ":Designers" reveal: a colon emerges beside the D (hugging it), nudges it right, and "esigners"
+
+// unrolls from the mouth and stays out until the next swap. Clicking the logo always plays the reveal.
+
+// The dot on the lowercase i (the Ai4D / AiFD variant) blinks the palette like the signal points,
+
+// wherever a brand swap has placed it. Re-queried each frame; static under reduced motion.
+
+(function(){
+  var cs=getComputedStyle(document.documentElement);
+  var COLORS=['--c1','--c2','--c3','--c4','--c5','--c6'].map(function(v){return cs.getPropertyValue(v).trim();});
+  var reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var on=true, next=0.5+Math.random(), color=COLORS[0], last=null;
+  function frame(now){
+    var d=document.querySelector('.i-dot');
+    if(d && reduce){ d.setAttribute('fill', cs.getPropertyValue('--accent').trim()); d.setAttribute('opacity',1); }
+    else if(d){
+      if(last===null) last=now; var dt=Math.min((now-last)/1000,0.05); last=now;
+      next-=dt;
+      if(next<=0){ on=!on; next=on?(0.6+Math.random()*1.1):(0.12+Math.random()*0.3); if(on) color=COLORS[(Math.random()*COLORS.length)|0]; }
+      d.setAttribute('fill', color); d.setAttribute('opacity', on?1:0.2);
+    } else { last=null; }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+// The hamburger, once the menu is open (on click): the three dots blink the palette like the signal
+
+// points, and the bottom border runs the sine->square wave. Static when closed and under reduced motion.
+
+// The eye's pupil looks around like a real eye: it holds a spot and blinks the palette a few times,
+
+// then slowly glides to a new spot and looks there. Re-queried each frame so it survives a brand
+
+// re-injection; under reduced motion it holds a static centered pupil.
+
+(function(){
+  var cs=getComputedStyle(document.documentElement);
+  var COLORS=['--c1','--c2','--c3','--c4','--c5','--c6'].map(function(v){return cs.getPropertyValue(v).trim();});
+  var reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Spots that keep the r=4.4 pupil inside the almond (viewBox 0 0 26 20).
+  var SPOTS=[{x:13,y:8},{x:13,y:10.5},{x:9,y:13},{x:17,y:13}];
+  var EASE=5.5;                                   // glide rate: ~0.5s to reach a new spot, never a snap
+  var ti=0, x=SPOTS[0].x, y=SPOTS[0].y, tx=x, ty=y; // pos + eased target (pupil ships at 13,8 = SPOTS[0])
+  var state='look', dwell=0.8+Math.random()*1.7+(Math.random()<0.3?1.5+Math.random()*3:0), blinks=1+((Math.random()*4)|0);
+  var on=true, blinkT=0.4+Math.random()*0.4, color=COLORS[0], last=null;
+  function pick(){                                // a new spot, never the current one
+    var n; do{ n=(Math.random()*SPOTS.length)|0; }while(n===ti); ti=n;
+    tx=SPOTS[n].x+(Math.random()-0.5)*1.2; ty=SPOTS[n].y+(Math.random()-0.5)*1.2; // <=0.6 jitter, still in bounds
+  }
+  function frame(now){
+    var dot=document.querySelector('.eye-dot');
+    if(!dot){ last=null; requestAnimationFrame(frame); return; } // a swap variant with no eye: skip, don't error
+    if(reduce){ dot.setAttribute('fill', cs.getPropertyValue('--accent').trim()); dot.setAttribute('opacity',1); dot.setAttribute('cx',13); dot.setAttribute('cy',10.5); requestAnimationFrame(frame); return; }
+    if(last===null) last=now; var dt=Math.min((now-last)/1000,0.05); last=now;
+    x+=(tx-x)*EASE*dt; y+=(ty-y)*EASE*dt;         // ease toward the target each frame, frame-rate independent
+    if(state==='look'){
+      dwell-=dt;
+      if(blinks>0){                               // blink a few times while looking, then hold the eye open
+        blinkT-=dt;
+        if(blinkT<=0){ on=!on; if(on){ blinkT=0.28+Math.random()*0.4; color=COLORS[(Math.random()*COLORS.length)|0]; blinks--; } else blinkT=0.09+Math.random()*0.13; }
+      } else on=true;
+      if(dwell<=0 && on){ pick(); state='move'; } // leave only with the eye open, never mid-blink
+    } else { on=true;                             // keep the eye open through the glide
+      if(Math.abs(tx-x)<0.15 && Math.abs(ty-y)<0.15){ state='look'; dwell=0.8+Math.random()*1.7+(Math.random()<0.3?1.5+Math.random()*3:0); blinks=1+((Math.random()*4)|0); blinkT=0.4+Math.random()*0.4; }
+    }
+    dot.setAttribute('fill', color); dot.setAttribute('opacity', on?1:0.2);
+    dot.setAttribute('cx', x.toFixed(2)); dot.setAttribute('cy', y.toFixed(2));
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+// safety: never leave the wordmark hidden if the font never resolves
+
+// Turn the editable template off so the links become clickable, and back on to edit the text.
+
+// While contenteditable is on, a click places the caret instead of following a link.
+</script>
+
+</body></html>

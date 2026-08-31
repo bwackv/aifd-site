@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A.I. for Designers — J. Doe</title>
+<style>
+  :root {
+    --ink: #141414;
+    --dim: #767676;
+    --rule: #e0e0e0;
+    --accent: #c4340a;
+    --paper: #fbfaf8;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 4rem 1.5rem 6rem;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .sheet {
+    max-width: 44rem;
+    margin: 0 auto;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(2rem, 7vw, 3.25rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+
+  .meta {
+    margin: 1rem 0 0;
+    color: var(--dim);
+    font-size: 0.95rem;
+  }
+
+  .meta a {
+    color: var(--dim);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .meta a:hover { color: var(--accent); }
+
+  h2 {
+    margin: 4rem 0 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--ink);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .work {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .work li {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .num {
+    color: var(--dim);
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .title { font-size: 1.05rem; }
+
+  .work a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 1px;
+  }
+
+  .work a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  @media (max-width: 30rem) {
+    body { padding: 2.5rem 1.25rem 4rem; }
+    .work li { grid-template-columns: 2rem 1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="sheet">
+
+    <h1>A.I. FOR DESIGNERS — J. Doe</h1>
+    <p class="meta">ART 3041 · Fall 2026</p>
+    <p class="meta"><a href="mailto:j.doe@baruchmail.cuny.edu">j.doe@baruchmail.cuny.edu</a></p>
+
+    <h2>Work</h2>
+    <ul class="work">
+      <li>
+        <span class="num">01</span>
+        <span class="title"><a href="#">Custom Instructions</a></span>
+      </li>
+      <li>
+        <span class="num">02</span>
+        <span class="title"><a href="#">A Style Guide for Your AI</a></span>
+      </li>
+      <li>
+        <span class="num">03</span>
+        <span class="title"><a href="#">Design a ___</a></span>
+      </li>
+      <li>
+        <span class="num">04</span>
+        <span class="title"><a href="#">Commute Story</a></span>
+      </li>
+      <li>
+        <span class="num">05</span>
+        <span class="title"><a href="#">Become a Crea(i)tive Director</a></span>
+      </li>
+      <li>
+        <span class="num">06</span>
+        <span class="title"><a href="#">Experimental AI Interface</a></span>
+      </li>
+      <li>
+        <span class="num">07</span>
+        <span class="title"><a href="#">Open</a></span>
+      </li>
+    </ul>
+
+  </div>
+</body>
+</html>

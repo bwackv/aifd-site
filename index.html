@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-subtitle="ART 3041" data-docname="art3041-index">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ART 3041 — A.I. for Designers</title>
+
+<!-- ROND must be named in this URL or roundness stays pinned at its default.
+     Axis order: lowercase axes alphabetically, then uppercase. -->
+<link rel="stylesheet" href="shared/font.css">
+<link rel="stylesheet" href="shared/core.css">
+<style>
+
+/* When the rail collapses into the band header, its last line carries no trailing margin, so the gap
+   down to the main body is main's collapsed padding-top alone (--s2), not the note margin and the
+   padding stacked. */
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main .note,.main .sec,.main .tag,
+.rail .sec,.rail .note,.rail .face,
+.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+/* Trying a smaller signal point on this page only. */
+
+a{--dot-size:4px;}
+
+/* --- A week that is not current ------------------------------------------------
+   Only the active week stands open. The rail still names the week, its dates and its subject, so a
+   collapsed band reads as a week; the toggle opens the sessions under it. */
+
+.week-body{margin-top:var(--s3);}
+
+/* The session line is a heading for the list under it, so it carries weight. Elsewhere .tag is a
+   label beside a value and stays at 400. */
+
+.main .tag{font-variation-settings:"wdth" 100,"wght" 700,"ROND" 55;}
+
+/* Homework is an instruction, not an aside — it reads at full strength. */
+
+/* Homework is the one line in a week a student has to act on, so it is marked the way the
+   system marks structure — an accent rule, not a background, so it survives print. */
+.note.hw{
+  color:var(--fg);
+  width:auto;max-width:var(--measure);
+  margin-top:var(--s3);
+  padding-left:var(--s2);
+  border-left:2px solid var(--accent);
+}
+.note.hw strong{
+  display:block;
+  color:var(--accent);
+  font-size:0.75rem;letter-spacing:.1em;text-transform:uppercase;
+}
+
+/* --- Label list ---------------------------------------------------------------
+   A short term naming a longer one. Same component as the syllabus. */
+
+.info{
+  display:grid;
+  grid-template-columns:minmax(6rem,9rem) minmax(0,1fr);
+  gap:var(--s1) var(--s3);
+  align-items:baseline;
+  margin:0;
+  max-width:var(--measure);
+}
+
+.info dd{margin:0;min-width:0;width:fit-content;overflow-wrap:break-word;}
+
+.info dt{
+  font-size:0.875rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--dim);
+  font-variation-settings:"wdth" 100,"wght" 400,"ROND" 55;
+  line-height:1.45;
+}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}   /* no rail column, no boundary */
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}   /* field is hidden here, so nothing sits at a crossing */
+}
+
+@media (max-width:599px){
+  /* A word-length label and its value will not both fit, so the label sits above its value. */
+  .info{grid-template-columns:1fr;gap:0;}
+  .info dd{margin:0 0 var(--s2);}
+  .info dd:last-child{margin-bottom:0;}
+  /* Mobile: tighten the side padding to 12px — the field 12px off the screen edge, the type 12px inside it. */
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+
+/* --- Students dropdown (navbar) -----------------------------------------------
+   Declared as a nav-extra so core.js drops it into .tools. A name with no published
+   page yet is a <span>, so nothing in the panel is ever a dead link. */
+
+.nav-drop{position:relative;}
+
+.nav-drop .nav-panel{
+  display:none;
+  position:absolute;top:calc(100% + 0.5rem);right:0;z-index:6;
+  width:max-content;max-width:min(32rem,calc(100vw - 2rem));
+  padding:var(--s3);
+  background:var(--bg);border:1px solid var(--line);
+  columns:2;column-gap:var(--s4);
+}
+
+.nav-drop[data-open="true"] .nav-panel{display:block;}
+
+/* A single line joining the button's bottom edge to the box, same as the hamburger panel. */
+
+.nav-drop[data-open="true"] .nav-panel::before{
+  content:"";position:absolute;right:1.5rem;top:-0.5rem;width:1px;height:0.5rem;background:var(--line);
+}
+
+/* The drawn underline and its point are driven by measureLinks, which only runs over .page —
+   in the bar they would draw from the wrong origin and never animate. Colour carries the hover here. */
+
+.nav-panel a,.nav-panel span{
+  display:block;break-inside:avoid;
+  padding:0.15rem 0;font-size:0.95rem;line-height:1.5;white-space:nowrap;
+}
+
+.nav-panel a::before,.nav-panel a::after{content:none;}
+
+.nav-panel a:hover{color:var(--accent);}
+
+.nav-panel span{color:var(--dim);}          /* no published page yet */
+
+@media (max-width:600px){
+  /* .tools is itself the dropdown here, so the panel flows inside it rather than escaping. */
+  .nav-drop .nav-panel{position:static;columns:1;width:auto;max-width:none;
+    margin-top:var(--s2);padding:var(--s2) 0 0;border:0;border-top:1px solid var(--line);}
+  .nav-drop[data-open="true"] .nav-panel::before{content:none;}
+}
+/* --- Introductory statement ----------------------------------------------------
+   A modal sheet over the field. It lives inside .page so measureLinks decorates the
+   links in it; contenteditable="false" so those links stay clickable while the
+   document itself is editable. */
+
+.sheet{
+  width:min(48rem,calc(100vw - 2rem));
+  max-height:min(85vh,54rem);
+  padding:var(--s4);
+  background:var(--bg);color:var(--fg);
+  border:1px solid var(--line);
+  overflow-y:auto;
+  overscroll-behavior:contain;
+}
+
+.sheet::backdrop{background:rgba(0,0,0,.55);}
+[data-theme="dark"] .sheet::backdrop{background:rgba(0,0,0,.8);}
+
+.sheet-head{
+  display:flex;align-items:baseline;justify-content:space-between;gap:var(--s3);
+  margin-bottom:var(--s4);padding-bottom:var(--s2);
+  border-bottom:2px solid var(--line);
+}
+
+.sheet-head .sec{margin:0;}
+.sheet p,.sheet .info{max-width:var(--measure);}
+.sheet .info{margin:var(--s4) 0;}
+.sheet > :last-child{margin-bottom:0;}
+
+/* Quoted matter: set in from the measure on both sides, and stepped down 2px from the body. The subset has no italic
+   face, so the quote is marked by tighter spacing and a flat ROND instead. */
+
+.quote{
+  margin:var(--s4) 0;
+  padding:0 var(--s3);
+  max-width:var(--measure);
+  font-size:0.875rem;
+  letter-spacing:-0.01em;
+  font-variation-settings:"wdth" 100,"wght" 400,"ROND" 0;
+}
+
+.quote p{max-width:none;}
+.quote > :last-child{margin-bottom:0;}
+
+@media (max-width:599px){
+  .sheet{width:calc(100vw - 1.5rem);padding:var(--s3);}
+  .sheet-head{flex-direction:column;align-items:flex-start;gap:var(--s2);}
+}
+</style>
+<link rel="stylesheet" href="shared/print.css">
+</head>
+<body>
+
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <svg class="cols" contenteditable="false" aria-hidden="true"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true">
+    <polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"/>
+    <g id="frame-dots"></g>
+  </svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1><span>A.I. for Designers</span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;">ART 3041-WWA &middot; 38308 &middot; Special Topic &middot; <a href="https://www.citytech.cuny.edu/registrar/docs/fall_2026_meeting_grid.pdf">Fall 2026</a></p>
+      <p class="note" style="margin-bottom:0;">Mon online-synchronous &middot; Wed in person, B&nbsp;&mdash;&nbsp;Vert 8-165</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec">Introduction</p>
+    </div>
+    <div class="main">
+      <button class="btn-outline" type="button" contenteditable="false" onclick="openIntro()">Introductory statement</button>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec">Contact</p>
+    </div>
+    <div class="main">
+      <dl class="info">
+        <dt>Professor</dt>
+        <dd>Broderick Shoemaker</dd>
+        <dt>Email</dt>
+        <dd><a href="mailto:bshoemaker@ccny.cuny.edu">bshoemaker@ccny.cuny.edu</a></dd>
+        <dt>Room</dt>
+        <dd>B&nbsp;&mdash;&nbsp;Vert 8-165</dd>
+        <dt>Schedule</dt>
+        <dd>Mondays 2:55&ndash;4:35pm (online-synchronous)<br>Wednesdays 2:55&ndash;4:35pm (in-person)</dd>
+        <dt>Office hours</dt>
+        <dd>Wednesdays after class, 4:35pm, and by appointment</dd>
+        <dt>Meet with me</dt>
+        <dd><a href="https://calendly.com/bshoemaker-1/15min">calendly.com/bshoemaker-1/15min</a></dd>
+        <dt>Syllabus</dt>
+        <dd><a href="syllabus.html">Course syllabus</a></dd>
+        <dt>Calendar</dt>
+        <dd><a href="https://www.citytech.cuny.edu/registrar/docs/fall_2026_meeting_grid.pdf">Fall calendar</a></dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec">Documents</p>
+      <p class="note">Updated as the semester runs.</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li><a href="assets/course-setup/copilot.html">Copilot</a> — signing in with your CUNY Login and writing your custom instructions.</li>
+        <li><a href="assets/course-setup/landing-page.html">Your course landing page</a> — directing Copilot to build the page you publish.</li>
+        <li><a href="assets/course-setup/github-pages.html">GitHub Pages</a> — putting that page online.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>Week</p>
+      <p class="note">Aug 31 &ndash; Sep 2</p>
+      <p class="note">Intro &middot; Design a (blank)</p>
+    </div>
+    <div class="main">
+      <p class="tag">1.1 &middot; Mon Aug 31 &middot; online</p>
+      <ul>
+        <li>Syllabus</li>
+        <li>Intro statement</li>
+        <li><a href="assets/course-setup/copilot.html">Copilot setup</a></li>
+        <li>Design Challenge #1: <strong><a href="assets/projects/design-a-blank/design-a-blank.html">Design a (blank)</a></strong></li>
+      </ul>
+      <p class="note hw"><strong>HW</strong>Update Design a (blank) and bring it to class on Wednesday.</p>
+      <p class="tag">1.2 &middot; Wed Sep 2 &middot; in person &middot; GitHub</p>
+      <ul>
+        <li>Lecture / discussion &mdash; <a href="assets/lectures/lecture-01-what-is-ai.html"><em>What is A.I.?</em></a></li>
+        <li>Peer review of Design a (blank) &mdash; take notes</li>
+        <li><a href="assets/course-setup/github-pages.html">GitHub Pages set up</a>, with <a href="assets/course-setup/landing-page.html">index creation</a></li>
+        <li>Lecture / discussion &mdash; <em>Working with A.I.</em> Principles: be specific &middot; be methodical &middot; articulate a vision &middot; taste.</li>
+      </ul>
+      <p class="note hw"><strong>HW</strong>Finalize your Design a (blank) and bring it to class next week.</p>
+      <p class="note">Is your design looking generic? Make it not, by next week.</p>
+      <p class="note">Ask A.I. how to post Design a (blank) to the index.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">02</span>Week</p>
+      <p class="note">Sep 9</p>
+      <p class="note">Style guide</p>
+    </div>
+    <div class="main">
+      <p class="note">Mon Sep 7 &middot; Labor Day, no class</p>
+      <button class="btn-outline" type="button" contenteditable="false" aria-expanded="false" onclick="toggleWeek(this)">Show week</button>
+      <div class="week-body" hidden>
+        <p class="tag">2.1 &middot; Wed Sep 9 &middot; in person</p>
+        <ul>
+          <li>Topics discussion &mdash; whiteboard</li>
+          <li><a href="assets/projects/style-guide/style-guide.html">Creating a comprehensive style guide</a> for your projects this semester</li>
+          <li>Posting Design a (blank)</li>
+          <li>Update the index &mdash; personalize it, and generate a hero image for it. Brief discussion on image generation.</li>
+        </ul>
+        <p class="note">Start taking photos of your commute.</p>
+        <p class="note hw"><strong>HW</strong>None, if you finished your style guide in class. Make sure your GitHub links off to your Design a (blank).</p>
+      </div>
+    </div>
+  </div>
+
+<!-- Weeks 03-16 are hidden until each is current. Uncomment a band to publish it.
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">03</span>Week</p>
+      <p class="note">Sep 14 – 16</p>
+    </div>
+    <div class="main">
+      <p class="sec"><span class="fill">[title]</span></p>
+      <p class="tag">3.1 &middot; Mon Sep 14 &middot; online</p>
+      <p class="tag">3.2 &middot; Wed Sep 16 &middot; in person</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">04</span>Week</p>
+      <p class="note">Sep 21 – 23</p>
+    </div>
+    <div class="main">
+      <p class="sec"><span class="fill">[title]</span></p>
+      <p class="tag">4.1 &middot; Mon Sep 21 &middot; online</p>
+      <p class="tag">4.2 &middot; Wed Sep 23 &middot; in person</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">05</span>Week</p>
+      <p class="note">Sep 28 – 30</p>
+    </div>
+    <div class="main">
+      <p class="sec"><span class="fill">[title]</span></p>
+      <p class="tag">5.1 &middot; Mon Sep 28 &middot; online</p>
+      <p class="tag">5.2 &middot; Wed Sep 30 &middot; in person</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">06</span>Week</p>
+      <p class="note">Oct 5 – 7</p>
+    </div>
+    <div class="main">
+      <p class="sec"><span class="fill">[title]</span></p>
+      <p class="tag">6.1 &middot; Mon Oct 5 &middot; online</p>
+      <p class="tag">6.2 &middot; Wed Oct 7 &middot; in person</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">07</span>Week</p>
+      <p class="note">Oct 13 – 14</p>
+    </div>
+    <div class="main">
+      <p class="sec"><span class="fill">[title]</span></p>
+      <p class="tag">7.1 &middot; Tue Oct 13 &middot; online &middot; Monday schedule</p>
+      <p class="tag">7.2 &middot; Wed Oct 14 &middot; in person</p>
+      <p class="note">Mon Oct 12 &middot; Columbus Day, college closed</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">08</span>Week</p>
+      <p class="note">Oct 19 – 21</p>
+    </div>
+    <div class="main">
+      <p class="sec"><span class="fill">[title]</span></p>
+      <p class="tag">8.1 &middot; Mon Oct 19 &middot; online</p>
+      <p class="tag">8.2 &middot; Wed Oct 21 &middot; in person</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">09</span>Week</p>
+      <p class="note">Oct 26 – 28</p>
+    </div>
+    <div class="main">
+      <p class="sec"><span class="fill">[title]</span></p>
+      <p class="tag">9.1 &middot; Mon Oct 26 &middot; online</p>
+      <p class="tag">9.2 &middot; Wed Oct 28 &middot; in person</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">10</span>Week</p>
+      <p class="note">Nov 2 – 4</p>
+    </div>
+    <div class="main">
+      <p class="sec"><span class="fill">[title]</span></p>
+      <p class="tag">10.1 &middot; Mon Nov 2 &middot; online</p>
+      <p class="tag">10.2 &middot; Wed Nov 4 &middot; in person</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">11</span>Week</p>
+      <p class="note">Nov 9 – 11</p>
+    </div>
+    <div class="main">
+      <p class="sec"><span class="fill">[title]</span></p>
+      <p class="tag">11.1 &middot; Mon Nov 9 &middot; online</p>
+      <p class="tag">11.2 &middot; Wed Nov 11 &middot; in person</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">12</span>Week</p>
+      <p class="note">Nov 16 – 18</p>
+    </div>
+    <div class="main">
+      <p class="sec"><span class="fill">[title]</span></p>
+      <p class="tag">12.1 &middot; Mon Nov 16 &middot; online</p>
+      <p class="tag">12.2 &middot; Wed Nov 18 &middot; in person</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">13</span>Week</p>
+      <p class="note">Nov 23</p>
+    </div>
+    <div class="main">
+      <p class="sec"><span class="fill">[title]</span></p>
+      <p class="tag">13.1 &middot; Mon Nov 23 &middot; online</p>
+      <p class="note">Wed Nov 25 &middot; Thanksgiving recess, no class</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">14</span>Week</p>
+      <p class="note">Nov 30 – Dec 2</p>
+    </div>
+    <div class="main">
+      <p class="sec"><span class="fill">[title]</span></p>
+      <p class="tag">14.1 &middot; Mon Nov 30 &middot; online</p>
+      <p class="tag">14.2 &middot; Wed Dec 2 &middot; in person</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">15</span>Week</p>
+      <p class="note">Dec 7 – 9</p>
+    </div>
+    <div class="main">
+      <p class="sec"><span class="fill">[title]</span></p>
+      <p class="tag">15.1 &middot; Mon Dec 7 &middot; online</p>
+      <p class="tag">15.2 &middot; Wed Dec 9 &middot; in person</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">16</span>Week</p>
+      <p class="note">Dec 14</p>
+    </div>
+    <div class="main">
+      <p class="sec"><span class="fill">[title]</span></p>
+      <p class="tag">16.1 &middot; Mon Dec 14 &middot; online &middot; last class</p>
+    </div>
+  </div>
+
+-->
+
+  <dialog class="sheet" id="intro-sheet" contenteditable="false" aria-labelledby="intro-title">
+    <div class="sheet-head">
+      <p class="sec" id="intro-title">Introductory statement</p>
+      <button class="btn-outline" type="button" onclick="closeIntro()">Close</button>
+    </div>
+
+    <p>As an introductory statement to this course I want to say that I&rsquo;ve found that it&rsquo;s impossible not to become philosophical about the subject of teaching a.i. because much of its proposal is one of automation, of replacing &ldquo;work&rdquo; and &ldquo;effort&rdquo;. These things, the work, the effort, the process, are ironically the very things that not only turn a.i. into a useful tool, but also reject the idea of a tool that could somehow replace these activities. If you&rsquo;re going to succeed in your work (in life), you need to enjoy the process. Or at least that is my proposal to all of you. With that being said I want to say a few words that I&rsquo;ll return to throughout the semester:</p>
+
+    <dl class="info">
+      <dt>Imagine</dt>
+      <dd>Daydream or philosophize or think deeply and if your wildest imagination comes up with an idea, perhaps &ldquo;a.i.&rdquo; can enable you to bring it to life whereas before there might have been some difficult-to-surmount roadblocks.</dd>
+      <dt>Articulate</dt>
+      <dd>You might have an idea in your mind&rsquo;s eye, but can you spell it out for others? In the case of this course, that requires you to be as specific as possible when you work with a.i. tools. The better your plan, the better the work it will do. Also, at its base you&rsquo;re still working with a machine. They take things literally, or work better when you spell things out literally. It&rsquo;s worth watching a bit of <a href="https://www.youtube.com/watch?v=okkIyWhN0iQ">this video</a> about instructing someone to make a PB&amp;J sandwich.</dd>
+      <dt>Taste</dt>
+      <dd>What makes something good? An ever moving target but it&rsquo;s one that separates the amateurs from the pros and it will separate the slop work from the great work in this class and beyond. What do you like and why? Can you articulate that?</dd>
+    </dl>
+
+    <p>A quote to end on:</p>
+
+    <blockquote class="quote">
+      <p>&ldquo;This emphasis on pleasure runs counter to the dominant story we are currently being sold about creative work. There is, says Shallcrass, &lsquo;so much talk about automation&rsquo; and artificial intelligence: a discourse that frames making as a chore and human involvement as a problem to be solved. To automate is to assume that the output is what matters, and the process merely what it takes to get there. But, he asks, what about those of us who enjoy our work&mdash;who find meaning in the production of letterforms, or music, or films? Shallcrass made Constrictor because the process of making the letterforms contributed to his understanding of them. The joy is not incidental to the work, it is the work.&rdquo;</p>
+
+      <p class="note">Frere-Jones Type &mdash; <a href="https://frerejones.com/blog/designing-constrictor">Designing Constrictor</a></p>
+    </blockquote>
+
+    <p>I like this quote because it speaks to the joy of making. I derive joy from making and also from experiencing work where I sense the presence of that joy and of the human (hand/mind/voice/eye) being behind it.</p>
+  </dialog>
+
+
+</main>
+
+
+<template id="nav-extra">
+  <span class="nav-drop">
+    <button class="btn-outline" id="students-btn" type="button" aria-expanded="false" onclick="toggleStudents()">Student sites</button>
+    <div class="nav-panel" id="students-panel">
+      <span>Zoya Amjad</span>
+      <span>Elaine Chen</span>
+      <span>Krystal Contreras</span>
+      <span>Aliou B Diallo</span>
+      <span>Wendy Gao</span>
+      <span>Maria Haceaturia</span>
+      <span>Faria Hossain</span>
+      <span>Sarah Inkateshta</span>
+      <span>Wahida Irina</span>
+      <span>Md Miftaul Karim</span>
+      <span>Brian Lau</span>
+      <span>Hanlin Li</span>
+      <span>Yu Heng Li</span>
+      <span>Anna Lin</span>
+      <span>Abigail Mutiara Lumintang</span>
+      <span>Avery Hunter Malbon</span>
+      <span>Fiona Mei</span>
+      <span>Lindsy Kate Ong</span>
+      <span>Rosa I Paula</span>
+      <span>Mukesh Rani</span>
+      <span>Liang Jing Ren</span>
+      <span>Alexa Ashley Rosales</span>
+      <span>Leanna E Urena</span>
+      <span>Michell Yang-Ng</span>
+    </div>
+  </span>
+</template>
+
+<script src="shared/core.js"></script>
+
+<script>
+// The sheet is display:none until it opens, so its links have no box to measure until then.
+function openIntro(){
+  var d=document.getElementById('intro-sheet'); if(!d) return;
+  d.showModal();
+  if(window.measureLinks) measureLinks();
+}
+function closeIntro(){
+  var d=document.getElementById('intro-sheet'); if(d) d.close();
+}
+
+// A click on the backdrop lands on the dialog itself, not on anything inside it.
+document.getElementById('intro-sheet').addEventListener('click', function(e){
+  if(e.target===this) this.close();
+});
+
+function toggleWeek(btn){
+  var body=btn.nextElementSibling;
+  if(!body || !body.classList.contains('week-body')) return;
+  var open=!body.hidden;
+  body.hidden=open;
+  btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+  setBtnLabel(btn, open ? 'Show week' : 'Hide week');
+  refresh();
+  if(window.measureLinks) measureLinks();   // a hidden body has no boxes to draw a link line against
+}
+
+function toggleStudents(){
+  var d=document.querySelector('.nav-drop'); if(!d) return;
+  var open=d.getAttribute('data-open')==='true';
+  d.setAttribute('data-open', open ? 'false' : 'true');
+  document.getElementById('students-btn').setAttribute('aria-expanded', open ? 'false' : 'true');
+}
+
+// Anywhere else, or Escape, closes it.
+document.addEventListener('click', function(e){
+  var d=document.querySelector('.nav-drop');
+  if(d && d.getAttribute('data-open')==='true' && !d.contains(e.target)) d.setAttribute('data-open','false');
+});
+document.addEventListener('keydown', function(e){
+  if(e.key!=='Escape') return;
+  var d=document.querySelector('.nav-drop'); if(d) d.setAttribute('data-open','false');
+});
+</script>
+</body>
+</html>

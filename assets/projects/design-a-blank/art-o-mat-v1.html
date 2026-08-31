@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ART-O-MAT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Special+Elite&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ─── CUSTOM PROPERTIES ─── */
+    :root {
+      --pop-red: #E3242B;
+      --pop-yellow: #FFD700;
+      --pop-blue: #1E90FF;
+      --pop-pink: #FF69B4;
+      --pop-black: #111;
+      --pop-white: #FAFAF0;
+      --pop-cyan: #00CED1;
+      --font-display: 'Bangers', cursive;
+      --font-body: 'Oswald', sans-serif;
+      --font-label: 'Special Elite', cursive;
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── HALFTONE DOT PATTERN via radial-gradient ─── */
+    body {
+      background-color: var(--pop-yellow);
+      /* Halftone dot grid overlay */
+      background-image:
+        radial-gradient(circle, var(--pop-black) 1px, transparent 1px);
+      background-size: 8px 8px;
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    /* ─── HEADER ─── */
+    .header {
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+      position: relative;
+    }
+    .header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 10vw, 6rem);
+      color: var(--pop-red);
+      letter-spacing: 0.05em;
+      /* Thick black stroke + white fill trick using text-shadow */
+      text-shadow:
+        3px 3px 0 var(--pop-black),
+        -1px -1px 0 var(--pop-black),
+        1px -1px 0 var(--pop-black),
+        -1px 1px 0 var(--pop-black),
+        1px 1px 0 var(--pop-black);
+      transform: rotate(-2deg);
+      line-height: 1;
+    }
+    .header .subtitle {
+      font-family: var(--font-label);
+      font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+      color: var(--pop-black);
+      margin-top: 0.5rem;
+      transform: rotate(1deg);
+    }
+
+    /* ─── COMIC BURST — decorative starburst behind title ─── */
+    .burst {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 320px;
+      height: 320px;
+      z-index: -1;
+      opacity: 0.15;
+    }
+
+    /* ─── VENDING MACHINE CONTAINER ─── */
+    .machine {
+      background: var(--pop-red);
+      border: 6px solid var(--pop-black);
+      border-radius: 20px 20px 8px 8px;
+      width: min(420px, 92vw);
+      margin: 1.5rem auto;
+      padding: 0;
+      position: relative;
+      box-shadow:
+        8px 8px 0 var(--pop-black),
+        inset 0 0 40px rgba(0,0,0,0.15);
+    }
+
+    /* ─── DISPLAY WINDOW — where the artwork appears ─── */
+    .display-window {
+      background: var(--pop-white);
+      border: 4px solid var(--pop-black);
+      border-radius: 12px;
+      margin: 1.5rem 1.5rem 1rem;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      /* Halftone overlay on the display */
+      background-image:
+        radial-gradient(circle, rgba(0,0,0,0.05) 1px, transparent 1px);
+      background-size: 4px 4px;
+    }
+
+    /* Placeholder text before vending */
+    .display-placeholder {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--pop-black);
+      opacity: 0.3;
+      text-align: center;
+      padding: 1rem;
+      transition: opacity 0.3s;
+    }
+
+    /* Artwork card that drops in */
+    .artwork-card {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      opacity: 0;
+      transform: translateY(-120%);
+      transition: none;
+    }
+    .artwork-card.dropped {
+      animation: dropIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @keyframes dropIn {
+      0%   { transform: translateY(-120%); opacity: 0; }
+      60%  { transform: translateY(8px); opacity: 1; }
+      80%  { transform: translateY(-4px); }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    /* The artwork image frame */
+    .artwork-frame {
+      width: 180px;
+      height: 180px;
+      border: 4px solid var(--pop-black);
+      background: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      position: relative;
+      box-shadow: 3px 3px 0 var(--pop-black);
+      /* Halftone effect on the "painting" */
+      background-image:
+        radial-gradient(circle, rgba(0,0,0,0.08) 1.5px, transparent 1.5px);
+      background-size: 5px 5px;
+    }
+
+    .artwork-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--pop-black);
+      margin-top: 0.75rem;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .artwork-artist {
+      font-family: var(--font-label);
+      font-size: 0.85rem;
+      color: #555;
+      margin-top: 0.25rem;
+    }
+    .artwork-year {
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      color: #888;
+      margin-top: 0.15rem;
+    }
+
+    /* ─── CONTROLS PANEL — coin slot + crank ─── */
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 1rem 1.5rem 1.5rem;
+    }
+
+    /* Coin slot */
+    .coin-slot-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .coin-slot {
+      width: 50px;
+      height: 8px;
+      background: var(--pop-black);
+      border-radius: 4px;
+      position: relative;
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.2);
+    }
+    .coin-label {
+      font-family: var(--font-label);
+      font-size: 0.7rem;
+      color: var(--pop-yellow);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* Insert coin button */
+    .coin-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--pop-yellow);
+      border: 3px solid var(--pop-black);
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      color: var(--pop-black);
+      cursor: pointer;
+      box-shadow: 3px 3px 0 var(--pop-black);
+      transition: transform 0.1s, box-shadow 0.1s;
+      line-height: 1.1;
+    }
+    .coin-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 var(--pop-black);
+    }
+    .coin-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* Crank handle */
+    .crank-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .crank-btn {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: var(--pop-cyan);
+      border: 4px solid var(--pop-black);
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      color: var(--pop-black);
+      cursor: pointer;
+      box-shadow: 4px 4px 0 var(--pop-black);
+      transition: transform 0.3s;
+      position: relative;
+    }
+    .crank-btn::after {
+      /* Crank arm — a small bar sticking out */
+      content: "";
+      position: absolute;
+      right: -18px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 8px;
+      background: var(--pop-black);
+      border-radius: 0 4px 4px 0;
+    }
+    .crank-btn.cranking {
+      animation: crankSpin 0.5s ease-in-out;
+    }
+    @keyframes crankSpin {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .crank-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .crank-label {
+      font-family: var(--font-label);
+      font-size: 0.7rem;
+      color: var(--pop-yellow);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── STATUS STRIP — LED-style message ─── */
+    .status-strip {
+      background: var(--pop-black);
+      color: var(--pop-yellow);
+      font-family: var(--font-label);
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 0.5rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-radius: 0 0 14px 14px;
+    }
+
+    /* ─── COLLECTION TRAY — shows what you've vended ─── */
+    .tray-section {
+      width: min(420px, 92vw);
+      margin: 0 auto 2rem;
+      text-align: center;
+    }
+    .tray-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--pop-black);
+      margin-bottom: 0.75rem;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+    }
+    .tray {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .tray-item {
+      background: var(--pop-white);
+      border: 3px solid var(--pop-black);
+      border-radius: 6px;
+      padding: 0.5rem;
+      width: 90px;
+      box-shadow: 2px 2px 0 var(--pop-black);
+      animation: popIn 0.3s ease-out;
+    }
+    @keyframes popIn {
+      0%   { transform: scale(0); }
+      80%  { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    .tray-item .tray-emoji {
+      font-size: 2rem;
+    }
+    .tray-item .tray-artist {
+      font-family: var(--font-label);
+      font-size: 0.55rem;
+      color: #555;
+      margin-top: 0.25rem;
+      line-height: 1.2;
+    }
+
+    /* ─── COMIC SPEED LINES — decorative background ─── */
+    .speed-lines {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .speed-lines::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: repeating-conic-gradient(
+        transparent 0deg,
+        transparent 8deg,
+        rgba(255,255,255,0.04) 8deg,
+        rgba(255,255,255,0.04) 10deg
+      );
+      animation: slowSpin 120s linear infinite;
+    }
+    @keyframes slowSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 1rem;
+      text-align: center;
+      font-family: var(--font-label);
+      font-size: 0.65rem;
+      color: rgba(0,0,0,0.4);
+      margin-bottom: 1rem;
+    }
+
+    /* ─── COIN INSERTED INDICATOR — lights up the slot area ─── */
+    .coin-slot-area.inserted .coin-slot {
+      background: var(--pop-yellow);
+      box-shadow: 0 0 12px var(--pop-yellow);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Decorative spinning speed lines -->
+  <div class="speed-lines"></div>
+
+  <!-- ─── HEADER ─── -->
+  <div class="header">
+    <h1>ART-O-MAT</h1>
+    <div class="subtitle">Insert coin. Crank handle. Collect a mystery masterpiece.</div>
+  </div>
+
+  <!-- ─── VENDING MACHINE ─── -->
+  <div class="machine">
+
+    <!-- Display window where artwork appears -->
+    <div class="display-window" id="displayWindow">
+      <div class="display-placeholder" id="placeholder">INSERT COIN<br>& CRANK</div>
+      <div class="artwork-card" id="artworkCard">
+        <div class="artwork-frame" id="artworkFrame"></div>
+        <div class="artwork-title" id="artworkTitle"></div>
+        <div class="artwork-artist" id="artworkArtist"></div>
+        <div class="artwork-year" id="artworkYear"></div>
+      </div>
+    </div>
+
+    <!-- Controls: coin + crank -->
+    <div class="controls">
+      <div class="coin-slot-area" id="coinSlotArea">
+        <div class="coin-slot"></div>
+        <button class="coin-btn" id="coinBtn">25¢</button>
+        <div class="coin-label">Insert Coin</div>
+      </div>
+
+      <div class="crank-area">
+        <button class="crank-btn" id="crankBtn" disabled>VEND</button>
+        <div class="crank-label">Crank It</div>
+      </div>
+    </div>
+
+    <!-- Status message strip -->
+    <div class="status-strip" id="statusStrip">— ready —</div>
+  </div>
+
+  <!-- ─── COLLECTION TRAY ─── -->
+  <div class="tray-section">
+    <div class="tray-title">Your Collection</div>
+    <div class="tray" id="tray"></div>
+  </div>
+
+  <footer>art-o-mat · mystery masterpieces from the masters · no refunds</footer>
+
+  <script>
+    // ─── ARTWORK DATABASE ───
+    // Each entry: emoji stand-in for the painting, title, artist, year, bg color
+    const artworks = [
+      // Edgar Degas
+      { emoji: "🩰", title: "The Dance Class", artist: "Edgar Degas", year: "1874", bg: "#E8DCC8" },
+      { emoji: "🛁", title: "The Tub", artist: "Edgar Degas", year: "1886", bg: "#D4C5A9" },
+      { emoji: "👒", title: "The Millinery Shop", artist: "Edgar Degas", year: "1879", bg: "#C9B99A" },
+      { emoji: "🐎", title: "Racehorses at Longchamp", artist: "Edgar Degas", year: "1871", bg: "#B8C5A3" },
+      { emoji: "🎻", title: "The Orchestra at the Opera", artist: "Edgar Degas", year: "1870", bg: "#8B7355" },
+
+      // Pablo Picasso
+      { emoji: "🎸", title: "The Old Guitarist", artist: "Pablo Picasso", year: "1904", bg: "#3A5F8A" },
+      { emoji: "🪞", title: "Girl Before a Mirror", artist: "Pablo Picasso", year: "1932", bg: "#D4A843" },
+      { emoji: "😭", title: "The Weeping Woman", artist: "Pablo Picasso", year: "1937", bg: "#C4D44A" },
+      { emoji: "🕊️", title: "Dove of Peace", artist: "Pablo Picasso", year: "1949", bg: "#E8E4D8" },
+      { emoji: "💀", title: "Still Life with Bull's Skull", artist: "Pablo Picasso", year: "1942", bg: "#8B7765" },
+
+      // Jenny Saville
+      { emoji: "🫀", title: "Propped", artist: "Jenny Saville", year: "1992", bg: "#D4A88C" },
+      { emoji: "🧬", title: "Strategy", artist: "Jenny Saville", year: "1994", bg: "#C5A3A3" },
+      { emoji: "👁️", title: "Reverse", artist: "Jenny Saville", year: "2002", bg: "#B8A090" },
+      { emoji: "🩸", title: "Torso 2", artist: "Jenny Saville", year: "2004", bg: "#C9A5A5" },
+      { emoji: "🌊", title: "Shift", artist: "Jenny Saville", year: "1996", bg: "#A8B5C5" },
+
+      // Yayoi Kusama
+      { emoji: "🔴", title: "Infinity Nets", artist: "Yayoi Kusama", year: "1958", bg: "#222" },
+      { emoji: "🎃", title: "Pumpkin", artist: "Yayoi Kusama", year: "1994", bg: "#FFD700" },
+      { emoji: "🪩", title: "Narcissus Garden", artist: "Yayoi Kusama", year: "1966", bg: "#C0C0C0" },
+      { emoji: "🟡", title: "Dots Obsession", artist: "Yayoi Kusama", year: "2003", bg: "#FF1493" },
+      { emoji: "♾️", title: "Infinity Mirror Room", artist: "Yayoi Kusama", year: "1965", bg: "#111" },
+    ];
+
+    // Track what's been vended so far (to avoid immediate repeats)
+    let lastVended = -1;
+    // Collection tray
+    const collection = [];
+
+    // DOM refs
+    const coinBtn = document.getElementById('coinBtn');
+    const crankBtn = document.getElementById('crankBtn');
+    const placeholder = document.getElementById('placeholder');
+    const artworkCard = document.getElementById('artworkCard');
+    const artworkFrame = document.getElementById('artworkFrame');
+    const artworkTitle = document.getElementById('artworkTitle');
+    const artworkArtist = document.getElementById('artworkArtist');
+    const artworkYear = document.getElementById('artworkYear');
+    const statusStrip = document.getElementById('statusStrip');
+    const coinSlotArea = document.getElementById('coinSlotArea');
+    const tray = document.getElementById('tray');
+
+    let coinInserted = false;
+
+    // ─── INSERT COIN ───
+    coinBtn.addEventListener('click', () => {
+      if (coinInserted) return;
+      coinInserted = true;
+
+      // Visual feedback: light up slot, disable coin btn, enable crank
+      coinSlotArea.classList.add('inserted');
+      coinBtn.disabled = true;
+      crankBtn.disabled = false;
+      statusStrip.textContent = '— coin accepted · crank to vend —';
+
+      // Brief "clink" animation on the coin button
+      coinBtn.style.transform = 'translateY(4px) scale(0.9)';
+      setTimeout(() => { coinBtn.style.transform = ''; }, 150);
+    });
+
+    // ─── CRANK TO VEND ───
+    crankBtn.addEventListener('click', () => {
+      if (!coinInserted) return;
+
+      // Spin the crank
+      crankBtn.classList.add('cranking');
+      crankBtn.disabled = true;
+      statusStrip.textContent = '— vending... —';
+
+      // Pick a random artwork (avoid immediate repeat)
+      let idx;
+      do {
+        idx = Math.floor(Math.random() * artworks.length);
+      } while (idx === lastVended && artworks.length > 1);
+      lastVended = idx;
+
+      const art = artworks[idx];
+
+      // After crank animation, drop the artwork
+      setTimeout(() => {
+        crankBtn.classList.remove('cranking');
+
+        // Hide placeholder, reset card, then drop it in
+        placeholder.style.opacity = '0';
+        artworkCard.classList.remove('dropped');
+        artworkCard.style.opacity = '0';
+        artworkCard.style.transform = 'translateY(-120%)';
+
+        // Set artwork content
+        artworkFrame.textContent = art.emoji;
+        artworkFrame.style.backgroundColor = art.bg;
+        // Adjust text color for dark backgrounds
+        const isDark = art.bg.startsWith('#1') || art.bg.startsWith('#2') || art.bg.startsWith('#3') || art.bg === '#222' || art.bg === '#111';
+        artworkFrame.style.color = isDark ? '#fff' : '#111';
+        artworkTitle.textContent = art.title;
+        artworkArtist.textContent = art.artist;
+        artworkYear.textContent = art.year;
+
+        // Trigger drop animation
+        void artworkCard.offsetWidth; // force reflow
+        artworkCard.classList.add('dropped');
+
+        statusStrip.textContent = `— ${art.artist} · ${art.title} —`;
+
+        // Add to collection tray
+        addToTray(art);
+
+        // Reset for next coin
+        coinInserted = false;
+        coinSlotArea.classList.remove('inserted');
+        coinBtn.disabled = false;
+      }, 600);
+    });
+
+    // ─── ADD TO COLLECTION TRAY ───
+    function addToTray(art) {
+      const item = document.createElement('div');
+      item.className = 'tray-item';
+      item.innerHTML = `
+        <div class="tray-emoji">${art.emoji}</div>
+        <div class="tray-artist">${art.artist}</div>
+      `;
+      tray.appendChild(item);
+    }
+  </script>
+</body>
+</html>

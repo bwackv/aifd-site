@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-frame="on" data-subtitle="Design a ___" data-docname="art3041-design-a-blank"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design a ____ — A.I. for Designers</title>
+
+
+<link rel="stylesheet" href="../../../shared/font.css">
+<link rel="stylesheet" href="../../../shared/core.css">
+<style>
+
+/* When the rail collapses into the band header, its last line carries no trailing margin, so the gap
+   down to the main body is main's collapsed padding-top alone (--s2), not the note margin and the
+   padding stacked. */
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main .note,.main .sec,.main .tag,
+.rail .sec,.rail .note,
+.full .sec,.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+/* --- Sets on a rail-less field ------------------------------------------------
+   A set spans all twelve columns and lays its cells on equal columns with a real gap.
+   The set carries no ground of its own, so the field lines read through the gaps and the
+   padding ring; each cell carries the ground instead and knocks the field out around
+   itself. The column count is not fixed here: arrangeSets() chooses it from the item
+   count and the breakpoint so no cell is ever left alone on the last row. */
+
+.set{
+  grid-column:1 / -1;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);   /* overwritten by arrangeSets() */
+  gap:var(--s3);
+  padding:var(--s3);
+}
+
+/* A card carries its own ground and fades the field out around its edges: a padded body,
+   with an optional full-bleed image on top. Cells in a row stretch to the tallest. */
+
+.cell{
+  display:flex;flex-direction:column;
+  border:1px solid var(--line);
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+  overflow:hidden;
+  text-decoration:none;color:inherit;
+  transition:border-color .15s, transform .15s;
+}
+
+.cell:hover{border-color:var(--accent);transform:translateY(-2px);}
+
+.cell:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+/* A card that spans a full row becomes a feature: image beside the text, not above it, with the
+   copy capped to a reading measure. arrangeSets() adds .span; it only ever applies at two or three
+   columns, so a stacked mobile card is never affected. */
+
+.cell.span{flex-direction:row;}
+
+.cell.span .card-img{width:40%;flex:none;align-self:stretch;aspect-ratio:auto;max-height:none;}
+
+.cell.span .card-body{flex:1;}
+
+.cell.span .card-body > *{max-width:var(--measure);}
+
+/* Placeholder image: a palette gradient with a soft highlight, so it reads as a picture without an
+   external request. Theme-independent on purpose. */
+
+.card-img{width:100%;aspect-ratio:3 / 2;max-height:280px;filter:saturate(.72) brightness(.96);}
+
+.img-a{background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.30),transparent 55%),linear-gradient(135deg,var(--c5),var(--c6));}
+
+.img-b{background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.30),transparent 55%),linear-gradient(135deg,var(--c1),var(--c2));}
+
+.img-c{background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.30),transparent 55%),linear-gradient(135deg,var(--c4),var(--c3));}
+
+.card-body{display:flex;flex-direction:column;flex:1;padding:var(--s3);overflow-wrap:break-word;}
+
+.card-body > :last-child{margin-bottom:0;}
+
+.ctitle{
+  margin:0 0 var(--s2);
+  font-size:1.125rem;line-height:1.2;
+  font-variation-settings:"wdth" 100,"wght" 600,"ROND" 55;
+}
+
+/* Pinned to the card foot, so a short text-only card fills its stretched height instead of a void */
+
+.card-meta{
+  margin:auto 0 0;padding-top:var(--s2);
+  color:var(--accent);
+  font-size:0.875rem;letter-spacing:.06em;text-transform:uppercase;
+  font-variation-settings:"wdth" 100,"wght" 500,"ROND" 55;
+}
+
+/* The blank is the student's, so it carries this document's accent rather than the fixed choice red. */
+
+h1 .fill{color:var(--accent);}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}   /* no rail column, no boundary */
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}   /* field is hidden here, so nothing sits at a crossing */
+}
+
+@media (max-width:599px){
+  /* Mobile: tighten the side padding to 12px — the field 12px off the screen edge, the type 12px inside it. */
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+</style>
+<link rel="stylesheet" href="../../../shared/print.css">
+</head>
+<body>
+
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <svg class="cols" contenteditable="false" aria-hidden="true"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true">
+    <polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline>
+    <g id="frame-dots"></g>
+  </svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1><span>Design a <span class="fill">____</span></span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;">interpret an intentionally vague prompt and use a.i. to make it into something</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>The Brief</p>
+      <p class="note">Read this first.</p>
+    </div>
+    <div class="main">
+      <p>Pick one of the three prompts below. Your job is <strong>not to write code</strong> — it's to <strong>direct the A.I.</strong> to build a website in HTML, CSS &amp; JavaScript that reflects your interpretation.&nbsp;</p>
+      <p>The prompt is intentionally vague. Feel free to take creative license.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="full">
+      <h2 class="sec"><span class="num">02</span>Your Prompt</h2>
+      <p class="note">Pick one. The blank is yours to fill. Have a better idea than these three? Go with it (just run it by me first).</p>
+    </div>
+    <div class="set">
+      <div class="cell">
+        <div class="card-body">
+          <span class="tag">Clock</span>
+          <h3 class="ctitle">“Make a clock.”</h3>
+          <p>A sundial? A Dalí clock? A clock made of words? A countdown to something? You decide.</p>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="card-body">
+          <span class="tag">Vending machine</span>
+          <h3 class="ctitle">“Build a vending machine.”</h3>
+          <p>What does it sell? What does it look like? Is it from the future, the past, or another planet?</p>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="card-body">
+          <span class="tag">Shrine</span>
+          <h3 class="ctitle">“Build a shrine.”</h3>
+          <p>To what? To whom? A memorial, a fan altar, a glowing neon temple, a single candle in a dark room?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">03</span>The Rules</p>
+      <p class="note">How it works.</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li>You have the rest of the class time to start on this. We will continue it in class on Wednesday.</li>
+        <li>Use <strong>Copilot</strong>. If Copilot will not do something, you can try another one.</li>
+        <li>Decide which of the three prompts to pursue, then start by asking the A.I. to brainstorm with you.</li>
+        <li>Ask for the whole thing as a <strong>single HTML file</strong> — all the HTML, CSS, and JavaScript together, so it's fast to paste into your editor and open in a browser.</li>
+        <li>You don't write the code — the A.I. does. <strong>You direct.</strong></li>
+        <li><strong>Iterate.</strong> Don't accept the first thing it gives you. Push it further.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">04</span>Hand-In</p>
+      <p class="note">When time's up.</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li>Bring your HTML file to class on Wednesday.</li>
+        <li>You will learn how to post it once you have made your course website.</li>
+        <li>We'll look at a few together as a class.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">05</span>Worked Example</p>
+      <p class="note">How I built “ART-O-MAT” with A.I.</p>
+    </div>
+    <div class="main">
+      <p>I built a vending-machine site with Claude. Here's what the process actually looked like — including the parts where the first version wasn't good enough and I had to push the A.I. harder. Be sure to push your project as far as you can!&nbsp;</p>
+
+      <h2>1&nbsp; The first prompt</h2>
+      <ul>
+        <li>I told Claude: <em>“Build a vending-machine website. I want it to vend unknown artworks by masters — Degas, Picasso, Jenny Saville, Yayoi Kusama. It should have a pop-art halftone feel.”</em></li>
+        <li>What came back: a working machine with a coin slot, a crank handle, halftone dots, comic-style type, and a collection tray. The structure and interaction were solid but...</li>
+      </ul>
+
+      <h2>2&nbsp; What was wrong</h2>
+      <ul>
+        <li>The “paintings” were just emojis — a ballet slipper standing in for a Degas, a guitar for Picasso's Old Guitarist. A placeholder, not a design.</li>
+        <li>The machine itself looked good — the pop-art style, the halftone, the interaction — but the art it was vending felt lazy.</li><li><a href="art-o-mat-v1.html" target="_blank">See the first version</a></li>
+      </ul>
+
+      <h2>3&nbsp; Going back in — defining the artists</h2>
+      <ul>
+        <li>I told Claude: <em>“The paintings are crappy. Define each artist's visual style, then build CSS paintings that actually feel like their work.”</em></li>
+        <li>We broke it down artist by artist:</li>
+        <li><strong>Degas</strong> — soft pastels, warm ochres, blurred motion, diagonal compositions, dancers mid-gesture.</li>
+        <li><strong>Picasso</strong> — bold black outlines, fragmented geometry, flat colour planes, several viewpoints at once.</li>
+        <li><strong>Jenny Saville</strong> — flesh tones, thick impasto, layered transparency, warm pinks and reds bleeding together.</li>
+        <li><strong>Kusama</strong> — polka dots, infinite repetition, vivid colour fields, hot pink and yellow, layered dot grids.</li>
+        <li>Then I asked for three CSS paintings per artist — twelve in all — built from gradients, shapes, patterns, and layering. No images. Just code.</li>
+        <li><a href="art-o-mat-gallery.html" target="_blank">See the CSS paintings gallery</a></li>
+      </ul>
+
+      <h2>4&nbsp; Putting it together</h2>
+      <ul>
+        <li>Once the paintings existed, I had Claude swap the emoji for the real CSS paintings inside the machine.</li>
+        <li>I pushed on layout too: <em>“Make it fill most of the screen. The body text is hard to read on the halftone — add a semi-transparent red behind it.”</em></li>
+        <li>Small tweaks, but they make a difference.&nbsp;</li>
+        <li><a href="art-o-mat-v2.html" target="_blank">See the final version</a></li>
+      </ul>
+
+      <h2>5&nbsp; What else could be done (you should keep going, my demo is limited)</h2>
+      <p>Beyond my own ideas of further changes such as making it dynamic with an evolving roster of artists, I asked Claude what to add next. It came back with:</p>
+      <ul>
+        <li><strong>A “mystery” button</strong> — generates a brand-new painting on the fly in one artist's style, so you get something never seen before.</li>
+        <li><strong>Ornate gold frames</strong> — CSS-rendered around each painting, to sell the gallery feel.</li>
+        <li><strong>Sound effects</strong> — a coin clink, a crank grind, a soft thud on drop, synthesised with the Web Audio API, no files needed.</li>
+        <li><strong>A “sold out” mechanic</strong> — once all twelve are vended, the machine flashes, shakes, and resets.</li>
+        <li><strong>An animated reveal</strong> — the painting drops wrapped in paper that peels away, building anticipation.</li>
+        <li>The point: you can always keep going. The A.I. doesn't run out of ideas — you just have to keep asking. It may run out of good ideas, though.&nbsp;</li>
+      </ul>
+
+      <h2>6&nbsp; Takeaway</h2>
+      <ul>
+        <li>The first version took one prompt. <b>The good version took a conversation.</b></li>
+        <li>The A.I. doesn't know what “good” looks like for your project — you do. Look at what it gives you, find what isn't working, and tell it specifically what to fix.</li>
+        <li>The more specific the feedback, the better the result. “The paintings are crappy” is a start; “define each artist's style and build CSS paintings that match” is better.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="full">
+      <p class="note"><strong>This is experimental.</strong> There's no wrong answer. The goal is to get your hands on these tools, see what they can do, and start forming your own sense of how to direct them. Go weird.</p>
+      <p class="note" style="margin-top:var(--s3);">ART 3041 · A.I. for Designers · Fall 2026 · this page was built with A.I. under my creative direction.</p>
+    </div>
+  </div>
+</main>
+
+<script src="../../../shared/core.js"></script>
+
+<script>
+// Light unless the toggle says otherwise.
+
+// Field lines on or off, for checking the layout underneath them.
+
+// Column count for a set: the most columns (capped by the breakpoint, never more than the item
+
+// count) that leave no single cell alone on the last row; if every count would strand one, keep the
+
+// cap and let the last cell span its row. Ported from the grid sample so the three prompts never orphan.
+
+function colsFor(n, cap){
+  cap = Math.min(cap, n);
+  if(cap < 2) return {cols:Math.max(1,cap), span:false};
+  for(var c=cap;c>=2;c--){ if(n % c !== 1) return {cols:c, span:false}; }
+  return {cols:cap, span:true};
+}
+
+function capFor(){
+  return window.matchMedia('(min-width:900px)').matches ? 3
+       : window.matchMedia('(min-width:600px)').matches ? 2 : 1;
+}
+
+function arrangeSets(){
+  var cap = capFor();
+  document.querySelectorAll('.set').forEach(function(set){
+    var cells = Array.prototype.filter.call(set.children, function(c){ return c.classList.contains('cell'); });
+    var n = cells.length; if(!n) return;
+    var a = colsFor(n, cap);
+    set.style.gridTemplateColumns = 'repeat(' + a.cols + ',1fr)';
+    cells.forEach(function(c){ c.style.gridColumn = ''; c.classList.remove('span'); });
+    if(a.span){ cells[n-1].style.gridColumn = '1 / -1'; cells[n-1].classList.add('span'); }
+  });
+}
+
+// Turn the editable template off so the example links become clickable, and back on to edit copy.
+
+// This document arranges its own card sets; run it on every shared layout pass.
+RELAYOUT.push(arrangeSets);
+</script>
+
+</body></html>
