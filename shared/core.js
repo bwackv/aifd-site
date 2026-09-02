@@ -373,20 +373,45 @@ document.addEventListener('visibilitychange', function(){
 
 // the loop corrects until the text fits or the floor is reached.
 
+// The heading is set to the column: measured at a known size, then scaled by the ratio. A title
+// long enough that one line would fall below MIN is allowed to wrap instead — it takes as many
+// lines as it needs to stay at or above MIN, and then shrinks again only if a single word is
+// still wider than the column. Without the wrap path a long title just ran off the page on a
+// phone, because nowrap plus a floor of 20px has nowhere left to go.
+var FIT_MIN = 20;
+
 function fitHeadings(){
   document.querySelectorAll('h1 > span, .fit > span').forEach(function(span){
     var h1 = span.parentElement;
     var target = h1.clientWidth;
     if(!target) return;
+    span.style.whiteSpace = 'nowrap';
     h1.style.fontSize = '100px';                       // measure at a known size
     var natural = span.getBoundingClientRect().width;
     if(!natural) return;
     var size = 100 * target / natural;
-    for(var i=0;i<4;i++){
-      h1.style.fontSize = Math.max(20, size) + 'px';
-      var w = span.getBoundingClientRect().width;
-      if(w <= target || size <= 20) break;
-      size = size * target / w;
+
+    if(size >= FIT_MIN){
+      for(var i=0;i<4;i++){
+        h1.style.fontSize = size + 'px';
+        var w = span.getBoundingClientRect().width;
+        if(w <= target) break;
+        size = size * target / w;
+      }
+      return;
+    }
+
+    // Two lines, then three, until the size clears MIN.
+    span.style.whiteSpace = 'normal';
+    var lines = 2;
+    while(100 * (lines * target) / natural < FIT_MIN && lines < 6) lines++;
+    size = 100 * (lines * target) / natural;
+    h1.style.fontSize = size + 'px';
+
+    // A word wider than the column would still overhang, so back off until none is.
+    for(var j=0;j<4 && span.scrollWidth > target + 1; j++){
+      size = size * target / span.scrollWidth;
+      h1.style.fontSize = size + 'px';
     }
   });
 }
@@ -394,6 +419,10 @@ function fitHeadings(){
 // Geometry shared with the link-point loop: where each link's line starts (--u-left) and ends
 
 // (the terminus, = the anchor's own width). The hover point travels between the two.
+
+// A touch screen has no hover: it leaves :hover on the last element tapped, which left a link
+// animating after it had been followed and the page returned to. The drivers below check this.
+var CAN_HOVER = !window.matchMedia || matchMedia('(hover:hover)').matches;
 
 var LINKGEOM = new WeakMap();
 
@@ -738,6 +767,7 @@ function measureLinks(){
   }
   var state=new WeakMap(), active=false;
   function tick(dt){
+    if(!CAN_HOVER) return;
     var any=!!document.querySelector('.page a:hover');
     if(!any && !active) return;                 // no link under the pointer: CSS holds the rest state
     active=any;
@@ -821,7 +851,7 @@ function measureLinks(){
   if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   function tick(dt){
     items.forEach(function(it){
-      if(!it.b.matches(':hover')){ if(it.hover){ it.hover=false; it.dot.setAttribute('opacity','0'); } return; }
+      if(!CAN_HOVER || !it.b.matches(':hover')){ if(it.hover){ it.hover=false; it.dot.setAttribute('opacity','0'); } return; }
       var W=it.b.offsetWidth, H=it.b.offsetHeight;
       it.svg.setAttribute('viewBox','0 0 '+W+' '+H);
       it.scroll+=WSPD*dt;

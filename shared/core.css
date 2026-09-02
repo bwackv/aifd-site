@@ -215,6 +215,12 @@ a::before{
   transition:none;pointer-events:none;                    /* snap out: no unmasked solid collapse on mouse-off */
 }
 
+/* Every hover treatment sits behind a real hover device. A touch screen keeps :hover on the last
+   element tapped, so a link went on running its wave after the student had followed it and come
+   back to the page. */
+
+@media (hover:hover){
+
 a:hover::before{
   right:0;                                                /* the signal runs the full width, under the dot */
   height:var(--u-band,6px);
@@ -222,6 +228,8 @@ a:hover::before{
   -webkit-mask:var(--wave) repeat-x var(--wsx,0px) center;mask:var(--wave) repeat-x var(--wsx,0px) center;
   -webkit-mask-size:360px var(--u-band,6px);mask-size:360px var(--u-band,6px);   /* --wsx (JS) scrolls left -> right */
   transition:height .18s, bottom .18s, right .18s;        /* animate in only; base snaps back out */
+}
+
 }
 
 /* The point: at rest it sits at the terminus (outer edge on the last letter's end), centred on the line.
@@ -234,7 +242,9 @@ a::after{
   background:var(--dot-color,var(--accent));opacity:var(--dot-op,1);pointer-events:none;
 }
 
-a:hover::after{ right:auto;left:var(--dot-x,0);transform:translateY(var(--dot-y,0)); }
+@media (hover:hover){
+  a:hover::after{ right:auto;left:var(--dot-x,0);transform:translateY(var(--dot-y,0)); }
+}
 
 /* rides the wave: --dot-x/--dot-y per frame */
 
@@ -395,7 +405,9 @@ a:hover::after{ right:auto;left:var(--dot-x,0);transform:translateY(var(--dot-y,
   line-height:1.2;cursor:pointer;
 }
 
-.btn:hover{background:var(--accent);color:var(--bg);}
+@media (hover:hover){
+  .btn:hover{background:var(--accent);color:var(--bg);}
+}
 
 .btn:focus-visible,.btn-outline:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
 
@@ -425,14 +437,18 @@ a:hover::after{ right:auto;left:var(--dot-x,0);transform:translateY(var(--dot-y,
    left and right edges ride up and down to meet it, and a point circles the real border from the
    bottom-right, against the wave. The flat CSS border is dropped so the two do not double. */
 
-.btn-outline:hover{border-color:transparent;}
+@media (hover:hover){
+  .btn-outline:hover{border-color:transparent;}
+}
 
 /* An <svg> is a replaced element: inset alone does not size it, so it falls back to the default
    300px and pushes the page wider than the viewport on mobile. Size it to the button explicitly. */
 
 .btn-frame{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);overflow:visible;color:var(--line);opacity:0;pointer-events:none;transition:opacity .12s;}
 
-.btn-outline:hover .btn-frame{opacity:1;}
+@media (hover:hover){
+  .btn-outline:hover .btn-frame{opacity:1;}
+}
 
 /* Once the script draws the wavy, edge-connected band rules in the frame SVG, drop the flat CSS ones. */
 
