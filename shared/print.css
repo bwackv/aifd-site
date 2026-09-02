@@ -133,6 +133,18 @@
 
   .rail,li,dd,.spec,.sig,.swatch,.swatch-pt,.set > *{break-inside:avoid;}
 
+  /* A section is one unit. Split across a sheet, its rail label lands on one page and its text on
+     the other, which reads as two different sections. Chrome ignores this for a band taller than
+     the page box and fragments it anyway, which is the behaviour we want in that case. */
+
+  .band{break-inside:avoid;}
+
+  /* Except a band built on a label list. Those are the long ones — the grading weights, the
+     grade definitions — and forcing them whole pushes a nearly empty page ahead of them. They
+     fragment cleanly, because dt and dd already refuse to split. */
+
+  .band:has(.info){break-inside:auto;}
+
   /* Never fewer than two lines of a paragraph either side of a break. This is the guard against a
      single line stranded at the top of a sheet, and it only works if nothing else forces a break —
      a break-before:avoid on the same block makes Chrome drop widows to satisfy the harder rule. */
