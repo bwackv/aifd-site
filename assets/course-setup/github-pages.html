@@ -262,7 +262,15 @@ ol{margin:0 0 var(--s3);width:fit-content;padding-left:1.4em;}
         <li>Name it <strong>design-a.html</strong>. Leave it next to <strong>index.html</strong> &mdash; not inside a folder.</li>
         <li>Get the code the same way you did before: open your <a href="../projects/design-a-blank/design-a-blank.html">Design a ____</a> file in the browser, right click, <strong>View Page Source</strong>, select all, copy, and paste it into <strong>Enter file contents here</strong>.</li>
         <li>Click <strong>Commit changes</strong>.</li>
-        <li>Open <strong>index.html</strong> and click the pencil to edit it. Find the <strong>Design a ____</strong> row of your Work list &mdash; it is a link with nothing in it yet. Put the file name between its quotes so it reads <strong>href="design-a.html"</strong>. Commit.</li>
+        <li>Now link to it from your homepage. Back in the repository, click <strong>index.html</strong>, then the pencil icon to edit it.</li>
+        <li>Find the <strong>03 Design a ___</strong> row of your Work list. Copilot built each row as an empty link, so it looks like this:
+          <pre class="code">&lt;a href=""&gt;Design a ___&lt;/a&gt;</pre>
+        </li>
+        <li>Type the file name inside the empty quotes, so it reads:
+          <pre class="code">&lt;a href="design-a.html"&gt;Design a ___&lt;/a&gt;</pre>
+          Nothing else on the line changes.
+        </li>
+        <li>Click <strong>Commit changes</strong>.</li>
         <li>Open your live address and click that row. It opens at <strong>https://yourusername.github.io/your-repo/design-a.html</strong>, the way the note above describes.</li>
       </ol>
       <p class="note">Every project after this one works the same way: add the file, then fill in its row.</p>
