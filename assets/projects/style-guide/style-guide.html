@@ -322,8 +322,8 @@ p.cue .cue-mark .cue-h{right:calc(100% + var(--s3));}
 
 <main class="page" contenteditable="false" spellcheck="false">
 
-  <svg class="cols" contenteditable="false" aria-hidden="true" viewBox="0 0 1200 7933"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
-  <svg class="frame" contenteditable="false" aria-hidden="true" viewBox="0 0 1200 7933"><polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline><g id="frame-dots"></g></svg>
+  <svg class="cols" contenteditable="false" aria-hidden="true" viewBox="0 0 1200 7526"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true" viewBox="0 0 1200 7526"><polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline><g id="frame-dots"></g></svg>
 
   <div class="band">
     <div class="masthead">
@@ -339,8 +339,8 @@ p.cue .cue-mark .cue-h{right:calc(100% + var(--s3));}
     </div>
     <div class="main">
       <p>You already have a homepage online (<strong>index.html</strong>). In week 1 you wrote a few rules for it — tone, typography — but it wasn't very in depth.</p>
-      <p>This week you will write a more robust set of design guidelines for a.i. to follow. The result of creating a set of design guidelines is that it stops injecting it's own designs and uses yours; pages/designs will look consistent across assignments/projects. so it stops guessing and builds your page the same way every time. We call this set of design standards a <b>Style Guide</b>, or you'll give it as a "handoff" to the a.i.</p>
-      <p>Here's a definition of style guide from <a href="https://www.figma.com/resource-library/what-is-a-style-guide/" target="_blank" rel="noopener" style="">Figma</a>:</p>
+      <p>This week you will write a more robust set of design guidelines for a.i. to follow. <b>This is called a style guide</b>. A good style guide results in a consistent look/feel across all of your assets. Usually they are made for clients/brands, but you are making one for this class since you'll be making many different things like websites, mini-apps, experimental software, typography stuff, etc... After creating our style guide, we are going to "hand it off" to our a.i. tools, so we'll name it our "handoff".&nbsp;</p>
+      <p>Here's a definition of style guide from <a href="https://www.figma.com/resource-library/what-is-a-style-guide/" target="_blank" rel="noopener" style="">Figma</a>&nbsp;(although it doesn't address layout, which is important for us):</p>
       <blockquote>
         <p>“A brand style guide maintains brand consistency and coherence,” explains Leandro. “It gives you helpful templates and guidance on how to use brand elements, including fonts, typography, logo, color palette, and imagery. It's also a key tool to guide messaging and content creation, providing valuable insights into your company's brand voice, tone, and writing style.”</p>
       </blockquote>
@@ -368,7 +368,7 @@ p.cue .cue-mark .cue-h{right:calc(100% + var(--s3));}
             <li>How many columns it has, and what happens to them when you narrow the window to phone width.</li>
             <li>What links and buttons look like, and what happens when you hover them.</li>
             <li>Anything that moves.</li>
-            <li>How images are treated — edge to edge, inset, overlaid, cropped.</li>
+            <li>How images are treated — edge to edge, inset, overlaid, cropped.</li><li>Any interesting features like animations, actions, interactions, transitions, etc...&nbsp;</li>
           </ul>
           <p class="pick-out">Site 1 <span class="fill" contenteditable="true" data-key="ref.u1">___</span> · What I like <span class="fill" contenteditable="true" data-key="ref.w1">___</span></p>
           <p class="pick-out">Site 2 <span class="fill" contenteditable="true" data-key="ref.u2">___</span> · What I like <span class="fill" contenteditable="true" data-key="ref.w2">___</span></p>
@@ -391,57 +391,18 @@ p.cue .cue-mark .cue-h{right:calc(100% + var(--s3));}
         </div>
 
         <div class="pick" data-dec="color">
-          <p class="pick-name">Colour</p>
-          <p>Three colours: background, text, and one accent. The accent is the colour that stands out — links, lines and borders, button fills. Pick them below.</p>
-          <p class="note">On your index.html: the ground, the words, and every link in your Work list.</p>
+          <p class="pick-name">Color</p>
+          <p>Three colous: background, text, and one accent. The accent is the color that stands out — links, lines and borders, button fills. Pick them below.</p>
         </div>
 
         <div class="pick" data-dec="lay">
           <p class="pick-name">Layout</p>
-          <p>Open your two reference sites, count the columns, then narrow the window to phone width and count again. Pick yours. Then pick how the image across the top sits: running to the edges of the screen, or inset with a margin. And whether your name sits on it or under it.</p>
-          <p class="note">On your index.html: the shape of the whole page, at both sizes.</p>
-          <div class="pick-ctrl" contenteditable="false">
-            <span class="lbl">Columns · laptop</span>
-            <button class="btn-outline" type="button" data-step="lay.desk" data-val="-1">−</button>
-            <span class="pick-num" data-num="lay.desk">4</span>
-            <button class="btn-outline" type="button" data-step="lay.desk" data-val="1">+</button>
-            <span class="lbl">Columns · phone</span>
-            <button class="btn-outline" type="button" data-step="lay.phone" data-val="-1">−</button>
-            <span class="pick-num" data-num="lay.phone">1</span>
-            <button class="btn-outline" type="button" data-step="lay.phone" data-val="1">+</button>
-          </div>
-          <div class="pick-ctrl" contenteditable="false">
-            <span class="lbl">Hero image</span>
-            <button class="btn-outline" type="button" data-set="lay.hero" data-val="edge" aria-pressed="false">Edge to edge</button>
-            <button class="btn-outline" type="button" data-set="lay.hero" data-val="inset" aria-pressed="true">Inset</button>
-            <span class="lbl">My name</span>
-            <button class="btn-outline" type="button" data-set="lay.head" data-val="over" aria-pressed="false">On the image</button>
-            <button class="btn-outline" type="button" data-set="lay.head" data-val="below" aria-pressed="true">Under it</button>
-          </div>
-          <div class="pick-demo demo-lay" id="d-lay" data-hero="inset" data-head="below" style="--desk: 4; --phone: 1;" contenteditable="false">
-            <figure class="wide">
-              <figcaption>Laptop</figcaption>
-              <div class="screen">
-                <div class="hero"><span class="ttl">Your name</span></div>
-                <p class="below ttl">Your name</p>
-                <div class="grid"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-              </div>
-            </figure>
-            <figure class="narrow">
-              <figcaption>Phone</figcaption>
-              <div class="screen">
-                <div class="hero"><span class="ttl">Name</span></div>
-                <p class="below ttl">Name</p>
-                <div class="grid"><i></i><i></i><i></i><i></i></div>
-              </div>
-            </figure>
-          </div>
-          <p class="pick-out">Columns on a laptop <span class="fill" data-out="lay.desk">4</span> · on a phone <span class="fill" data-out="lay.phone">1</span> · Hero <span class="fill" data-out="lay.hero">inset, with a margin around it</span> · My name sits <span class="fill" data-out="lay.head">underneath the image</span></p>
+          <p>Open your two reference sites, count the columns, then narrow the window to phone width and count again. You'll notice that the AiFD website is 12 columns (you can see the lines) but mostly follows a two column layout, with a narrow left rail for subject headings / topics and a wider right column for main content. It collapses to a one column layout on mobile.&nbsp;</p>
         </div>
 
         <div class="pick" data-dec="btn">
           <p class="pick-name">Links</p>
-          <p>Your page is a list of links to your assignments. They can be plain text links or buttons. Hover each sample below — what changes is the hover state, and you pick that too.</p>
+          <p>Your page is a list of links to your assignments. They can be plain text links or buttons. They can also have interesting interactions on hover or on click. You may have already been given something interesting by your a.i. Now you should specify what YOU want. Hover each sample below to get some ideas — what changes is the hover state, and you pick that too.</p>
           <p class="note">On your index.html: every item in your Work list.</p>
           <div class="pick-ctrl" contenteditable="false">
             <span class="lbl">They are</span>
@@ -471,7 +432,7 @@ p.cue .cue-mark .cue-h{right:calc(100% + var(--s3));}
 
         <div class="pick" data-dec="mo">
           <p class="pick-name">Motion</p>
-          <p>Specify an animation. This can be an animated background (as below). But it could also be many other things, such as an animated effect when you hover a link. Pick what it is.</p>
+          <p>Specify an animation. This can be an animated background (as below). But it could also be many other things, such as an animated effect when you hover a link. Here is one animation to give you an idea.</p>
           <p class="note">On your index.html: behind everything, the whole time.</p>
           <div class="pick-ctrl" contenteditable="false">
             <span class="lbl">Background</span>
@@ -521,7 +482,7 @@ LINKS IN MY WORK LIST
 MOVING BACKGROUND
   What it is: a slow colour shift
   Speed: medium</pre>
-      <p class="note">This fills itself in as you decide. Anything still reading <em>you decide</em> is a blank you left for the a.i.</p>
+      <p class="note"><br></p>
     </div>
   </div>
 
@@ -580,7 +541,7 @@ Fill in the technical details a developer would need — sizes,
 spacing, breakpoints — based on my answers. Do not ask me
 questions. Output only the list.</pre>
       <p>Read what comes back. If it changed one of your answers, tell it and ask again.</p>
-      <p class="cue">Make a file called <strong>handoff.md</strong> and paste the list into it. Keep it next to your <strong>index.html</strong> — you'll upload it in 07.<span class="cue-mark" contenteditable="false" aria-hidden="true" style="opacity: 1; color: rgb(27, 105, 200);">
+      <p class="cue">Make a file called <strong>handoff.md</strong> and paste the list into it. Keep it next to your <strong>index.html</strong> — you'll upload it in 07.<span class="cue-mark" contenteditable="false" aria-hidden="true" style="opacity: 1; color: rgb(229, 0, 110);">
         <svg class="cue-h" viewBox="0 0 36 26"><polygon class="cue-head" fill="currentColor" points="0,1 0,25 34,13"></polygon></svg>
         <svg class="cue-v" viewBox="0 0 26 36"><polygon class="cue-head" fill="currentColor" points="1,0 25,0 13,34"></polygon></svg>
       </span></p>
@@ -595,7 +556,7 @@ questions. Output only the list.</pre>
     </div>
     <div class="main">
       <ol>
-        <li class="cue">Open your <a href="../../course-setup/copilot.html" target="_blank" rel="noopener" style="">Copilot custom instructions</a>.<span class="cue-mark" contenteditable="false" aria-hidden="true" style="opacity: 1; color: rgb(27, 105, 200);">
+        <li class="cue">Open your <a href="../../course-setup/copilot.html" target="_blank" rel="noopener" style="">Copilot custom instructions</a>. (note: you can do this with any a.i. tool, another option is to just drag in the handoff file at the start of a session)<span class="cue-mark" contenteditable="false" aria-hidden="true" style="opacity: 1; color: rgb(229, 0, 110);">
           <svg class="cue-h" viewBox="0 0 36 26"><polygon class="cue-head" fill="currentColor" points="0,1 0,25 34,13"></polygon></svg>
           <svg class="cue-v" viewBox="0 0 26 36"><polygon class="cue-head" fill="currentColor" points="1,0 25,0 13,34"></polygon></svg>
         </span></li>
@@ -603,9 +564,8 @@ questions. Output only the list.</pre>
         <li>Paste in your handoff.</li>
         <li>Add this line to the end, exactly as written: <strong>Do not display code. Always give me a fully updated and downloadable file complete with all HTML/CSS/JS.</strong></li>
         <li>Save it, then open a brand new chat.</li>
-        <li>Do the same in every other a.i. you use. ChatGPT has custom instructions, Gemini has saved info, Claude has project instructions. Same handoff in each one.</li>
       </ol>
-      <p class="note">Custom instructions apply to every conversation, not just the next one. Once the handoff is in there you stop re-explaining it at the start of every chat.</p>
+      <p class="note">Custom instructions apply to every conversation, not just the next one. Once the handoff is in there you stop re-explaining it at the start of every chat. Or atleast this is our hope.</p>
     </div>
   </div>
 
@@ -624,7 +584,7 @@ questions. Output only the list.</pre>
       <p>Your page needs one image, across the top. This is called a "hero image". Generate the image using a.i.</p>
       <p>Copilot can generate images, but it sometimes refuses or does a bad job. If it does, use Gemini or ChatGPT — both are free. Claude does not generate images at all, but it is good at writing the prompt for you.</p>
       <p>It has to relate to your life somehow. That is as specific as I am going to be — your commute, your apartment, something you own, something you do, what you're into right now, somewhere you go. Take it where you want. In your prompt for the image generation also specify the look/feel. This should "match" the style of the page. Again, what this means is up to you, but you'll know it when you find something that works well.&nbsp;</p>
-      <p class="cue">Rename the file <strong>hero.jpg</strong> or <strong>hero.png</strong>, depending on what filetype it saved as.<span class="cue-mark" contenteditable="false" aria-hidden="true" style="opacity: 1; color: rgb(27, 105, 200);">
+      <p class="cue">Rename the file <strong>hero.jpg</strong> or <strong>hero.png</strong>, depending on what filetype it saved as.<span class="cue-mark" contenteditable="false" aria-hidden="true" style="opacity: 1; color: rgb(229, 0, 110);">
         <svg class="cue-h" viewBox="0 0 36 26"><polygon class="cue-head" fill="currentColor" points="0,1 0,25 34,13"></polygon></svg>
         <svg class="cue-v" viewBox="0 0 26 36"><polygon class="cue-head" fill="currentColor" points="1,0 25,0 13,34"></polygon></svg>
       </span></p>
@@ -664,7 +624,7 @@ But I'm also going to paste it here:
 <span class="fill">[paste your style handoff]</span>
 
 I have attached my page as it is now, index.html, and my hero
-image, hero.jpg.
+image, hero.jpg. The hero image should go across the top of the page.
 
 Rebuild the page so it follows the style handoff, and add one thing:
 - A background that moves. Written in CSS or JavaScript, inside
