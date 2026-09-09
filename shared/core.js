@@ -116,6 +116,7 @@ function buildToolbar(){
             + (extra ? '    ' + extra.innerHTML.trim() + '\n' : '');
   var author = PUBLIC ? '' :
       '    <button class="btn-outline" type="button" onclick="saveDoc()">Save HTML</button>\n' +
+      '    <button class="btn-outline" type="button" onclick="pickSaveFolder()" title="Point Save HTML at the course folder">Save folder</button>\n' +
       '    <button class="btn-outline" type="button" onclick="window.print()">PDF</button>\n';
   var hint = PUBLIC ? '' : '\n    <span class="hint">or press &#8984;/Ctrl + S</span>';
 
@@ -977,16 +978,81 @@ function saveDoc(){
     a.click();
     URL.revokeObjectURL(a.href);
   };
-  // Chrome and Edge can put up a real Save As dialog so the file can be filed where it belongs;
-  // anywhere else, and on a cancelled dialog's error path, it lands in the download folder as before.
-  // `id` is what makes the dialog come back to the course folder: Chrome remembers the last directory
-  // used under that name, so the picker only has to be steered to aifd-site once. Without it every
-  // save opens in Documents.
+  // Chrome and Edge can put up a real Save As dialog; anywhere else the file lands in the download
+  // folder as before.
   if(!window.showSaveFilePicker){ toDownloads(); return; }
-  window.showSaveFilePicker({id:'aifd-site',suggestedName:name,types:[{description:'HTML file',accept:{'text/html':['.html']}}]})
-    .then(function(h){ return h.createWritable(); })
-    .then(function(w){ return w.write(blob).then(function(){ return w.close(); }); })
-    .catch(function(e){ if(!e || e.name !== 'AbortError') toDownloads(); });
+  var opts = {id:'aifd-site', suggestedName:name, types:[{description:'HTML file',accept:{'text/html':['.html']}}]};
+  var write = function(h){
+    return h.createWritable()
+      .then(function(w){ return w.write(blob).then(function(){ return w.close(); }); })
+      .then(function(){ return putHandle(h); });        // remember where, for the next save
+  };
+  savedFolder().then(function(dir){
+    // The folder is known: write straight into it, beside the file this doc was opened from.
+    if(dir) return dir.getFileHandle(name, {create:true}).then(write);
+    // First save: a dialog. `startIn` is the last file saved from this doc; the very first time
+    // there is nothing to point at and Chrome opens in Documents. Steer it to the course folder
+    // once and it never asks again.
+    return lastHandle().then(function(prev){
+      if(prev) opts.startIn = prev;
+      return window.showSaveFilePicker(opts).then(write);
+    });
+  }).catch(function(e){ if(!e || e.name !== 'AbortError') toDownloads(); });
+}
+
+// Where Save HTML puts the file. SITE_ROOT is a path, and a path cannot be turned into a directory
+// handle — only a picker hands one out — so the last handle the user chose is kept in IndexedDB
+// (handles are structured-cloneable; localStorage cannot hold one). Two kinds are stored: a
+// directory handle, once `pickSaveFolder()` has been run, which makes every save silent and
+// dialog-free; and otherwise the last file handle, used only as the Save As dialog's opening
+// location so it stops reverting to Documents.
+function idbHandle(key, val){
+  return new Promise(function(res, rej){
+    var r = indexedDB.open('aifd-save', 1);
+    r.onupgradeneeded = function(){ r.result.createObjectStore('h'); };
+    r.onerror = function(){ rej(r.error); };
+    r.onsuccess = function(){
+      var st = r.result.transaction('h', val === undefined ? 'readonly' : 'readwrite').objectStore('h');
+      if(val !== undefined){ st.put(val, key); res(val); return; }
+      var q = st.get(key);
+      q.onsuccess = function(){ res(q.result || null); };
+      q.onerror = function(){ res(null); };
+    };
+  }).catch(function(){ return null; });
+}
+function putHandle(h){ return idbHandle('file', h); }
+function lastHandle(){ return idbHandle('file'); }
+
+// A stored directory handle is only usable while its readwrite permission stands; Chrome drops that
+// between sessions and re-granting it needs the click that is already in hand.
+function savedFolder(){
+  return idbHandle('dir').then(function(h){
+    if(!h || !h.queryPermission) return null;
+    var o = {mode:'readwrite'};
+    return h.queryPermission(o)
+      .then(function(p){ return p === 'granted' ? p : h.requestPermission(o); })
+      .then(function(p){ return p === 'granted' ? subDir(h) : null; })
+      .catch(function(){ return null; });
+  });
+}
+
+// Walk from the chosen course folder down to this doc's own folder, so a doc nested in
+// assets/projects/... saves next to itself and its relative links to shared/ still resolve.
+function subDir(root){
+  var here = location.href.split(/[?#]/)[0];
+  var rel  = here.indexOf(SITE_ROOT) === 0 ? here.slice(SITE_ROOT.length) : '';
+  var segs = rel.split('/').slice(0, -1).filter(Boolean);
+  return segs.reduce(function(p, seg){
+    return p.then(function(d){ return d.getDirectoryHandle(decodeURIComponent(seg)); });
+  }, Promise.resolve(root));
+}
+
+// Toolbar: Save folder. Pick the course folder once and Save HTML stops opening a dialog at all.
+function pickSaveFolder(){
+  if(!window.showDirectoryPicker) return;
+  window.showDirectoryPicker({id:'aifd-site', mode:'readwrite'})
+    .then(function(d){ return idbHandle('dir', d); })
+    .catch(function(){});
 }
 
 function toggleTheme(){
