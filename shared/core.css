@@ -139,6 +139,15 @@ strong,b{font-variation-settings:"wdth" 100,"wght" 600,"ROND" 25;}
 
 .rail,.main,.masthead,.full{padding:var(--s3);min-width:0;}
 
+/* Bleed: a row where the content IS the band. Every other standing position is padded, which under
+   an image leaves a strip of ground below it that reads as a second, empty band — so a full-bleed
+   image must drop the padding rather than cancel it with a negative margin, which only ever gets
+   three sides right. Media in a bleed row fills the twelve columns edge to edge. */
+
+.band.bleed > .full{padding:0;}
+
+.band.bleed img,.band.bleed video{display:block;width:100%;height:100%;object-fit:cover;}
+
 /* --- Type -------------------------------------------------------------------- */
 
 /* font-variation-settings does not cascade — any axis a rule omits resets to

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" data-public data-theme="light" data-frame="on" class="fonts-ready" data-subtitle="ART 3041" data-docname="art3041-style-guide-for-your-ai" style=""><head>
+<html lang="en" data-public data-theme="light" data-frame="on" class="fonts-ready" data-subtitle="ART 3041" data-docname="art3041-style-handoff-for-your-ai" style=""><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ART 3041 — A Style Guide for Your AI</title>
+<title>ART 3041 — A Style Handoff for Your AI</title>
 
 <link rel="stylesheet" href="../../../shared/font.css">
 <link rel="stylesheet" href="../../../shared/core.css">
@@ -94,6 +94,227 @@ p.cue .cue-mark .cue-h{right:calc(100% + var(--s3));}
 .code{margin:0 0 var(--s3);padding:var(--s2);border:1px solid var(--line);background:var(--bg);
   overflow-x:auto;min-width:0;white-space:pre;
   font-family:ui-monospace,Menlo,monospace;font-size:0.8rem;line-height:1.5;color:var(--fg);}
+
+/* --- Six decisions: a control, a live sample, an answer ----------------------
+   The controls are chrome, so they sit outside the editable field; the answers are the student's
+   own words, so they stay inside it. #answers is assembled from both. */
+
+.pick{margin:0 0 var(--s5);}
+
+.pick-name{margin:0 0 var(--s1);font-variation-settings:"wdth" 100,"wght" 600,"ROND" 55;}
+
+.pick-ctrl{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s1) var(--s2);margin:0 0 var(--s2);}
+
+.pick-ctrl .lbl{font-size:0.8rem;color:var(--dim);}
+
+.pick-ctrl .btn-outline{padding:var(--s1) var(--s2);font-size:0.85rem;}
+
+.pick-ctrl .btn-outline[aria-pressed="true"]{background:var(--fg);color:var(--bg);}
+
+.pick-num{min-width:1.2em;text-align:center;font-variation-settings:"wdth" 100,"wght" 500,"ROND" 55;}
+
+/* The one native control in the site. A colour has to be picked, not chosen off a list I wrote. */
+
+.swatch{display:inline-flex;align-items:center;gap:var(--s1);font-size:0.8rem;color:var(--dim);}
+
+.swatch input[type=color]{width:34px;height:34px;padding:0;border:1px solid var(--line);background:none;cursor:pointer;}
+
+.swatch input[type=color]::-webkit-color-swatch-wrapper{padding:3px;}
+
+.swatch input[type=color]::-webkit-color-swatch{border:0;}
+
+.swatch .hex{font-family:ui-monospace,Menlo,monospace;color:var(--fg);}
+
+/* The sample. A border, never a background, so the field reads through it.
+
+   The halo at the top of this file knocks the drawn field out from behind type by giving every
+   .main p the page's own ground. Inside a sample that is wrong twice over: the sample carries the
+   student's background, and the page's ground paints straight over it — black boxes on a white
+   panel in dark mode, and the same in reverse the moment a student picks a dark background. There
+   is no field behind a sample, so there is nothing to knock out. */
+
+.pick-demo{border:1px solid var(--line);padding:var(--s3);margin:0 0 var(--s2);}
+
+.pick-demo p,.pick-demo ul,.pick-demo ol{background:none;box-shadow:none;}
+
+/* The answer line. A blank is the student's decision, so it is --choice like every other one. */
+
+.pick-out{margin:0 0 var(--s2);font-size:0.9rem;}
+
+.pick-out .fill[contenteditable="true"]{display:inline-block;min-width:3em;padding:0 3px;
+  border-bottom:1px dotted var(--choice);}
+
+.pick-out .fill:focus{outline:none;border-bottom-style:solid;}
+
+/* Typography: the only decision you can see without colour. */
+
+.demo-type .h{margin:0 0 var(--s1);line-height:1.05;font-variation-settings:"wdth" 100,"wght" 600,"ROND" 55;}
+
+.demo-type[data-scale="big"] .h{font-size:2.6rem;}
+
+.demo-type[data-scale="small"] .h{font-size:1.2rem;}
+
+.demo-type p:last-child{margin:0;color:var(--dim);}
+
+/* Colour: one colour doing all three of the jobs an accent does. */
+
+.demo-pal{background:var(--d-bg);color:var(--d-fg);}
+
+.demo-pal p{margin:0 0 var(--s2);}
+
+.demo-pal p:last-child{margin-bottom:0;}
+
+.demo-pal a{color:var(--d-ac);--dot-color:var(--d-ac);white-space:nowrap;}
+
+.demo-pal .box{border:1px solid var(--d-ac);padding:var(--s2);}
+
+.demo-pal .filled{display:inline-block;background:var(--d-ac);color:var(--d-bg);padding:var(--s1) var(--s2);}
+
+/* Layout: their index.html in miniature, at both widths at once. */
+
+.demo-lay{display:flex;gap:var(--s4);align-items:flex-start;}
+
+.demo-lay figure{margin:0;}
+
+.demo-lay figcaption{font-size:0.75rem;color:var(--dim);margin:0 0 var(--s1);}
+
+.demo-lay .screen{border:1px solid var(--line);padding:6px;overflow:hidden;}
+
+/* The phone is a fixed 88px because a phone is a fixed width; the laptop takes whatever is left,
+   so the pair reads as one wide screen and one narrow one rather than two small boxes adrift in
+   an empty panel. */
+
+.demo-lay .wide{flex:1;min-width:0;}
+
+.demo-lay .narrow .screen{width:88px;}
+
+.demo-lay .hero{height:38px;border:1px solid var(--line);margin:0 0 6px;
+  display:flex;align-items:center;justify-content:center;}
+
+.demo-lay[data-hero="edge"] .hero{margin:-6px -6px 6px;border-width:0 0 1px;}
+
+.demo-lay .ttl{font-size:0.6rem;color:var(--dim);}
+
+.demo-lay[data-head="over"] .below,.demo-lay[data-head="below"] .hero .ttl{display:none;}
+
+.demo-lay .below{margin:0 0 6px;}
+
+.demo-lay .grid{display:grid;gap:4px;}
+
+.demo-lay .wide .grid{grid-template-columns:repeat(var(--desk,3),1fr);}
+
+.demo-lay .narrow .grid{grid-template-columns:repeat(var(--phone,1),1fr);}
+
+.demo-lay .grid i{display:block;height:18px;border:1px solid var(--line);}
+
+/* Links: the same link, four ways, in their colours. Hover it — that is the other decision. */
+
+.demo-btn{background:var(--d-bg);color:var(--d-fg);display:flex;align-items:center;gap:var(--s2);}
+
+.demo-btn .item{display:inline-block;padding:var(--s1) var(--s2);
+  transition:background .15s,color .15s,transform .15s,filter .15s,border-color .15s;}
+
+.demo-btn[data-treat="text"] .item{padding:0;color:var(--d-ac);}
+
+.demo-btn[data-treat="filled"] .item{background:var(--d-ac);color:var(--d-bg);border:1px solid var(--d-ac);}
+
+.demo-btn[data-treat="outlined"] .item{border:1px solid var(--d-ac);color:var(--d-ac);}
+
+.demo-btn[data-shape="round"] .item{border-radius:999px;}
+
+/* Off for everything but the plain text link, which is meant to show the real treatment.
+   The opt-out is core.css's own, used on the wordmark. */
+
+.demo-btn:not([data-treat="text"]) .item::before,
+.demo-btn:not([data-treat="text"]) .item::after{content:none;}
+
+@media (hover:hover){
+  .demo-btn[data-hover="swap"] .item:hover{background:var(--d-fg);color:var(--d-bg);border-color:var(--d-fg);}
+  .demo-btn[data-hover="dark"] .item:hover{filter:brightness(0.7);}
+  .demo-btn[data-hover="lift"] .item:hover{transform:translateY(-3px);}
+  .demo-btn[data-hover="line"] .item:hover{text-decoration:underline;text-underline-offset:3px;}
+}
+
+/* The two that animate instead of switching. Both grow a pseudo-element on hover, so the sample
+   shows the movement and not only the end state. They sit after the content:none opt-out above and
+   match its specificity, which is how they win it back. */
+
+.demo-btn[data-hover="wipe"] .item,.demo-btn[data-hover="slide"] .item{position:relative;}
+
+.demo-btn[data-hover="slide"] .item{overflow:hidden;isolation:isolate;}
+
+.demo-btn[data-hover="wipe"] .item::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;
+  background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .25s ease;}
+
+.demo-btn[data-hover="slide"] .item::after{content:"";position:absolute;inset:0;z-index:-1;
+  background:var(--d-fg);transform:scaleX(0);transform-origin:left;transition:transform .25s ease;}
+
+.demo-btn[data-hover="slide"][data-treat="text"] .item::after{background:var(--d-ac);}
+
+@media (hover:hover){
+  .demo-btn[data-hover="wipe"] .item:hover::after,
+  .demo-btn[data-hover="slide"] .item:hover::after{transform:scaleX(1);}
+  .demo-btn[data-hover="slide"] .item:hover{color:var(--d-bg);}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .demo-btn .item,.demo-btn .item::after{transition:none;}
+}
+
+/* Motion: absolute is right here — decorative particles pinned inside a relative box. */
+
+.demo-mo{position:relative;height:130px;overflow:hidden;background:var(--d-bg);padding:0;}
+
+.demo-mo[data-speed="slow"]{--dur:22s;}
+
+.demo-mo[data-speed="medium"]{--dur:12s;}
+
+.demo-mo[data-speed="fast"]{--dur:6s;}
+
+.demo-mo i{position:absolute;display:block;background:var(--d-ac);}
+
+.demo-mo[data-motion="stars"] i{width:4px;height:4px;border-radius:50%;
+  animation:mo-drift var(--dur) linear infinite;}
+
+.demo-mo[data-motion="rise"] i{width:16px;height:16px;
+  animation:mo-rise var(--dur) linear infinite;}
+
+.demo-mo[data-motion="shift"] i{display:none;}
+
+.demo-mo[data-motion="shift"]{animation:mo-shift var(--dur) ease-in-out infinite alternate;}
+
+.demo-mo i:nth-child(1){left:8%;top:22%;animation-delay:-1s;}
+.demo-mo i:nth-child(2){left:28%;top:64%;animation-delay:-5s;}
+.demo-mo i:nth-child(3){left:47%;top:12%;animation-delay:-9s;}
+.demo-mo i:nth-child(4){left:63%;top:76%;animation-delay:-3s;}
+.demo-mo i:nth-child(5){left:81%;top:40%;animation-delay:-7s;}
+.demo-mo i:nth-child(6){left:93%;top:86%;animation-delay:-11s;}
+
+@keyframes mo-drift{from{transform:translateX(30px);}to{transform:translateX(-260px);}}
+
+@keyframes mo-rise{from{transform:translateY(120px) rotate(0deg);}to{transform:translateY(-140px) rotate(200deg);}}
+
+@keyframes mo-shift{from{background:var(--d-bg);}to{background:var(--d-ac);}}
+
+@media (prefers-reduced-motion:reduce){
+  .demo-mo,.demo-mo i{animation:none !important;}
+}
+
+/* --- 05, the other assignment -------------------------------------------------
+   It shares the page but it is its own brief, so it opens on its own image, in a bleed band. The
+   only thing left for the page to say is the crop. */
+
+.hero-shot{margin:0;aspect-ratio:16 / 5;overflow:hidden;}
+
+/* The break between the hour in the room and the week after it. */
+
+.handoff-split{margin:0 0 var(--s3);padding:var(--s2) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+
+@media (max-width:599px){
+  .demo-lay{flex-wrap:wrap;}
+  .demo-lay .wide .screen{width:100%;}
+  .demo-btn{flex-wrap:wrap;}
+}
 </style>
 <link rel="stylesheet" href="../../../shared/print.css">
 </head>
@@ -101,12 +322,12 @@ p.cue .cue-mark .cue-h{right:calc(100% + var(--s3));}
 
 <main class="page" contenteditable="false" spellcheck="false">
 
-  <svg class="cols" contenteditable="false" aria-hidden="true" viewBox="0 0 1200 2913"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
-  <svg class="frame" contenteditable="false" aria-hidden="true" viewBox="0 0 1200 2913"><polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline><g id="frame-dots"></g></svg>
+  <svg class="cols" contenteditable="false" aria-hidden="true" viewBox="0 0 1200 7933"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true" viewBox="0 0 1200 7933"><polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline><g id="frame-dots"></g></svg>
 
   <div class="band">
     <div class="masthead">
-      <h1 style=""><span>A Style Guide for Your A.I.</span></h1>
+      <h1 style=""><span style="white-space: nowrap;">A Style Handoff for Your A.I.</span></h1>
       <p class="note" style="margin-top:var(--s2);margin-bottom:0;">A set of instructions to hand off to a.i. so that it creates consistent documents · ART 3041</p>
     </div>
   </div>
@@ -117,9 +338,9 @@ p.cue .cue-mark .cue-h{right:calc(100% + var(--s3));}
       <p class="note">Rules first, then the page.</p>
     </div>
     <div class="main">
-      <p>You already have a homepage online on GitHub Pages (<strong>index.html</strong>). In week 1 you wrote down the rules it is supposed to follow. There were a few stylistic decisions like tone and typography, but it was not fully thought-out or comprehensive.</p>
-      <p>The first thing you should do when constructing this style guide is take this file — or select all on this page — and paste it into Copilot and say something like: “I have to create a style guide for working with you/a.i., here's what my professor has outlined, let's chat about this, what do I have to do?”</p>
-      <p>Here's a definition from <a href="https://www.figma.com/resource-library/what-is-a-style-guide/" target="_blank" rel="noopener" style="">Figma</a>:</p>
+      <p>You already have a homepage online (<strong>index.html</strong>). In week 1 you wrote a few rules for it — tone, typography — but it wasn't very in depth.</p>
+      <p>This week you will write a more robust set of design guidelines for a.i. to follow. The result of creating a set of design guidelines is that it stops injecting it's own designs and uses yours; pages/designs will look consistent across assignments/projects. so it stops guessing and builds your page the same way every time. We call this set of design standards a <b>Style Guide</b>, or you'll give it as a "handoff" to the a.i.</p>
+      <p>Here's a definition of style guide from <a href="https://www.figma.com/resource-library/what-is-a-style-guide/" target="_blank" rel="noopener" style="">Figma</a>:</p>
       <blockquote>
         <p>“A brand style guide maintains brand consistency and coherence,” explains Leandro. “It gives you helpful templates and guidance on how to use brand elements, including fonts, typography, logo, color palette, and imagery. It's also a key tool to guide messaging and content creation, providing valuable insights into your company's brand voice, tone, and writing style.”</p>
       </blockquote>
@@ -128,90 +349,326 @@ p.cue .cue-mark .cue-h{right:calc(100% + var(--s3));}
 
   <div class="band">
     <div class="rail">
-      <p class="sec"><span class="num">02</span>Write the style guide</p>
-      <p class="note">The part you write yourself, with a.i. assistance.</p>
+      <p class="sec"><span class="num">02</span>Research</p>
+      <p class="note">Six categories.</p>
     </div>
     <div class="main">
-      <p>I'm not going to hand hold across this entire process, because I want you to ask a.i. for help, see what it returns, and see how it can guide you through it.</p>
-      <p>In week one you answered a few questions about how your page should look. That was a brief for one page. This is a system — it'll hold up across the semester and beyond.</p>
-      <p>Write it as instructions, addressed to the A.I. Specific enough that somebody else could follow it without asking you a question.</p>
-      <ul>
-        <li><strong>Typography.</strong> Which typeface(s)? Serif or sans-serif? Do you have a particular font you love? Go do some research at <a href="https://fonts.adobe.com" target="_blank" rel="noopener" style="">fonts.adobe.com</a> and <a href="https://fonts.google.com" target="_blank" rel="noopener" style="">fonts.google.com</a>. A good rule of thumb if you want something dynamic: a heading/display font and a more legible body font. How big are your headings? And what size should the body font be?</li>
-        <li><strong>Color.</strong> Name them if you want, but be sure to include hex codes. Here's a <a href="https://htmlcolorcodes.com/color-picker/" target="_blank" rel="noopener" style="">color&nbsp;picker</a>. How many, and what each one is for — background, text, one accent.</li>
-        <li><strong>Space.</strong> Tight or open? How much room around things. How many columns on desktop? How many on tablet? How many on mobile? Ask A.I. about laying out webpages.</li>
-        <li><strong>Images.</strong> Should images get an overlay, or some other sort of treatment?</li>
-      </ul>
-      <p class="note">Vague rules produce vague pages!</p>
+      <p>You have six style guide categories to research.&nbsp;</p>
+
+      <div id="decisions" style="--d-bg:#FFFFFF;--d-fg:#111111;--d-ac:#2E9B4F;">
+
+        <div class="pick">
+          <p class="pick-name">Reference</p>
+          <p>Find two websites you like the look of.&nbsp;</p>
+          <p class="note">The other five categories come out of this one.</p>
+          <p>For each one, write down what you like. Look at:</p>
+          <ul>
+            <li>The headings — big or small, serif or sans.</li>
+            <li>The colours — the background, the text, and what the one bright colour is used for.</li>
+            <li>How many columns it has, and what happens to them when you narrow the window to phone width.</li>
+            <li>What links and buttons look like, and what happens when you hover them.</li>
+            <li>Anything that moves.</li>
+            <li>How images are treated — edge to edge, inset, overlaid, cropped.</li>
+          </ul>
+          <p class="pick-out">Site 1 <span class="fill" contenteditable="true" data-key="ref.u1">___</span> · What I like <span class="fill" contenteditable="true" data-key="ref.w1">___</span></p>
+          <p class="pick-out">Site 2 <span class="fill" contenteditable="true" data-key="ref.u2">___</span> · What I like <span class="fill" contenteditable="true" data-key="ref.w2">___</span></p>
+        </div>
+
+        <div class="pick" data-dec="type">
+          <p class="pick-name">Typography</p>
+          <p>Go to <a href="https://fonts.google.com" target="_blank" rel="noopener" style="">fonts.google.com</a>&nbsp;and&nbsp;<a href="https://fonts.adobe.com" target="_blank" rel="noopener" style="">fonts.adobe.com</a> and pick two: one for headings, one for body text. A display font for headings and a plainer one for body usually works. Hint: web search for "font pairing inspiration".</p>
+          <p class="note">On your index.html: your name at the top, and every line of text under it.</p>
+          <div class="pick-ctrl" contenteditable="false">
+            <span class="lbl">Headings</span>
+            <button class="btn-outline" type="button" data-set="type.scale" data-val="big" aria-pressed="false">Big</button>
+            <button class="btn-outline" type="button" data-set="type.scale" data-val="small" aria-pressed="true">Small</button>
+          </div>
+          <div class="pick-demo demo-type" id="d-type" data-scale="small" contenteditable="false">
+            <p class="h">Your name here</p>
+            <p>Body text sits underneath at this size.</p>
+          </div>
+          <p class="pick-out">Heading font <span class="fill" contenteditable="true" data-key="type.head">___</span> · Body font <span class="fill" contenteditable="true" data-key="type.body">___</span> · Headings <span class="fill" data-out="type.scale">small</span></p>
+        </div>
+
+        <div class="pick" data-dec="color">
+          <p class="pick-name">Colour</p>
+          <p>Three colours: background, text, and one accent. The accent is the colour that stands out — links, lines and borders, button fills. Pick them below.</p>
+          <p class="note">On your index.html: the ground, the words, and every link in your Work list.</p>
+        </div>
+
+        <div class="pick" data-dec="lay">
+          <p class="pick-name">Layout</p>
+          <p>Open your two reference sites, count the columns, then narrow the window to phone width and count again. Pick yours. Then pick how the image across the top sits: running to the edges of the screen, or inset with a margin. And whether your name sits on it or under it.</p>
+          <p class="note">On your index.html: the shape of the whole page, at both sizes.</p>
+          <div class="pick-ctrl" contenteditable="false">
+            <span class="lbl">Columns · laptop</span>
+            <button class="btn-outline" type="button" data-step="lay.desk" data-val="-1">−</button>
+            <span class="pick-num" data-num="lay.desk">4</span>
+            <button class="btn-outline" type="button" data-step="lay.desk" data-val="1">+</button>
+            <span class="lbl">Columns · phone</span>
+            <button class="btn-outline" type="button" data-step="lay.phone" data-val="-1">−</button>
+            <span class="pick-num" data-num="lay.phone">1</span>
+            <button class="btn-outline" type="button" data-step="lay.phone" data-val="1">+</button>
+          </div>
+          <div class="pick-ctrl" contenteditable="false">
+            <span class="lbl">Hero image</span>
+            <button class="btn-outline" type="button" data-set="lay.hero" data-val="edge" aria-pressed="false">Edge to edge</button>
+            <button class="btn-outline" type="button" data-set="lay.hero" data-val="inset" aria-pressed="true">Inset</button>
+            <span class="lbl">My name</span>
+            <button class="btn-outline" type="button" data-set="lay.head" data-val="over" aria-pressed="false">On the image</button>
+            <button class="btn-outline" type="button" data-set="lay.head" data-val="below" aria-pressed="true">Under it</button>
+          </div>
+          <div class="pick-demo demo-lay" id="d-lay" data-hero="inset" data-head="below" style="--desk: 4; --phone: 1;" contenteditable="false">
+            <figure class="wide">
+              <figcaption>Laptop</figcaption>
+              <div class="screen">
+                <div class="hero"><span class="ttl">Your name</span></div>
+                <p class="below ttl">Your name</p>
+                <div class="grid"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+            </figure>
+            <figure class="narrow">
+              <figcaption>Phone</figcaption>
+              <div class="screen">
+                <div class="hero"><span class="ttl">Name</span></div>
+                <p class="below ttl">Name</p>
+                <div class="grid"><i></i><i></i><i></i><i></i></div>
+              </div>
+            </figure>
+          </div>
+          <p class="pick-out">Columns on a laptop <span class="fill" data-out="lay.desk">4</span> · on a phone <span class="fill" data-out="lay.phone">1</span> · Hero <span class="fill" data-out="lay.hero">inset, with a margin around it</span> · My name sits <span class="fill" data-out="lay.head">underneath the image</span></p>
+        </div>
+
+        <div class="pick" data-dec="btn">
+          <p class="pick-name">Links</p>
+          <p>Your page is a list of links to your assignments. They can be plain text links or buttons. Hover each sample below — what changes is the hover state, and you pick that too.</p>
+          <p class="note">On your index.html: every item in your Work list.</p>
+          <div class="pick-ctrl" contenteditable="false">
+            <span class="lbl">They are</span>
+            <button class="btn-outline" type="button" data-set="btn.treat" data-val="text" aria-pressed="false">Text links</button>
+            <button class="btn-outline" type="button" data-set="btn.treat" data-val="filled" aria-pressed="true">Filled</button>
+            <button class="btn-outline" type="button" data-set="btn.treat" data-val="outlined" aria-pressed="false">Outlined</button>
+            <span class="lbl">Corners</span>
+            <button class="btn-outline" type="button" data-set="btn.shape" data-val="square" aria-pressed="true">Square</button>
+            <button class="btn-outline" type="button" data-set="btn.shape" data-val="round" aria-pressed="false">Rounded</button>
+          </div>
+          <div class="pick-ctrl" contenteditable="false">
+            <span class="lbl">On hover</span>
+            <button class="btn-outline" type="button" data-set="btn.hover" data-val="swap" aria-pressed="false">Colours swap</button>
+            <button class="btn-outline" type="button" data-set="btn.hover" data-val="dark" aria-pressed="false">Darkens</button>
+            <button class="btn-outline" type="button" data-set="btn.hover" data-val="lift" aria-pressed="false">Lifts</button>
+            <button class="btn-outline" type="button" data-set="btn.hover" data-val="line" aria-pressed="true">Underlines</button>
+            <button class="btn-outline" type="button" data-set="btn.hover" data-val="wipe" aria-pressed="false">Underline draws in</button>
+            <button class="btn-outline" type="button" data-set="btn.hover" data-val="slide" aria-pressed="false">Fill slides across</button>
+            <button class="btn-outline" type="button" data-set="btn.hover" data-val="none" aria-pressed="false">Nothing</button>
+          </div>
+          <div class="pick-demo demo-btn" id="d-btn" data-treat="filled" data-shape="square" data-hover="line" contenteditable="false">
+            <a class="item" href="#" style="">Design a Blank</a>
+            <a class="item" href="#" style="">Style Handoff</a>
+          </div>
+          <p class="pick-out">My assignment links are <span class="fill" data-out="btn.treat">filled buttons</span> with <span class="fill" data-out="btn.shape">square corners</span> · on hover <span class="fill" data-out="btn.hover">it underlines</span></p>
+        </div>
+
+        <div class="pick" data-dec="mo">
+          <p class="pick-name">Motion</p>
+          <p>Specify an animation. This can be an animated background (as below). But it could also be many other things, such as an animated effect when you hover a link. Pick what it is.</p>
+          <p class="note">On your index.html: behind everything, the whole time.</p>
+          <div class="pick-ctrl" contenteditable="false">
+            <span class="lbl">Background</span>
+            <button class="btn-outline" type="button" data-set="mo.type" data-val="stars" aria-pressed="false">Stars drifting</button>
+            <button class="btn-outline" type="button" data-set="mo.type" data-val="rise" aria-pressed="false">Shapes floating up</button>
+            <button class="btn-outline" type="button" data-set="mo.type" data-val="shift" aria-pressed="true">Slow colour shift</button>
+            <span class="lbl">Speed</span>
+            <button class="btn-outline" type="button" data-set="mo.speed" data-val="slow" aria-pressed="false">Slow</button>
+            <button class="btn-outline" type="button" data-set="mo.speed" data-val="medium" aria-pressed="true">Medium</button>
+            <button class="btn-outline" type="button" data-set="mo.speed" data-val="fast" aria-pressed="false">Fast</button>
+          </div>
+          <div class="pick-demo demo-mo" id="d-mo" data-motion="shift" data-speed="medium" contenteditable="false"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <p class="pick-out">My background is <span class="fill" data-out="mo.type">a slow colour shift</span> · Speed <span class="fill" data-out="mo.speed">medium</span></p></div></div>
+
+      <div class="code-head">
+        <span class="label">You can use this to write down your research answers</span>
+        <button class="btn-outline copy" type="button" contenteditable="false" data-for="answers">Copy</button>
+      </div>
+      <pre class="code" id="answers" contenteditable="false">REFERENCE
+  Site 1: you decide
+  What I like about it: you decide
+  Site 2: you decide
+  What I like about it: you decide
+
+TYPOGRAPHY
+  Heading font: you decide
+  Body font: you decide
+  Headings are: small
+
+COLOUR
+  Background: #FFFFFF
+  Text: #111111
+  Accent: #2E9B4F
+  The accent is used for links, borders and button fills, and also for: you decide
+
+LAYOUT
+  Columns on a laptop: 4
+  Columns on a phone: 1
+  The hero image runs: inset, with a margin around it
+  My name sits: underneath the image
+
+LINKS IN MY WORK LIST
+  They are: filled buttons
+  Corners: square corners
+  On hover: it underlines
+
+MOVING BACKGROUND
+  What it is: a slow colour shift
+  Speed: medium</pre>
+      <p class="note">This fills itself in as you decide. Anything still reading <em>you decide</em> is a blank you left for the a.i.</p>
     </div>
   </div>
 
   <div class="band">
     <div class="rail">
-      <p class="sec"><span class="num">03</span>Put it in your custom instructions</p>
+      <p class="sec"><span class="num">03</span>Write the style handoff</p>
+      <p class="note">Turn your answers into instructions.</p>
+    </div>
+    <div class="main">
+      <p>The a.i. writes the handoff, out of the answers you just gave. The prompt below already has them in it. Copy it and paste the whole thing into a new chat.</p>
+      <div class="code-head">
+        <span class="label">Paste into your a.i.</span>
+        <button class="btn-outline copy" type="button" contenteditable="false" data-for="convert">Copy</button>
+      </div>
+      <pre class="code" id="convert">Here are my design decisions for my class homepage — a
+one-page index of links to my assignments with a hero image.
+<span class="fill" id="prompt-answers">
+REFERENCE
+  Site 1: you decide
+  What I like about it: you decide
+  Site 2: you decide
+  What I like about it: you decide
+
+TYPOGRAPHY
+  Heading font: you decide
+  Body font: you decide
+  Headings are: small
+
+COLOUR
+  Background: #FFFFFF
+  Text: #111111
+  Accent: #2E9B4F
+  The accent is used for links, borders and button fills, and also for: you decide
+
+LAYOUT
+  Columns on a laptop: 4
+  Columns on a phone: 1
+  The hero image runs: inset, with a margin around it
+  My name sits: underneath the image
+
+LINKS IN MY WORK LIST
+  They are: filled buttons
+  Corners: square corners
+  On hover: it underlines
+
+MOVING BACKGROUND
+  What it is: a slow colour shift
+  Speed: medium
+</span>
+Turn these into a style handoff: a numbered list of
+instructions addressed to you, that you will follow every
+time you build or edit my page. Keep every decision exactly
+as I wrote it. Where I wrote "you decide," choose something
+that fits the rest of my answers and write it in as a rule.
+Fill in the technical details a developer would need — sizes,
+spacing, breakpoints — based on my answers. Do not ask me
+questions. Output only the list.</pre>
+      <p>Read what comes back. If it changed one of your answers, tell it and ask again.</p>
+      <p class="cue">Make a file called <strong>handoff.md</strong> and paste the list into it. Keep it next to your <strong>index.html</strong> — you'll upload it in 07.<span class="cue-mark" contenteditable="false" aria-hidden="true" style="opacity: 1; color: rgb(27, 105, 200);">
+        <svg class="cue-h" viewBox="0 0 36 26"><polygon class="cue-head" fill="currentColor" points="0,1 0,25 34,13"></polygon></svg>
+        <svg class="cue-v" viewBox="0 0 26 36"><polygon class="cue-head" fill="currentColor" points="1,0 25,0 13,34"></polygon></svg>
+      </span></p>
+      <p class="note handoff-split">Everything above happens in class. Everything below is homework.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">04</span>Put it in your custom instructions</p>
       <p class="note">So you stop repeating yourself.</p>
     </div>
     <div class="main">
       <ol>
-        <li class="cue">Open your <a href="../../course-setup/copilot.html" target="_blank" rel="noopener" style="">Copilot custom instructions</a>.<span class="cue-mark" contenteditable="false" aria-hidden="true" style="opacity: 1; color: rgb(46, 155, 79);">
+        <li class="cue">Open your <a href="../../course-setup/copilot.html" target="_blank" rel="noopener" style="">Copilot custom instructions</a>.<span class="cue-mark" contenteditable="false" aria-hidden="true" style="opacity: 1; color: rgb(27, 105, 200);">
           <svg class="cue-h" viewBox="0 0 36 26"><polygon class="cue-head" fill="currentColor" points="0,1 0,25 34,13"></polygon></svg>
           <svg class="cue-v" viewBox="0 0 26 36"><polygon class="cue-head" fill="currentColor" points="1,0 25,0 13,34"></polygon></svg>
         </span></li>
-        <li>Delete the <strong>Tone</strong> and <strong>Words to avoid</strong> lines you filled in earlier.</li>
-        <li>Paste in your new style guide instructions.</li>
+        <li>Delete the <strong>Tone</strong> and <strong>Words to avoid</strong> lines you filled in earlier. Your handoff goes in their place.</li>
+        <li>Paste in your handoff.</li>
         <li>Add this line to the end, exactly as written: <strong>Do not display code. Always give me a fully updated and downloadable file complete with all HTML/CSS/JS.</strong></li>
         <li>Save it, then open a brand new chat.</li>
+        <li>Do the same in every other a.i. you use. ChatGPT has custom instructions, Gemini has saved info, Claude has project instructions. Same handoff in each one.</li>
       </ol>
-      <p class="note">Custom instructions apply to every conversation, not just the next one. Once the style guide is in there you stop re-explaining your design decisions every time you start a chat — which is the whole reason to write it down.</p>
+      <p class="note">Custom instructions apply to every conversation, not just the next one. Once the handoff is in there you stop re-explaining it at the start of every chat.</p>
+    </div>
+  </div>
+
+  <div class="band bleed">
+    <div class="full">
+      <figure class="hero-shot" contenteditable="false"><img src="gemini-hero.jpg" alt="Generated: overlapping sine waves crossing a ruled grid, with coloured points where they intersect."></figure>
     </div>
   </div>
 
   <div class="band">
     <div class="rail">
-      <p class="sec"><span class="num">04</span>Remake index.html: Begin with a hero image</p>
+      <p class="sec"><span class="num">05</span>Make a hero image</p>
       <p class="note">Generated, not found.</p>
     </div>
     <div class="main">
-      <p>Your page needs one image, across the top. This is called a "hero image". Generate the image using a.i. Copilot can generate images, but sometimes it won't. If that's the case use ChatGPT, Gemini or something else. There are a lot of free options.&nbsp;</p>
+      <p>Your page needs one image, across the top. This is called a "hero image". Generate the image using a.i.</p>
+      <p>Copilot can generate images, but it sometimes refuses or does a bad job. If it does, use Gemini or ChatGPT — both are free. Claude does not generate images at all, but it is good at writing the prompt for you.</p>
       <p>It has to relate to your life somehow. That is as specific as I am going to be — your commute, your apartment, something you own, something you do, what you're into right now, somewhere you go. Take it where you want. In your prompt for the image generation also specify the look/feel. This should "match" the style of the page. Again, what this means is up to you, but you'll know it when you find something that works well.&nbsp;</p>
-      <p class="cue">Rename the file <strong>hero.jpg</strong> or <strong>hero.png</strong>, depending on what filetype it saved as.<span class="cue-mark" contenteditable="false" aria-hidden="true" style="opacity: 1; color: rgb(46, 155, 79);">
+      <p class="cue">Rename the file <strong>hero.jpg</strong> or <strong>hero.png</strong>, depending on what filetype it saved as.<span class="cue-mark" contenteditable="false" aria-hidden="true" style="opacity: 1; color: rgb(27, 105, 200);">
         <svg class="cue-h" viewBox="0 0 36 26"><polygon class="cue-head" fill="currentColor" points="0,1 0,25 34,13"></polygon></svg>
         <svg class="cue-v" viewBox="0 0 26 36"><polygon class="cue-head" fill="currentColor" points="1,0 25,0 13,34"></polygon></svg>
       </span></p>
-      <p class="note">If Copilot will not generate images for you, use a free alternative: Google Gemini or ChatGPT.</p>
       <p>Things worth putting in the prompt:</p>
       <ul>
+        <li><strong>Your colours.</strong> Paste in the colour lines from your handoff, so the image matches the page.</li>
         <li><strong>A style.</strong> “Vintage.” “High res.” “Dark academic.” “Chillwave.” “Like Picasso painted it in 2024.”</li>
         <li><strong>Text or no text.</strong> Say which. If you want lettering, expect to fight for it.</li>
         <li><strong>Realistic or not.</strong> Say which.</li>
         <li><strong>The camera and the angle</strong>, if it is a photograph. “35mm, shot from below.”</li>
         <li><strong>Colors</strong> for the image.</li>
       </ul>
-      <p class="note">The first image will not be the one. Same as the page: say what is wrong with it and ask again.</p>
+      <p class="note">Remember to iterate until you get an image you like. Start new chats to avoid it using its memory of the last image it generated,&nbsp; you may have to tell it explicitly not to do something. It might not listen.&nbsp;</p><p class="note">the two hero images were generated by gemini (above) and copilot (below) based on its interpretation of a prompt generated in claude summarizing what it (claude) thought represented the spirit of the design principles / course style guide for AiFD.&nbsp;</p>
+    </div>
+  </div>
+
+  <div class="band bleed">
+    <div class="full">
+      <figure class="hero-shot" contenteditable="false"><img src="copilot1.png" alt="Generated: pale lines flowing from the left, quantising into right-angled steps, with six coloured points marking crossings on a black ground."></figure>
     </div>
   </div>
 
   <div class="band">
     <div class="rail">
-      <p class="sec"><span class="num">05</span>Rebuild index.html</p>
+      <p class="sec"><span class="num">06</span>Rebuild index.html</p>
       <p class="note">Attach your file, then paste the prompt.</p>
     </div>
     <div class="main">
-      <p>Drag your current <strong>index.html</strong> and your <strong>hero</strong> image into the Copilot chat box, then paste the prompt below. Copilot reads the file you attach &mdash; you never paste code into the chat.</p>
+      <p>Drag your current <strong>index.html</strong> and your <strong>hero</strong> image into the Copilot chat box, then paste the prompt below. Copilot reads the file you attach — you never paste code into the chat.</p>
       <div class="code-head">
         <span class="label">Paste into Copilot</span>
         <button class="btn-outline copy" type="button" contenteditable="false" data-for="prompt">Copy</button>
       </div>
-      <pre class="code" id="prompt">My style guide is in your custom instructions.
+      <pre class="code" id="prompt">My style handoff is in your custom instructions.
 But I'm also going to paste it here:
 
-<span class="fill">[paste your style guide]</span>
+<span class="fill">[paste your style handoff]</span>
 
-I have attached my page as it is now, index.html, and my hero image.
+I have attached my page as it is now, index.html, and my hero
+image, hero.jpg.
 
-Rebuild the page so it follows the style guide, and add two things:
+Rebuild the page so it follows the style handoff, and add one thing:
 - A background that moves. Written in CSS or JavaScript, inside
   the file. Not a video, not an image.
-- A hero image across the top of the page, named hero.jpg.
 
 Keep the rules from before:
 - One HTML file. The CSS and the JavaScript go inside it.
@@ -226,28 +683,29 @@ Give me a downloadable HTML file named index.html.</pre>
 
   <div class="band">
     <div class="rail">
-      <p class="sec"><span class="num">06</span>Put it online</p>
-      <p class="note">Two files this time.</p>
+      <p class="sec"><span class="num">07</span>Put it online</p>
+      <p class="note">Three files this time.</p>
     </div>
     <div class="main">
-      <p>Your page has always been one self-contained file. The image is the first exception — it has to live in the repository next to the HTML.</p>
+      <p>Your page has always been one self-contained file. The image and the handoff are the first exceptions — they have to live in the repository next to the HTML.</p>
       <ol>
         <li>In your repository, click <strong>Add file</strong>, then <strong>Upload files</strong>. Drag your image in and click <strong>Commit changes</strong>.</li>
-        <li>Upload the new <strong>index.html</strong> the same way. GitHub asks whether to replace the existing file &mdash; say yes, then <strong>Commit changes</strong>.</li>
+        <li>Upload <strong>handoff.md</strong> the same way.</li>
+        <li>Upload the new <strong>index.html</strong> the same way. GitHub asks whether to replace the existing file — say yes, then <strong>Commit changes</strong>.</li>
         <li>Wait about a minute and reload your live address.</li>
       </ol>
-      <p class="note">The steps are the same ones in the <a href="../../course-setup/github-pages.html" target="_blank" rel="noopener" style="">GitHub&nbsp;Pages</a> instructions, with an upload in place of a paste.</p>
+      <p class="note">These upload steps are the same ones in the <a href="../../course-setup/github-pages.html" target="_blank" rel="noopener" style="">GitHub&nbsp;Pages</a> instructions.</p>
     </div>
   </div>
 
   <div class="band">
     <div class="rail">
-      <p class="sec"><span class="num">07</span>Check it</p>
-      <p class="note">Against the guide, not against your taste.</p>
+      <p class="sec"><span class="num">08</span>Check it</p>
+      <p class="note">Against the handoff, not against your taste.</p>
     </div>
     <div class="main">
-      <p>Open the live address. Did it follow your style guide how you imagined?</p>
-      <p class="note">Nothing to submit — the live page is the hand-in. It has to be online by the end of class.</p>
+      <p>Open the live address with your handoff next to it. Go down it one line at a time: the type, the three colours, the columns on a laptop and on a phone, what your assignment links look like and what they do on hover, the background that moves, the image across the top.</p>
+      <p>If it broke a rule, quote that rule back into the chat and ask again.</p>
     </div>
   </div>
 
@@ -273,6 +731,167 @@ Give me a downloadable HTML file named index.html.</pre>
     setTimeout(tick, next);
   }
   tick();
+})();
+
+// The six decisions. State lives in the DOM — a data attribute or a custom property on the sample
+// itself — and nowhere else. saveDoc() clones the document, so a value held in a variable, or in
+// an input's .value, does not come back with the file; an attribute does.
+
+(function(){
+  var root=document.getElementById('decisions'); if(!root) return;
+
+  var AT={
+    'type.scale':{el:'d-type',attr:'data-scale'},
+    'color.bg'  :{el:'decisions',prop:'--d-bg'},
+    'color.fg'  :{el:'decisions',prop:'--d-fg'},
+    'color.ac'  :{el:'decisions',prop:'--d-ac'},
+    'lay.desk'  :{el:'d-lay',prop:'--desk'},
+    'lay.phone' :{el:'d-lay',prop:'--phone'},
+    'lay.hero'  :{el:'d-lay',attr:'data-hero'},
+    'lay.head'  :{el:'d-lay',attr:'data-head'},
+    'btn.treat' :{el:'d-btn',attr:'data-treat'},
+    'btn.shape' :{el:'d-btn',attr:'data-shape'},
+    'btn.hover' :{el:'d-btn',attr:'data-hover'},
+    'mo.type'   :{el:'d-mo',attr:'data-motion'},
+    'mo.speed'  :{el:'d-mo',attr:'data-speed'}
+  };
+
+  // What each stored value is called in English. The readout is for an a.i. to read, so it says
+  // "it darkens", not "dark".
+
+  var SAY={
+    big:'big', small:'small',
+    edge:'edge to edge', inset:'inset, with a margin around it',
+    over:'on top of the image', below:'underneath the image',
+    text:'plain text links', filled:'filled buttons', outlined:'outlined buttons',
+    square:'square corners', round:'rounded corners',
+    swap:'the fill and the text swap places', dark:'it darkens', lift:'it lifts',
+    line:'it underlines', none:'nothing happens',
+    wipe:'an underline draws in from the left', slide:'the accent slides across it from the left',
+    stars:'stars drifting', rise:'shapes floating up', shift:'a slow colour shift',
+    slow:'slow', medium:'medium', fast:'fast'
+  };
+
+  function get(k){
+    var d=AT[k], el=document.getElementById(d.el); if(!el) return '';
+    return d.attr ? el.getAttribute(d.attr) : el.style.getPropertyValue(d.prop).trim();
+  }
+  function put(k,v){
+    var d=AT[k], el=document.getElementById(d.el); if(!el) return;
+    if(d.attr) el.setAttribute(d.attr,v); else el.style.setProperty(d.prop,v);
+  }
+  function say(k){ var v=get(k); return SAY[v]||v; }
+
+  // A blank still holding its rule is not an answer. The conversion prompt has a clause for
+  // "you decide", so that is what an untouched blank becomes.
+
+  function txt(k){
+    var s=root.querySelector('.fill[data-key="'+k+'"]');
+    var v=s?s.textContent.replace(/\s+/g,' ').trim():'';
+    return (!v||/^_+$/.test(v)) ? 'you decide' : v;
+  }
+
+  function list(){
+    return [
+      'REFERENCE',
+      '  Site 1: '+txt('ref.u1'),
+      '  What I like about it: '+txt('ref.w1'),
+      '  Site 2: '+txt('ref.u2'),
+      '  What I like about it: '+txt('ref.w2'),
+      '',
+      'TYPOGRAPHY',
+      '  Heading font: '+txt('type.head'),
+      '  Body font: '+txt('type.body'),
+      '  Headings are: '+say('type.scale'),
+      '',
+      'COLOUR',
+      '  Background: '+get('color.bg'),
+      '  Text: '+get('color.fg'),
+      '  Accent: '+get('color.ac'),
+      '  The accent is used for links, borders and button fills, and also for: '+txt('color.use'),
+      '',
+      'LAYOUT',
+      '  Columns on a laptop: '+get('lay.desk'),
+      '  Columns on a phone: '+get('lay.phone'),
+      '  The hero image runs: '+say('lay.hero'),
+      '  My name sits: '+say('lay.head'),
+      '',
+      'LINKS IN MY WORK LIST',
+      '  They are: '+say('btn.treat'),
+      '  Corners: '+say('btn.shape'),
+      '  On hover: '+say('btn.hover'),
+      '',
+      'MOVING BACKGROUND',
+      '  What it is: '+say('mo.type'),
+      '  Speed: '+say('mo.speed')
+    ].join('\n');
+  }
+
+  var out=document.getElementById('answers');
+  var slot=document.getElementById('prompt-answers');
+  var KEY='aifd-handoff-decisions';
+
+  function sync(){
+    root.querySelectorAll('button[data-set]').forEach(function(b){
+      b.setAttribute('aria-pressed', b.getAttribute('data-val')===get(b.getAttribute('data-set')) ? 'true':'false');
+    });
+    root.querySelectorAll('[data-num]').forEach(function(s){ s.textContent=get(s.getAttribute('data-num')); });
+    root.querySelectorAll('input[type=color]').forEach(function(i){
+      var v=get(i.getAttribute('data-set'));
+      if(i.value.toUpperCase()!==v.toUpperCase()) i.value=v;
+      var h=i.parentNode.querySelector('.hex'); if(h) h.textContent=v.toUpperCase();
+    });
+    root.querySelectorAll('.fill[data-out]').forEach(function(s){
+      var k=s.getAttribute('data-out');
+      s.textContent = /^color\./.test(k) ? get(k).toUpperCase() : say(k);
+    });
+    var t=list();
+    if(out) out.textContent=t;
+    if(slot) slot.textContent='\n'+t+'\n';
+  }
+
+  // The published copy has no Save button, so this is the only thing between a student and losing
+  // an hour's decisions to a reload.
+
+  function store(){
+    try{
+      var o={};
+      Object.keys(AT).forEach(function(k){ o[k]=get(k); });
+      root.querySelectorAll('.fill[data-key]').forEach(function(s){ o['t:'+s.getAttribute('data-key')]=s.textContent; });
+      localStorage.setItem(KEY, JSON.stringify(o));
+    }catch(e){}
+  }
+  function restore(){
+    try{
+      var o=JSON.parse(localStorage.getItem(KEY)||'null'); if(!o) return;
+      Object.keys(AT).forEach(function(k){ if(o[k]) put(k,o[k]); });
+      root.querySelectorAll('.fill[data-key]').forEach(function(s){
+        var v=o['t:'+s.getAttribute('data-key')]; if(v!=null && v!=='') s.textContent=v;
+      });
+    }catch(e){}
+  }
+
+  root.addEventListener('click', function(e){
+    var t=e.target; if(!t.closest) return;
+    if(t.closest('.pick-demo a')) e.preventDefault();       // the samples are links, not destinations
+    var b=t.closest('button[data-set],button[data-step]'); if(!b) return;
+    if(b.hasAttribute('data-step')){
+      var k=b.getAttribute('data-step');
+      var n=(parseInt(get(k),10)||1)+parseInt(b.getAttribute('data-val'),10);
+      put(k, String(Math.max(1, Math.min(4, n))));
+    } else {
+      put(b.getAttribute('data-set'), b.getAttribute('data-val'));
+    }
+    sync(); store();
+  });
+
+  root.addEventListener('input', function(e){
+    var i=e.target;
+    if(i.tagName==='INPUT' && i.type==='color') put(i.getAttribute('data-set'), i.value.toUpperCase());
+    sync(); store();
+  });
+
+  restore(); sync();
 })();
 
 // Copy buttons: hand the paired block's text to the clipboard and say so in the label.

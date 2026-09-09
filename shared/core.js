@@ -979,8 +979,11 @@ function saveDoc(){
   };
   // Chrome and Edge can put up a real Save As dialog so the file can be filed where it belongs;
   // anywhere else, and on a cancelled dialog's error path, it lands in the download folder as before.
+  // `id` is what makes the dialog come back to the course folder: Chrome remembers the last directory
+  // used under that name, so the picker only has to be steered to aifd-site once. Without it every
+  // save opens in Documents.
   if(!window.showSaveFilePicker){ toDownloads(); return; }
-  window.showSaveFilePicker({suggestedName:name,types:[{description:'HTML file',accept:{'text/html':['.html']}}]})
+  window.showSaveFilePicker({id:'aifd-site',suggestedName:name,types:[{description:'HTML file',accept:{'text/html':['.html']}}]})
     .then(function(h){ return h.createWritable(); })
     .then(function(w){ return w.write(blob).then(function(){ return w.close(); }); })
     .catch(function(e){ if(!e || e.name !== 'AbortError') toDownloads(); });
