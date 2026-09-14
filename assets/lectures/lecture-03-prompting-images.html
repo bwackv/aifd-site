@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-docname="art3041-lecture-03"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>03 — Prompting for image generation — A.I. for Designers</title>
+
+<!--
+  LECTURE DECK TEMPLATE — copy this file for each lecture.
+
+  FIGMA CONTRACT (shared/slides.css holds the values)
+    Frame        1920 × 1080
+    Margin       96 all sides   ->  content 1728 × 888
+    Columns      12 × 144, zero gutter
+    Type         160 deck / 96 title / 64 head / 32 body / 24 caption / 32 kicker
+    Layer names  match the classes: s-title, s-full, s-split, ph
+
+  THREE TEMPLATES
+    .s-title              course line, lecture number, name, term
+    .s-full.statement     one idea across all twelve columns
+    .s-full.media         full-bleed placeholder, edge to edge, caption inset
+    .s-split              6 cols media / 6 cols text (hover the media -> Flip)
+
+  MEDIA  drag an image/video onto a slot, or hover it and press ⌘V.
+         Hover a slot: Full bleed (default) · Fill · Fit · Flip · ×
+         Full bleed = covers all four edges of ITS HALF, top and bottom included.
+
+  KEYS   ← →  PageUp/Down  Space  Home  End   ·   F fullscreen   ·   ⌘/Ctrl+S save
+  Text marked class="ed" becomes editable when Edit is toggled on.
+-->
+
+<link rel="stylesheet" href="../../shared/font.css">
+<link rel="stylesheet" href="../../shared/core.css">
+<link rel="stylesheet" href="../../shared/slides.v22.css">
+</head>
+<body>
+
+
+
+<div class="stage-wrap">
+<div class="stage">
+
+  <!-- 1 ── TITLE ------------------------------------------------------------- -->
+  <section class="slide s-title on">
+    <div class="pad">
+    <div class="top">
+      <p class="kick">ART 3041 &nbsp;·&nbsp; A.I. for Designers</p>
+      <p class="note">Fall 2026</p>
+    </div>
+
+    <div class="mid">
+      <h1 class="ed">Prompting for<br>image generation</h1>
+    </div>
+
+    <div class="bot">
+      <p class="note ed">Broderick Shoemaker</p>
+    </div>
+    </div>
+  </section>
+
+  <!-- 2 ── SET UP · open the three platforms ----------------------------------- -->
+  <section class="slide s-full statement">
+    <div class="pad">
+    <p class="kick"><span class="num">02</span></p>
+    <h1 class="ed">Open Copilot, Gemini and ChatGPT.</h1>
+    </div>
+  </section>
+
+  <!-- 3 ── BASELINE · everyone runs the same bare prompt ------------------------ -->
+  <section class="slide s-full statement">
+    <div class="pad">
+    <p class="kick"><span class="num">03 Our first prompt (use copilot):</span></p>
+    <h1 class="ed">a chair in the middle of a room.</h1>
+    <p class="note ed">We'll start simple and build it up from there. Before we moving on, compare your result with your neighbor. At this point, I would save tokens and just use Copilot.</p>
+    </div>
+  </section>
+
+  <!-- 4 ── TIP 01 · adjectives ------------------------------------------------ -->
+  <section class="slide s-split">
+    <div class="media-half">
+      <div class="ph" style="--ratio:4/3"><span>Image · 4:3</span></div>
+    </div>
+    <div class="text-half">
+      <p class="kick"><span class="num">04</span>Prompting</p>
+      <h2 class="ed">Let's add some adjectives</h2>
+      <p class="note ed">“a _____ chair in the middle of a _____ room.”</p>
+    </div>
+  </section>
+
+  <!-- 5 ── TIP 02 · setting --------------------------------------------------- -->
+  <section class="slide s-split flip">
+    <div class="media-half">
+      <div class="ph" style="--ratio:1/1"><span>Image · 1:1</span></div>
+    </div>
+    <div class="text-half">
+      <p class="kick"><span class="num">05</span>Prompting</p>
+      <h2 class="ed">Add the setting.</h2>
+      <p class="ed">What is the atmosphere like? What else is in the room? What time of day is it?</p>
+      <p class="note ed">“a _____ chair [sitting? floating? ominously standing?] in the middle of a _____ room, _____, _____, _____.”&nbsp;<br><br>a chrome chair floating in the middle of a dilapidated school room in the middle of the day. There are no other objects. A wooden floor. Old painted walls with windows up high.</p>
+    </div>
+  </section>
+
+  <!-- 6 ── TIP 03 · style ----------------------------------------------------- -->
+  <section class="slide s-split">
+    <div class="media-half">
+      <div class="ph" style="--ratio:4/3"><span>Image · 4:3</span></div>
+    </div>
+    <div class="text-half">
+      <p class="kick"><span class="num">06</span>Prompting</p>
+      <h2 class="ed">Add the style.</h2>
+      <p class="ed">If you want something that isn’t photorealistic, what is it? A woodcut, in the style of Picasso, a collaboration between Yayoi Kusama and Chanel.</p>
+      <p class="note ed">“a chrome chair floating in the middle of a dilapidated school room in the middle of the day. There are no other objects. A wooden floor. Old painted walls with windows up high. made in the style of a painting collaboration between Pablo Picasso and Jenny Saville.”</p>
+    </div>
+  </section>
+
+  <!-- 7 ── TIP 04 · camera ---------------------------------------------------- -->
+  <section class="slide s-split flip">
+    <div class="media-half">
+      <div class="ph" style="--ratio:16/9"><span>Image · 16:9</span></div>
+    </div>
+    <div class="text-half">
+      <p class="kick"><span class="num">07</span>Prompting</p>
+      <h2 class="ed">Take control of the camera.</h2>
+      <p class="ed">Angle, distance, crop, lens, and aspect ratio. Shot from above, three-quarter view, wide, close-up, from across the room. 16:9, 1:1, 4:5, 9:16.</p>
+      <p class="note ed">"a chrome chair floating in the middle of a dilapidated school room in the middle of the day. There are no other objects. A wooden floor. Old painted walls with windows up high. Shot from slightly above and across the room, on a black and white film camera with a low aperture. 16:9 format. "</p>
+    </div>
+  </section>
+
+  <!-- 8 ── TIP 05 · reference ------------------------------------------------- -->
+  <section class="slide s-split">
+    <div class="media-half">
+      <div class="ph" style="--ratio:4/3"><span>Image · 4:3</span></div>
+    </div>
+    <div class="text-half">
+      <p class="kick"><span class="num">08</span>Prompting</p>
+      <h2 class="ed">Give it a reference.</h2>
+      <p class="ed">A sketch, a source photo, an image you like. Words are not your only input.</p>
+      <p class="note ed">Draw on your chair image, upload it: “use my drawing on this image. put a window in the wall where I circled and take out what I crossed out. keep the chair and the room the same.”</p>
+    </div>
+  </section>
+
+  <!-- 9 ── TIP 06 · feedback loop --------------------------------------------- -->
+  <section class="slide s-split flip">
+    <div class="media-half">
+      <div class="ph" style="--ratio:1/1"><span>Image · 1:1</span></div>
+    </div>
+    <div class="text-half">
+      <p class="kick"><span class="num">09</span>Prompting</p>
+      <h2 class="ed">Set up a feedback loop.</h2>
+      <p class="ed">Hand your prompt to a different a.i. and ask it to rewrite it for an image generator.</p>
+      <p class="note ed">In a different a.i.: “rewrite this prompt for an image generator: [paste your prompt]”</p>
+    </div>
+  </section>
+
+  <!-- 10 ── TIP 07 · more passes ---------------------------------------------- -->
+  <section class="slide s-split">
+    <div class="media-half">
+      <div class="ph" style="--ratio:16/9"><span>Image · 16:9</span></div>
+    </div>
+    <div class="text-half">
+      <p class="kick"><span class="num">10</span>Prompting</p>
+      <h2 class="ed">Don’t stop at a single pass.</h2>
+      <p class="ed">It’s usually not perfect the first time, and you may need to start a new chat to get new results.</p>
+      <p class="note ed">“a chrome chair floating in the middle of a dilapidated school room in the middle of the day. There are no other objects. A wooden floor. Old painted walls with windows up high. Shot from slightly above and across the room, on a black and white film camera with a low aperture. 16:9 format. The chair is higher off the floor and the light through the windows is harder.”</p>
+    </div>
+  </section>
+
+  <!-- 11 ── CLOSE · compare first result to last -------------------------------- -->
+  <section class="slide s-full statement">
+    <div class="pad">
+    <p class="kick"><span class="num">11</span></p>
+    <ol class="ed">
+      <li>Add some adjectives</li>
+      <li>Add the setting</li>
+      <li>Add the style</li>
+      <li>Take control of the camera</li>
+      <li>Give it a reference</li>
+      <li>Set up a feedback loop</li>
+      <li>Don’t stop at a single pass</li>
+    </ol>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<script src="../../shared/slides.v22.js"></script>
+
+
+
+</body></html>
