@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-docname="art3041-lecture-03"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>03 — Prompting for image generation — A.I. for Designers</title>
+
+<!--
+  LECTURE 03 — Prompting for image generation. A follow-along: the room opens Copilot,
+  Gemini and ChatGPT and runs the prompt on each slide, building one chair prompt up
+  from bare to finished. Images in this folder are the results, in order.
+
+  Framework: shared/slides.v22.css + shared/slides.v23.js. Decks never load core.js.
+
+  KEYS   ← →  PageUp/Down  Space  Home  End   ·   F fullscreen   ·   ⌘/Ctrl+S save
+  MEDIA  drag an image onto a slot, or hover it and press ⌘V.
+         Hover a slot: Full bleed · Fill · Fit · Flip · ×
+  Text marked class="ed" becomes editable when Edit is toggled on.
+-->
+
+<link rel="stylesheet" href="../../../shared/font.css">
+<link rel="stylesheet" href="../../../shared/core.css">
+<link rel="stylesheet" href="../../../shared/slides.v22.css">
+<style>
+/* Slide 08 stacks reference → text → result; slide 09 captions its image. */
+.s-full.statement .ph.result{
+  position:relative; inset:auto; width:46%; height:auto; aspect-ratio:var(--ratio);
+  align-self:center;
+}
+.s-full.statement .ph.result.fit img{inset:0; left:0; top:0; width:100%; height:100%;}
+.s-split .media-half.flow{
+  display:grid; grid-template-rows:1fr auto 1fr; align-items:center;
+  padding:4% 0;
+}
+.s-split .media-half.flow .ph{position:relative; inset:auto; width:100%; height:100%;}
+.s-split .media-half.capped{
+  display:grid; grid-template-rows:auto auto; align-content:center;
+  gap:calc(1.25 * var(--u)); padding:0 5%;
+}
+.s-split .media-half.capped .ph{
+  position:relative; inset:auto; width:100%; height:auto; aspect-ratio:var(--ratio);
+}
+.s-split .media-half.capped .ph.fit img{inset:0; left:0; top:0; width:100%; height:100%;}
+.s-split .media-half.capped .cap{
+  margin:0;
+  font-size:calc(var(--t-note) * var(--u)); line-height:1.4; color:var(--dim);
+}
+.s-split .media-half.flow .step{
+  margin:0; padding:0 8%; text-align:center; line-height:1.35;
+  font-size:calc(var(--t-note) * var(--u)); color:var(--fg);
+}
+.s-split .media-half.flow .step i{
+  display:block; font-style:normal; color:var(--accent);
+  font-size:calc(2.6 * var(--t-note) * var(--u)); line-height:1;
+}
+</style>
+</head>
+<body>
+
+
+
+<div class="stage-wrap">
+<div class="stage">
+
+  <!-- 1 ── TITLE ------------------------------------------------------------- -->
+  <section class="slide s-title on">
+    <div class="pad">
+    <div class="top">
+      <p class="kick">ART 3041 &nbsp;·&nbsp; A.I. for Designers</p>
+      <p class="note">Fall 2026</p>
+    </div>
+
+    <div class="mid">
+      <h1 class="ed">Prompting for<br>image generation</h1>
+    </div>
+
+    <div class="bot">
+      <p class="note ed">Broderick Shoemaker</p>
+    </div>
+    </div>
+  </section>
+
+  <!-- 2 ── SET UP · open the three platforms ----------------------------------- -->
+  <section class="slide s-full statement">
+    <div class="pad">
+    <p class="kick"><span class="num">02</span>Set up</p>
+    <h1 class="ed">Open Copilot, Gemini and ChatGPT.</h1>
+    </div>
+  </section>
+
+  <!-- 3 ── BASELINE · everyone runs the same bare prompt ------------------------ -->
+  <section class="slide s-full statement">
+    <div class="pad">
+    <div class="ph fit result" style="--ratio:3/2"><img src="designer-04.jpg" alt=""><span>Image</span></div>
+    <p class="kick"><span class="num">03</span>Our first prompt (use Copilot):</p>
+    <h1 class="ed">a chair in the middle of a room.</h1>
+    <p class="note ed">We’ll start simple and build it up from there. Before we move on, compare your result with your neighbor. At this point, I would save tokens and just use Copilot.</p>
+    </div>
+  </section>
+
+  <!-- 4 ── TIP 01 · adjectives ------------------------------------------------ -->
+  <section class="slide s-split">
+    <div class="media-half">
+      <div class="ph fit" style="--ratio:4/3"><img src="designer-05.jpg" alt=""><span>Image · 4:3</span></div>
+    </div>
+    <div class="text-half">
+      <p class="kick"><span class="num">04</span>Let’s add some adjectives</p>
+      <p class="ed">You can see my example below, but use your own. It will make it a lot more interesting than just copying mine.</p>
+      <p class="note ed">“a _____ chair in the middle of a _____ room.”&nbsp;<br><br>a chrome chair in the middle of a shiny mid century room.</p>
+    </div>
+  </section>
+
+  <!-- 5 ── TIP 02 · setting --------------------------------------------------- -->
+  <section class="slide s-split flip">
+    <div class="media-half">
+      <div class="ph fit" style="--ratio:1/1"><img src="designer-06.jpg" alt=""><span>Image · 1:1</span></div>
+    </div>
+    <div class="text-half">
+      <p class="kick"><span class="num">05</span>Add the setting</p>
+      <p class="ed">What is the atmosphere like? What else is in the room? What time of day is it?</p>
+      <p class="note ed">“a _____ chair [sitting? floating? ominously standing?] in the middle of a _____ room, _____, _____, _____.”&nbsp;<br><br>a chrome chair floating in the middle of a shiny mid century room in the middle of the day. There are no other objects. The walls are clean with midcentury accents, the windows are framed with midcentury wood detailing.</p>
+    </div>
+  </section>
+
+  <!-- 6 ── TIP 03 · style ----------------------------------------------------- -->
+  <section class="slide s-split">
+    <div class="media-half">
+      <div class="ph fit" style="--ratio:4/3"><img src="designer-07.jpg" alt=""><span>Image · 4:3</span></div>
+    </div>
+    <div class="text-half">
+      <p class="kick"><span class="num">06</span>Add the style</p>
+      <p class="ed">If you want something that isn’t photorealistic, what is it? A woodcut, in the style of Picasso, a collaboration between Yayoi Kusama and Chanel.</p>
+      <p class="note ed">“a chrome chair floating in the middle of a shiny mid century room in the middle of the day. There are no other objects. The walls are clean with midcentury accents, the windows are framed with midcentury wood detailing. oil painting in the style of Gerhard Richter.”</p>
+    </div>
+  </section>
+
+  <!-- 7 ── TIP 04 · camera ---------------------------------------------------- -->
+  <section class="slide s-split flip">
+    <div class="media-half">
+      <div class="ph fit" style="--ratio:16/9"><img src="designer-08.jpg" alt=""><span>Image · 16:9</span></div>
+    </div>
+    <div class="text-half">
+      <p class="kick"><span class="num">07</span>Take control of the camera</p>
+      <p class="ed">Angle, distance, crop, lens, and aspect ratio. Shot from above, three-quarter view, wide, close-up, from across the room. 16:9, 1:1, 4:5, 9:16.</p>
+      <p class="note ed">“a chrome chair floating in the middle of a shiny mid century room in the middle of the day. There are no other objects. The walls are clean with midcentury accents, the windows are framed with midcentury wood detailing. oil painting in the style of Gerhard Richter. Shot from the right corner of the room with a zoom on the side of the chair in 16:9 format. f stop 1.2.”</p>
+    </div>
+  </section>
+
+  <!-- 8 ── TIP 05 · reference ------------------------------------------------- -->
+  <section class="slide s-split">
+    <div class="media-half flow">
+      <div class="ph fit" style="--ratio:16/9"><img src="designer-08-marked.jpg" alt=""><span>Image · 16:9</span></div>
+      <p class="step ed"><i>&darr;</i>“I marked up the photo. add the turtle on the floor. the yellow rectangle should be a renaissance oil painting and the clock on the right wall is at 11:25.”<i>&darr;</i></p>
+      <div class="ph fit" style="--ratio:16/9"><img src="designer-09.jpg" alt=""><span>Image · 16:9</span></div>
+    </div>
+    <div class="text-half">
+      <p class="kick"><span class="num">08</span>Give it a reference</p>
+      <p class="ed">A sketch, a source photo, an image you like. Words are not your only input.</p>
+    </div>
+  </section>
+
+  <!-- 9 ── TIP 06 · feedback loop --------------------------------------------- -->
+  <section class="slide s-split flip">
+    <div class="media-half capped">
+      <div class="ph fit" style="--ratio:16/9"><img src="designer-10.jpg" alt=""><span>Image · 16:9</span></div>
+      <p class="cap ed">This image was generated with Gemini. All the rest are Copilot.</p>
+    </div>
+    <div class="text-half">
+      <p class="kick"><span class="num">09</span>Set up a feedback loop</p>
+      <p class="ed">I said to Copilot: “now can you give me a prompt for a different image generator based on this image?”</p>
+      <p class="note ed">“a chrome chair floating in the middle of a shiny mid-century room in broad daylight. There are no objects in the room except a turtle resting on the polished floor in the left foreground. The walls are clean with subtle mid-century modern architectural accents. Large windows with rich mid-century wood framing line the left side of the room. A framed Renaissance oil painting hangs on the right wall. An analog wall clock on the far-right wall reads 11:25. The image is rendered as an oil painting with visible brushwork, soft blending, reflective surfaces, and slightly blurred realism inspired by Gerhard Richter. The camera is positioned in the back-right corner of the room, looking diagonally across the space. Tight composition focused on the side profile of the floating chrome chair. Extremely shallow depth of field, f/1.2 aperture. Strong reflections across the glossy floor. Cinematic natural daylight. 16:9 aspect ratio.”<br><br>If the generator responds better to concise prompts:<br>“Floating chrome chair, shiny mid-century modern room, daylight, no objects except a turtle on the left foreground floor, Renaissance oil painting on right wall, wall clock showing 11:25, wood-framed windows, reflective floor, Gerhard Richter-inspired oil painting, side view of chair, shot from back-right corner, f/1.2, shallow depth of field, cinematic light, 16:9.”</p>
+    </div>
+  </section>
+
+  <!-- 10 ── TIP 07 · more passes ---------------------------------------------- -->
+  <section class="slide s-split">
+    <div class="media-half">
+      <div class="ph fit" style="--ratio:16/9"><img src="designer-11.jpg" alt=""><span>Image · 16:9</span></div>
+    </div>
+    <div class="text-half">
+      <p class="kick"><span class="num">10</span>Don’t stop at a single pass</p>
+      <p class="ed">It’s usually not perfect the first time, and you may need to start a new chat to get new results.</p>
+      <p class="note ed">“a chrome chair floating in the middle of a shiny mid century room in the middle of the day. There are no other objects. The walls are clean with midcentury accents, the windows are framed with midcentury wood detailing. oil painting in the style of Gerhard Richter. Shot from the right corner of the room with a zoom on the side of the chair in 16:9 format. f stop 1.2.”<br><br>“this is a good start but the biggest issue is that the chair isn’t floating, it’s still sitting on the floor.”<br><br>It came back with suggestions for how to make it float, and I said: “ok go ahead and make it float.”<br><br>“give me the text for that image so I can see how you made it float.”<br><br>Copilot: “I can’t see the exact internal prompt that the image model used.” The visual clues it listed: a visible gap between the chair legs and the floor, a shadow separated from the chair, a reflection appearing below the chair rather than directly connected to it, the side view, and empty floor space around it. Then it rewrote the prompt:<br><br>“a chrome chair levitating above the floor in the middle of a shiny mid century room in the middle of the day. The chair is suspended in mid-air with a clearly visible gap between all chair legs and the floor. A soft shadow falls directly beneath the chair. There are no other objects. The walls are clean with midcentury accents, the windows are framed with midcentury wood detailing. Oil painting in the style of Gerhard Richter. Shot from the right corner of the room with a zoom on the side of the chair. Shallow depth of field. f/1.2. 16:9 aspect ratio.”</p>
+      <p class="note ed">You can ask the a.i. to give you the text for the image it just gave you.</p>
+    </div>
+  </section>
+
+  <!-- 11 ── RECAP ------------------------------------------------------------ -->
+  <section class="slide s-full statement">
+    <div class="pad">
+    <p class="kick"><span class="num">11</span></p>
+    <h1 class="ed">Recap</h1>
+    <ol class="ed">
+      <li>Add some adjectives</li>
+      <li>Add the setting</li>
+      <li>Add the style</li>
+      <li>Take control of the camera</li>
+      <li>Give it a reference</li>
+      <li>Set up a feedback loop</li>
+      <li>Don’t stop at a single pass</li>
+    </ol>
+    </div>
+  </section>
+
+
+  <!-- 12 ── FOR THE REST OF CLASS / HW --------------------------------------- -->
+  <section class="slide s-full statement">
+    <div class="pad">
+    <p class="kick"><span class="num">12</span>For the rest of class / HW</p>
+    <p class="ed">Use your style guide to have Copilot make you a simple site that displays these images in order, in a grid. Post it to your GitHub repo.</p>
+    <ol class="ed">
+      <li>Put all the images into a folder. Rename them something simple, in the order you generated them &mdash; chair1, chair2, and so on.</li>
+      <li>Resize all of them at <a href="https://squoosh.app">squoosh.app</a>. Tick <strong>Resize</strong>, set the width to <strong>1200</strong>, and leave the format on MozJPEG at quality 75.</li>
+      <li>New chat &mdash; Copilot, or whatever you want. Paste your style guide and say: &ldquo;make me a simple grid layout page showcasing my sequence of image generations. they are named chair1.jpg, chair2.jpg all the way to chairx.jpg.&rdquo;</li>
+      <li>Copy and paste your image generation texts in so it can pair them. What I would do is say &mdash; for chair 1 this is what I used (paste your prompt). Then just paste your entire chat and say, &ldquo;here is the rest of the chat, pair the prompts with their respective images for me.&rdquo;</li>
+      <li>Ultimately, you want a simple page that shows the sequence of images you generated, from simple chair to final results. If you&rsquo;re not sure how to get there, ask a.i. to help :)</li>
+    </ol>
+    <p class="ed">Mine: <a href="chair-sequence.html" target="_blank" rel="noopener">chair-sequence</a></p>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<script src="../../../shared/slides.v23.js"></script>
+
+
+
+</body></html>

@@ -54,9 +54,14 @@
   });
 
   // Click to advance, but never while editing and never on a link or button.
+  // A drag also ends in a click, so selecting text used to jump to the next slide.
+  var downX = 0, downY = 0;
+  stage.addEventListener('mousedown', function(e){ downX = e.clientX; downY = e.clientY; });
   stage.addEventListener('click', function(e){
     if(editing()) return;
     if(e.target.closest('a,button')) return;
+    if(Math.abs(e.clientX - downX) > 4 || Math.abs(e.clientY - downY) > 4) return;
+    if(String(window.getSelection())) return;
     next();
   });
 

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-subtitle="Chair sequence" data-docname="art3041-chair-sequence">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ART 3041 — Chair sequence</title>
+
+<link rel="stylesheet" href="../../../shared/font.css">
+<link rel="stylesheet" href="../../../shared/core.css">
+<style>
+h1,.fit,
+.masthead .note,
+.full .sec,.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+/* A set spans the twelve columns and lays its cells on equal columns with a real gap. The
+   set carries no ground, so the field lines read through the gaps; each cell carries its own
+   and knocks the field out around itself. arrangeSets() picks the column count. */
+
+.set{
+  grid-column:1 / -1;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);   /* overwritten by arrangeSets() */
+  gap:var(--s3);
+  padding:var(--s3);
+}
+
+.cell{
+  display:flex;flex-direction:column;
+  border:1px solid var(--line);
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+  overflow:hidden;
+}
+
+/* A cell left alone on the last row spans it instead, image beside the text. */
+
+.cell.span{flex-direction:row;}
+
+.cell.span .card-img{width:40%;flex:none;align-self:stretch;aspect-ratio:auto;max-height:none;}
+
+.cell.span .card-body{flex:1;}
+
+.cell.span .card-body > *{max-width:var(--measure);}
+
+.card-img{
+  display:block;width:100%;aspect-ratio:3 / 2;max-height:280px;
+  object-fit:cover;object-position:center;
+}
+
+.card-body{display:flex;flex-direction:column;flex:1;padding:var(--s3);overflow-wrap:break-word;}
+
+.card-body > :last-child{margin-bottom:0;}
+
+.ctitle{
+  margin:0 0 var(--s2);
+  font-size:1.125rem;line-height:1.2;
+  font-variation-settings:"wdth" 100,"wght" 600,"ROND" 55;
+}
+
+/* The prompt itself, set apart from the description as the thing that was typed. */
+
+.prompt{
+  margin:0 0 var(--s2);
+  font-size:0.9375rem;line-height:1.45;color:var(--dim);
+  border-left:1px solid var(--accent);
+  padding-left:var(--s2);
+}
+
+.card-meta{
+  margin:auto 0 0;padding-top:var(--s2);
+  color:var(--accent);
+  font-size:0.875rem;letter-spacing:.06em;text-transform:uppercase;
+  font-variation-settings:"wdth" 100,"wght" 500,"ROND" 55;
+}
+
+/* No rails on this page, so the only collapse is the field itself. The set column counts
+   are handled in script, so the breakpoints for layout and for drawing stay the same. */
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .cols{display:none;}
+  #frame-nodes{display:none;}
+}
+
+.btn:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+</style>
+<link rel="stylesheet" href="../../../shared/print.css">
+</head>
+<body>
+
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <svg class="cols" contenteditable="false" aria-hidden="true"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true">
+    <polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"/>
+    <g id="frame-dots"></g>
+  </svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1><span>Chair sequence</span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;">ART 3041 · one prompt, built up nine times</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="full">
+      <p class="note">Every image here came out of Copilot except 08, which is Gemini. Each card shows what was typed to get it.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="full">
+      <h2 class="sec"><span class="num">01</span>The sequence</h2>
+      <p class="note arr"></p>
+    </div>
+    <div class="set">
+
+      <div class="cell">
+        <img class="card-img" src="designer-04.jpg" alt="A plain wooden chair in an empty room">
+        <div class="card-body">
+          <span class="tag">01</span>
+          <h3 class="ctitle">The bare prompt</h3>
+          <p class="prompt">a chair in the middle of a room.</p>
+          <p class="card-meta">Copilot</p>
+        </div>
+      </div>
+
+      <div class="cell">
+        <img class="card-img" src="designer-05.jpg" alt="A chrome chair in a mid century room">
+        <div class="card-body">
+          <span class="tag">02</span>
+          <h3 class="ctitle">Adjectives</h3>
+          <p class="prompt">a chrome chair in the middle of a shiny mid century room.</p>
+          <p class="card-meta">Copilot</p>
+        </div>
+      </div>
+
+      <div class="cell">
+        <img class="card-img" src="designer-06.jpg" alt="A chrome chair alone in a sunlit mid century room">
+        <div class="card-body">
+          <span class="tag">03</span>
+          <h3 class="ctitle">The setting</h3>
+          <p class="prompt">a chrome chair floating in the middle of a shiny mid century room in the middle of the day. There are no other objects. The walls are clean with midcentury accents, the windows are framed with midcentury wood detailing.</p>
+          <p class="card-meta">Copilot</p>
+        </div>
+      </div>
+
+      <div class="cell">
+        <img class="card-img" src="designer-07.jpg" alt="The same room painted in the style of Gerhard Richter">
+        <div class="card-body">
+          <span class="tag">04</span>
+          <h3 class="ctitle">The style</h3>
+          <p class="prompt">…oil painting in the style of Gerhard Richter.</p>
+          <p class="card-meta">Copilot</p>
+        </div>
+      </div>
+
+      <div class="cell">
+        <img class="card-img" src="designer-08.jpg" alt="The chair seen in profile from the corner of the room">
+        <div class="card-body">
+          <span class="tag">05</span>
+          <h3 class="ctitle">The camera</h3>
+          <p class="prompt">…Shot from the right corner of the room with a zoom on the side of the chair in 16:9 format. f stop 1.2.</p>
+          <p class="card-meta">Copilot</p>
+        </div>
+      </div>
+
+      <div class="cell">
+        <img class="card-img" src="designer-08-marked.jpg" alt="The previous image with a turtle, a picture frame and a clock drawn on in orange marker">
+        <div class="card-body">
+          <span class="tag">06</span>
+          <h3 class="ctitle">The reference, marked up</h3>
+          <p class="prompt">Drawn on by hand and handed back to it. Words are not the only input.</p>
+          <p class="card-meta">Input</p>
+        </div>
+      </div>
+
+      <div class="cell">
+        <img class="card-img" src="designer-09.jpg" alt="The room with a turtle on the floor, a Renaissance painting and a clock reading 11:25">
+        <div class="card-body">
+          <span class="tag">07</span>
+          <h3 class="ctitle">What came back</h3>
+          <p class="prompt">I marked up the photo. add the turtle on the floor. the yellow rectangle should be a renaissance oil painting and the clock on the right wall is at 11:25.</p>
+          <p class="card-meta">Copilot</p>
+        </div>
+      </div>
+
+      <div class="cell">
+        <img class="card-img" src="designer-10.jpg" alt="A different generator's take on the same room">
+        <div class="card-body">
+          <span class="tag">08</span>
+          <h3 class="ctitle">The same prompt, a different generator</h3>
+          <p class="prompt">now can you give me a prompt for a different image generator based on this image?</p>
+          <p class="card-meta">Gemini</p>
+        </div>
+      </div>
+
+      <div class="cell">
+        <img class="card-img" src="designer-11.jpg" alt="The chrome chair clearly levitating above the floor">
+        <div class="card-body">
+          <span class="tag">09</span>
+          <h3 class="ctitle">Another pass</h3>
+          <p class="prompt">this is a good start but the biggest issue is that the chair isn’t floating, it’s still sitting on the floor.</p>
+          <p class="card-meta">Copilot</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<script src="../../../shared/core.js"></script>
+
+<script>
+// Column count for a set: the most columns (up to the breakpoint cap, never more than the
+// item count) that leave no single cell alone on the last row. If every count would strand
+// one, keep the cap and let the last cell span its row.
+
+function colsFor(n, cap){
+  cap = Math.min(cap, n);
+  if(cap < 2) return {cols:Math.max(1,cap), span:false};
+  for(var c=cap;c>=2;c--){ if(n % c !== 1) return {cols:c, span:false}; }
+  return {cols:cap, span:true};
+}
+
+function rowsFor(n, cols, span){
+  var rows=[], full = span ? n-1 : n;
+  for(var i=0;i<full;i+=cols) rows.push(Math.min(cols, full-i));
+  if(span) rows.push('(1)');
+  return rows;
+}
+
+// The same viewport widths the field and the collapse read.
+
+function capFor(){
+  return window.matchMedia('(min-width:900px)').matches ? 3
+       : window.matchMedia('(min-width:600px)').matches ? 2 : 1;
+}
+
+function arrangeSets(){
+  var cap = capFor();
+  document.querySelectorAll('.set').forEach(function(set){
+    var cells = Array.prototype.filter.call(set.children, function(c){ return c.classList.contains('cell'); });
+    var n = cells.length; if(!n) return;
+    var a = colsFor(n, cap);
+    set.style.gridTemplateColumns = 'repeat(' + a.cols + ',1fr)';
+    cells.forEach(function(c){ c.style.gridColumn = ''; c.classList.remove('span'); });
+    if(a.span){ cells[n-1].style.gridColumn = '1 / -1'; cells[n-1].classList.add('span'); }
+    var cip = set.parentElement.querySelector('.arr');
+    if(cip){
+      var d = colsFor(n,3), t = colsFor(n,2);
+      cip.textContent = n + ' cells · desktop ' + rowsFor(n,d.cols,d.span).join(' + ')
+        + ' · tablet ' + rowsFor(n,t.cols,t.span).join(' + ')
+        + ' · mobile ' + n + '×1';
+    }
+  });
+}
+
+RELAYOUT.push(arrangeSets);
+</script>
+</body>
+</html>
