@@ -189,6 +189,21 @@ a{--dot-size:4px;}
   .sheet{width:calc(100vw - 1.5rem);padding:var(--s3);}
   .sheet-head{flex-direction:column;align-items:flex-start;gap:var(--s2);}
 }
+
+/* The week's subject, in the rail under the number and the dates. The dates stay
+   quiet; this is what you are looking for when you scan the column. */
+
+.rail .wk-title{
+  width:fit-content;
+  color:var(--accent);
+  font-size:1.125rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-variation-settings:"wdth" 100,"wght" 600,"ROND" 55;
+  line-height:1.2;
+  margin:0 0 var(--s2);
+}
+
 </style>
 <link rel="stylesheet" href="shared/print.css">
 </head>
@@ -260,7 +275,7 @@ a{--dot-size:4px;}
     <div class="rail">
       <p class="sec"><span class="num">01</span>Week</p>
       <p class="note">Aug 31 – Sep 2</p>
-      <p class="note">Intro · Design a (blank)</p>
+      <p class="wk-title">Intro · Design a (blank)</p>
     </div>
     <div class="main">
       <button class="btn-outline" type="button" contenteditable="false" aria-expanded="false" onclick="toggleWeek(this)">Show week</button>
@@ -290,7 +305,7 @@ a{--dot-size:4px;}
     <div class="rail">
       <p class="sec"><span class="num">02</span>Week</p>
       <p class="note">Sep 9</p>
-      <p class="note">Style guide</p>
+      <p class="wk-title">Style guide</p>
     </div>
     <div class="main">
       <button class="btn-outline" type="button" contenteditable="false" aria-expanded="false" onclick="toggleWeek(this)">Show week</button>
@@ -312,48 +327,59 @@ a{--dot-size:4px;}
     <div class="rail">
       <p class="sec"><span class="num">03</span>Week</p>
       <p class="note">Sep 14 &ndash; 16</p>
-      <p class="note">Image generation</p>
+      <p class="wk-title">Image generation</p>
     </div>
     <div class="main">
       <p class="tag">3.1 &middot; Mon Sep 14 &middot; online</p>
       <ul>
-        <li>Lecture / follow along &mdash; <a href="assets/lectures/lecture_03/lecture-03-prompting-images.html"><em>Prompting for image generation</em></a></li>
         <li>Watch &mdash; <a href="https://www.youtube.com/watch?v=LPZh9BOjkQs">3Blue1Brown &middot; LLMs explained briefly</a></li>
         <li>Watch &mdash; <a href="https://www.youtube.com/watch?v=9YrYDqhJdPw">Text-to-image generation explained</a></li>
         <li>Further viewing &mdash; <a href="https://www.youtube.com/watch?v=iv-5mZ_9CPY">But how do AI images and videos actually work?</a></li>
+        <li>Lecture / follow along &mdash; <a href="assets/lectures/lecture_03/lecture-03-prompting-images.html"><em>Prompting for image generation</em></a>
+          <ul>
+            <li>My sequence page &mdash; <a href="assets/lectures/lecture_03/chair-sequence.html">chair sequence</a></li>
+          </ul>
+        </li>
       </ul>
       <p class="note">Ask the a.i. for help writing the image prompt. Give it sketches, a source photo, and information.</p>
-      <p class="note hw"><strong>HW</strong>Photograph images from your commute over the next couple of days and bring them to class on Wednesday. Very important as we will use them.</p>
-      <p class="note hw">Please email me at <a href="mailto:bshoemaker@ccny.cuny.edu">bshoemaker@ccny.cuny.edu</a> with the URL of your GitHub Pages index.html. Be sure that Design a ____ is linked on your index and that it has a hero image / follows the guidelines of your style guide we built last week (week 2.1).</p>
+      <p class="note hw"><strong>HW</strong>Complete your image generation sequence page if you didn’t in class (see the lecture above for details, slide 12).</p>
+      <p class="note hw">Photograph images from your commute over the next couple of days and bring them to class on Wednesday. Very important as we will use them.</p>
+      <p class="note hw">Please email me at <a href="mailto:bshoemaker@ccny.cuny.edu">bshoemaker@ccny.cuny.edu</a> with the URL of your GitHub Pages index.html. Be sure that Design a ____ and your chair sequence page are both linked on your index, and that it has a hero image / follows the guidelines of your style guide we built last week (week 2.1).</p>
       <p class="tag">3.2 &middot; Wed Sep 16 &middot; in person</p>
       <ul>
         <li>Lecture / discussion &mdash; Photoshop generative tools.</li>
         <li>In class &mdash; your commute, evolved.</li>
       </ul>
-      <p class="note hw"><strong>HW</strong>The Photoshop generative assignment.</p>
+      <p class="note hw"><strong>HW</strong>Complete &ldquo;Your commute, evolved.&rdquo;</p>
     </div>
   </div>
 
-<!-- Weeks 04-16 are hidden until each is current. Uncomment a band to publish it.
 
   <div class="band">
     <div class="rail">
       <p class="sec"><span class="num">04</span>Week</p>
       <p class="note">Sep 21 – 23</p>
+      <p class="wk-title">Image generation</p>
     </div>
     <div class="main">
-      <p class="sec"><span class="fill">[title]</span></p>
+      <button class="btn-outline" type="button" contenteditable="false" aria-expanded="false" onclick="toggleWeek(this)">Show week</button>
+      <div class="week-body" hidden>
       <p class="tag">4.1 &middot; Mon Sep 21 &middot; online</p>
       <ul>
-        <li>Lecture &mdash; how image generators work. The same prompt run on several platforms, side by side.</li>
-        <li>Design Challenge #2: <strong>a poster</strong> &mdash; prompt and challenge, off a famous movie or concert poster.</li>
+        <li>Design Challenge #2: <strong>A Promotional Poster for a Music Album or Movie</strong></li>
       </ul>
+      <p class="note hw"><strong>HW</strong>Claim a free year of Google AI Pro at <a href="https://gemini.google/students/">gemini.google/students</a>.</p>
+      <p class="note hw">Then set up <a href="https://flow.google.com">Google Flow</a> and generate one short clip, so it is working before Wednesday. Flow is 18+.</p>
       <p class="tag">4.2 &middot; Wed Sep 23 &middot; in person</p>
       <ul>
+        <li>A.I. video workshop &mdash; animating a still with Google Flow.</li>
         <li>Work session &mdash; posters, with feedback.</li>
       </ul>
+      </div>
     </div>
   </div>
+
+<!-- Weeks 05-16 are hidden until each is current. Uncomment a band to publish it.
 
   <div class="band">
     <div class="rail">

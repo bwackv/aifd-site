@@ -193,10 +193,25 @@
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeMenu(); });
 
   /* --- Save ---------------------------------------------------------------- */
+  // Served from serve.py on localhost the deck writes back to its own file; over file://
+  // it cannot, so Save HTML hands you a copy to put back. Decks never load core.js, so this
+  // is the deck's own copy of the same two lines.
+  var LIVE_SAVE = /^https?:$/.test(location.protocol)
+               && /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+
   function saveDeck(){
     var clone = document.documentElement.cloneNode(true);
     clone.querySelectorAll('[data-nosave]').forEach(function(el){ el.remove(); });
     var html = '<!DOCTYPE html>\n' + clone.outerHTML;
+    if(LIVE_SAVE){
+      fetch(location.pathname, {
+        method:'PUT', headers:{'Content-Type':'text/html; charset=utf-8'}, body:html
+      }).then(function(r){
+        if(!r.ok) throw new Error(r.status + ' ' + r.statusText);
+        report('saved');
+      }).catch(function(e){ report('save failed'); console.error('save in place:', e); });
+      return;
+    }
     var blob = new Blob([html], {type:'text/html'});
     var d = new Date();
     var stamp = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');

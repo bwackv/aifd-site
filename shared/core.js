@@ -952,6 +952,30 @@ document.addEventListener('keydown', function(e){
   if(!PUBLIC && (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's'){ e.preventDefault(); saveDoc(); }
 });
 
+// --- Saving in place -----------------------------------------------------------
+// A doc opened over file:// cannot write to its own file, so Save HTML hands you a copy to
+// put back. Served from serve.py on localhost it can: PUT the document to its own URL and
+// the server overwrites the file. Same button, same Cmd-S; no download, no re-placing.
+var LIVE_SAVE = /^https?:$/.test(location.protocol)
+             && /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+
+function putInPlace(html){
+  return fetch(location.pathname, {
+    method:'PUT', headers:{'Content-Type':'text/html; charset=utf-8'}, body:html
+  }).then(function(r){
+    if(!r.ok) throw new Error(r.status + ' ' + r.statusText);
+  });
+}
+
+// Say so on the button itself — a silent save is indistinguishable from a broken one.
+function flashSaved(txt){
+  var b = document.querySelector('.toolbar button[onclick^="save"]');
+  if(!b) return;
+  var was = b.textContent;
+  setBtnLabel(b, txt);
+  setTimeout(function(){ setBtnLabel(b, was); }, 1400);
+}
+
 function saveDoc(){
   var clone = document.documentElement.cloneNode(true);
   clone.querySelectorAll('[data-nosave]').forEach(function(el){ el.remove(); });   // drop the toolbar
@@ -967,6 +991,12 @@ function saveDoc(){
   var cols=clone.querySelector('.cols');
   if(cols) cols.innerHTML='<defs id="col-grads"></defs><g id="col-lines"></g>';
   var html = '<!DOCTYPE html>\n' + clone.outerHTML;
+  if(LIVE_SAVE){
+    putInPlace(html)
+      .then(function(){ flashSaved('Saved'); })
+      .catch(function(e){ flashSaved('Save failed'); console.error('save in place:', e); });
+    return;
+  }
   var blob = new Blob([html], {type:'text/html'});
   var d = new Date();
   var stamp = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
