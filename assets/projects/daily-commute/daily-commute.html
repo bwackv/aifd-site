@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-frame="on" data-subtitle="Your commute, evolved" data-docname="art3041-daily-commute"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Commute, Evolved — A.I. for Designers</title>
+
+
+<link rel="stylesheet" href="../../../shared/font.css">
+<link rel="stylesheet" href="../../../shared/core.css">
+<style>
+
+/* When the rail collapses into the band header, its last line carries no trailing margin, so the gap
+   down to the main body is main's collapsed padding-top alone (--s2), not the note margin and the
+   padding stacked. */
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main .note,.main .sec,.main .tag,
+.rail .sec,.rail .note,
+.full .sec,.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+/* --- Sets on a rail-less field ------------------------------------------------
+   A set spans all twelve columns and lays its cells on equal columns with a real gap.
+   The set carries no ground of its own, so the field lines read through the gaps and the
+   padding ring; each cell carries the ground instead and knocks the field out around
+   itself. arrangeSets() chooses the column count from the item count and the breakpoint. */
+
+.set{
+  grid-column:1 / -1;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);   /* overwritten by arrangeSets() */
+  gap:var(--s3);
+  padding:var(--s3);
+}
+
+.cell{
+  display:flex;flex-direction:column;
+  border:1px solid var(--line);
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+  overflow:hidden;
+}
+
+/* A card that spans a full row caps its copy to a reading measure, so a stranded last cell does not
+   run one line the whole width of the page. */
+
+.cell.span .card-body > *{max-width:var(--measure);}
+
+.card-body{display:flex;flex-direction:column;flex:1;padding:var(--s3);overflow-wrap:break-word;}
+
+.card-body > :last-child{margin-bottom:0;}
+
+.ctitle{
+  margin:0 0 var(--s2);
+  font-size:1.125rem;line-height:1.2;
+  font-variation-settings:"wdth" 100,"wght" 600,"ROND" 55;
+}
+
+/* The source picture, shown whole — it is the thing being expanded, so it is never cropped here. */
+
+.shot{display:block;width:100%;height:auto;border:1px solid var(--line);}
+
+.shot-meta{
+  margin:var(--s2) 0 0;
+  color:var(--dim);
+  font-size:0.8125rem;letter-spacing:.03em;
+}
+
+h1 .fill{color:var(--accent);}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}   /* no rail column, no boundary */
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}   /* field is hidden here, so nothing sits at a crossing */
+}
+
+@media (max-width:599px){
+  /* Mobile: tighten the side padding to 12px — the field 12px off the screen edge, the type 12px inside it. */
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+</style>
+<link rel="stylesheet" href="../../../shared/print.css">
+</head>
+<body>
+
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <svg class="cols" contenteditable="false" aria-hidden="true"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true">
+    <polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline>
+    <g id="frame-dots"></g>
+  </svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1><span>Your Commute, <span class="fill">Evolved</span></span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;">use the photos you brought from your own commute to tell a story</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>The File</p>
+      <p class="note">Start here.</p>
+    </div>
+    <div class="main">
+      <p>Download this picture and open it in Photoshop. We will all work on the same image during the demo.</p>
+      <p><a href="commute-pic.jpg" download data-self>Download commute-pic.jpg</a></p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="full">
+      <img class="shot" src="commute-pic.jpg" alt="The commute picture used for the in-class demo.">
+      <p class="shot-meta">commute-pic.jpg · 2054 × 1376 · 1 MB</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="full">
+      <h2 class="sec"><span class="num">02</span>The Demo</h2>
+      <p class="note">Three generative moves, in this order.</p>
+    </div>
+    <div class="set">
+      <div class="cell">
+        <div class="card-body">
+          <span class="tag">Crop tool</span>
+          <h3 class="ctitle">Generative expand</h3>
+          <p>First we are going to use the crop tool to generative expand.</p>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="card-body">
+          <span class="tag">Canvas</span>
+          <h3 class="ctitle">Generative fill</h3>
+          <p>Next we are going to expand the whole canvas and use generative fill.</p>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="card-body">
+          <span class="tag">Selection</span>
+          <h3 class="ctitle">Generative fill</h3>
+          <p>Finally we are going to select parts inside the image to generative fill.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">03</span>The Assignment</p>
+      <p class="note">Your turn.</p>
+    </div>
+    <div class="main">
+      <p>After this demo, your assignment is to use the photos you brought from your own commute to tell a story. I'm leaving this intentionally open-ended.</p>
+      <p>Perhaps at every juncture there is a magical discovery. Or an epic boss battle. Or just some moments of added beauty. Whatever you choose…</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">04</span>Hand-In</p>
+      <p class="note">What to bring.</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li>Use Photoshop generative tools on <strong>four images</strong>.</li>
+        <li>Once you finish the photos, use A.I. to make a small site for them — just like you did with your <a href="../../lectures/lecture_03/chair-sequence.html">chair sequence</a> from last class.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="full">
+      <p class="note">ART 3041 · A.I. for Designers · Fall 2026 · this page was built with A.I. under my creative direction.</p>
+    </div>
+  </div>
+</main>
+
+<script src="../../../shared/core.js"></script>
+
+<script>
+// Column count for a set: the most columns (capped by the breakpoint, never more than the item
+// count) that leave no single cell alone on the last row; if every count would strand one, keep the
+// cap and let the last cell span its row.
+
+function colsFor(n, cap){
+  cap = Math.min(cap, n);
+  if(cap < 2) return {cols:Math.max(1,cap), span:false};
+  for(var c=cap;c>=2;c--){ if(n % c !== 1) return {cols:c, span:false}; }
+  return {cols:cap, span:true};
+}
+
+function capFor(){
+  return window.matchMedia('(min-width:900px)').matches ? 3
+       : window.matchMedia('(min-width:600px)').matches ? 2 : 1;
+}
+
+function arrangeSets(){
+  var cap = capFor();
+  document.querySelectorAll('.set').forEach(function(set){
+    var cells = Array.prototype.filter.call(set.children, function(c){ return c.classList.contains('cell'); });
+    var n = cells.length; if(!n) return;
+    var a = colsFor(n, cap);
+    set.style.gridTemplateColumns = 'repeat(' + a.cols + ',1fr)';
+    cells.forEach(function(c){ c.style.gridColumn = ''; c.classList.remove('span'); });
+    if(a.span){ cells[n-1].style.gridColumn = '1 / -1'; cells[n-1].classList.add('span'); }
+  });
+}
+
+// This document arranges its own card sets; run it on every shared layout pass.
+RELAYOUT.push(arrangeSets);
+</script>
+
+</body></html>
