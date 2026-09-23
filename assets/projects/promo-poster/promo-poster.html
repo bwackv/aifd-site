@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-frame="on" data-subtitle="Promotional poster" data-docname="art3041-promo-poster"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Promotional Poster — A.I. for Designers</title>
+
+
+<link rel="stylesheet" href="../../../shared/font.css">
+<link rel="stylesheet" href="../../../shared/core.css">
+<style>
+
+/* When the rail collapses into the band header, its last line carries no trailing margin, so the gap
+   down to the main body is main's collapsed padding-top alone (--s2), not the note margin and the
+   padding stacked. */
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main .note,.main .sec,.main .tag,
+.rail .sec,.rail .note,
+.full .sec,.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+/* --- The process, in pairs ----------------------------------------------------
+   Two columns, so each what-went-in / what-came-back pair reads across one row.
+   The count is fixed at six, so this set does not need arrangeSets(). */
+
+.set{
+  grid-column:1 / -1;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:var(--s3);
+  padding:var(--s3);
+}
+
+.cell{
+  display:flex;flex-direction:column;
+  border:1px solid var(--line);
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+  overflow:hidden;
+}
+
+/* Everything here is a poster or a sketch of one, so the frame is portrait and the crop is nil. */
+
+.card-img{
+  display:block;width:100%;aspect-ratio:3 / 4;
+  object-fit:cover;object-position:center;
+}
+
+.card-body{display:flex;flex-direction:column;flex:1;padding:var(--s3);overflow-wrap:break-word;}
+
+.card-body > :last-child{margin-bottom:0;}
+
+/* The prompt itself, set apart from the description as the thing that was typed. */
+
+.prompt{
+  margin:0 0 var(--s2);
+  font-size:0.9375rem;line-height:1.45;color:var(--dim);
+  border-left:1px solid var(--accent);
+  padding-left:var(--s2);
+}
+
+h1 .fill{color:var(--accent);}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}   /* no rail column, no boundary */
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}   /* field is hidden here, so nothing sits at a crossing */
+  .set{grid-template-columns:1fr;}
+}
+
+@media (max-width:599px){
+  /* Mobile: tighten the side padding to 12px — the field 12px off the screen edge, the type 12px inside it. */
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+</style>
+<link rel="stylesheet" href="../../../shared/print.css">
+</head>
+<body>
+
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <svg class="cols" contenteditable="false" aria-hidden="true"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true">
+    <polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline>
+    <g id="frame-dots"></g>
+  </svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1><span>A Promotional Poster for a <span class="fill">Concert Tour or Movie</span></span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;">Develop an analog sketch as the basis for an image generation project. Additionally, recognize the importance of iteration and incremental image improvement.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>Brief</p>
+      <p class="note">Project summary.</p>
+    </div>
+    <div class="main">
+      <p>You&rsquo;re going to start with a sketch for a promotional movie or concert tour poster. The only text should be the name of the band/movie and, if desired, a tagline/enticing phrase. After you create the sketch, you put that into Gemini with a detailed breakdown of what each element in the sketch should represent. You can see from my example below, the building I specified as &ldquo;The Beresford&rdquo; which is a real apartment building in NYC.</p>
+      <p>Make your sketch detailed and your description of its elements methodical, this will yield best results.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="full">
+      <h2 class="sec"><span class="num">02</span>Process</h2>
+      <p class="note">A walkthrough of my process. You should keep going past what I did.</p>
+    </div>
+    <div class="set">
+
+      <div class="cell">
+        <img class="card-img" src="rainbow-01-sketch.jpg" alt="A pencil sketch of the RAINBOW poster on a clipboard: an arced title, a cloud with a lightning bolt, a skyline, a tall tower, and a figure at bottom left.">
+        <div class="card-body">
+          <span class="tag">01</span>
+          <p class="prompt">this is a sketch for the promotional poster to a movie I made up called RAINBOW. the building should be the Beresford in NYC, and the skyscraper should be a neo cyber punk tower. the person on the bottom left is half in shadow, holding a knife. the rainbow banner as solid rainbow lines behind it and a slab bubble hand made font. the cloud is a real cloud with a cartoon lightning bolt coming down. the sky is a gradient of pinks and gray storm colors</p>
+        </div>
+      </div>
+
+      <div class="cell">
+        <img class="card-img" src="rainbow-02-comp.jpg" alt="The first generated poster, rendered as a printed sheet lying on the clipboard, with the rainbow running diagonally and RAINBOW set vertically.">
+        <div class="card-body">
+          <span class="tag">02</span>
+          <p>It didn&rsquo;t follow my sketch, so I explained it needed to follow the layout explicitly. Additionally, I cropped the image to just my sketch for clarification.</p>
+        </div>
+      </div>
+
+      <div class="cell">
+        <img class="card-img" src="rainbow-03-sketch-cropped.jpg" alt="The same sketch, cropped to the drawn artboard alone — no clipboard, no desk.">
+        <div class="card-body">
+          <span class="tag">03</span>
+        </div>
+      </div>
+
+      <div class="cell">
+        <img class="card-img" src="rainbow-04-comp.jpg" alt="The second generated poster: rainbow arcing over the top left, RAINBOW in a bubble slab font, storm cloud and bolt, the Beresford beside a neon tower.">
+        <div class="card-body">
+          <span class="tag">04</span>
+          <p>This was much better, and now I went into Photoshop with the image and added some additional elements.</p>
+        </div>
+      </div>
+
+      <div class="cell">
+        <img class="card-img" src="rainbow-05-markup.jpg" alt="The second poster drawn on by hand: a wedge from the tower down to the figure, and marks in the sky where birds should go.">
+        <div class="card-body">
+          <span class="tag">05</span>
+          <p class="prompt">I want the punk tower to cast a glowing green beacon down to the head of the stranger, it should be glowing green and semi transparent. I want the Beresford&rsquo;s prominent windows to be glowing colors. the word &ldquo;RAINBOW&rdquo; should be in black or cutout. and there should be black flying birds silhouettes in the sky.</p>
+        </div>
+      </div>
+
+      <div class="cell">
+        <img class="card-img" src="rainbow-06-final.jpg" alt="The finished poster: green beacon from the tower to the figure, lit windows on the Beresford, RAINBOW cut out in black, birds across the sky.">
+        <div class="card-body">
+          <span class="tag">06</span>
+          <p>Now we&rsquo;re getting somewhere! Don&rsquo;t stop here in your own process, keep the back and forth going until you get the result imagined.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">03</span>Hand-In</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li>Post your poster to github and link to it on your index.html</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="full">
+      <p class="note">ART 3041 · A.I. for Designers · Fall 2026 · this page was built with A.I. under my creative direction.</p>
+    </div>
+  </div>
+</main>
+
+<script src="../../../shared/core.js"></script>
+
+</body></html>
