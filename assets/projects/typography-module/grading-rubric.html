@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-frame="on" data-subtitle="Typography · Grading rubric" data-docname="art3041-typography-grading-rubric"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI-Aided Generative Typography: Visual &amp; Systemic Grading Rubric — A.I. for Designers</title>
+
+
+<link rel="stylesheet" href="../../../shared/font.css">
+<link rel="stylesheet" href="../../../shared/core.css">
+<style>
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main .note,.main .sec,.main .tag,
+.rail .sec,.rail .note,
+.full .sec,.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+h1 .fill{color:var(--accent);}
+
+@media (min-width:768px){
+  .pair{columns:2;column-gap:var(--s4);}
+  .pair li{break-inside:avoid;}
+}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}
+}
+
+@media (max-width:599px){
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+</style>
+<link rel="stylesheet" href="../../../shared/print.css">
+</head>
+<body>
+
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <svg class="cols" contenteditable="false" aria-hidden="true"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true">
+    <polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline>
+    <g id="frame-dots"></g>
+  </svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1><span>AI-Aided Generative Typography: <span class="fill">Visual &amp; Systemic Grading Rubric</span></span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;"><strong>Evaluation Focus:</strong> This rubric assesses the final GitHub repository and the generative output of the web application. While the code must function, the primary grading emphasis is placed on visual rigor: the fidelity to historical Swiss typographic principles and the generative inventiveness of the resulting system.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>Typographic Analysis</p>
+      <p class="note">10 points</p>
+    </div>
+    <div class="main">
+      <p><strong>Core Question:</strong> Does the student&rsquo;s written deconstruction of the archival reference demonstrate genuine visual observation? This is the raw analysis document produced in Session 1 and the <code>skills.md</code> rules derived from it.</p>
+      <ul>
+        <li><strong>Exceptional (9&ndash;10 points):</strong> The analysis names specific, measurable characteristics &mdash; scale ratios, weight relationships, the unit the spacing is built on, where the grid is broken and why. Observations are particular to the chosen poster and could not describe any other. The rules in <code>skills.md</code> map directly onto what was observed.</li>
+        <li><strong>Proficient (7&ndash;8 points):</strong> The analysis identifies the major structural decisions correctly but stays general in places. Hierarchy and grid are described; finer relationships (x-height, stroke contrast, spatial rhythm) are noted loosely or missed. Most observations survive into usable rules.</li>
+        <li><strong>Developing (5&ndash;6 points):</strong> The analysis relies on impression rather than observation (&ldquo;clean,&rdquo; &ldquo;modern,&rdquo; &ldquo;balanced&rdquo;) without identifying the decisions that produce the effect. Little of it converts into constraints the tool can enforce.</li>
+        <li><strong>Insufficient (0&ndash;4 points):</strong> Missing, or describes the poster&rsquo;s subject rather than its design.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">02</span>Archival Aesthetic Fidelity</p>
+      <p class="note">30 points</p>
+    </div>
+    <div class="main">
+      <p><strong>Core Question:</strong> How closely and accurately did the student&rsquo;s tool capture the foundational aesthetic decisions, grid logic, and typographic hierarchy of the original archival references (e.g., M&uuml;ller-Brockmann, Weingart, Kunz)?</p>
+      <ul>
+        <li><strong>Exceptional (27&ndash;30 points):</strong> Masterful translation of the International Typographic Style. The output demonstrates a rigorous understanding of asymmetric grid math. Typographic hierarchy (scale, weight, contrast) perfectly mirrors the historical DNA. Unitized cadencing, spatial rhythms, and x-height relationships are historically accurate based on the AI-assisted font sourcing.</li>
+        <li><strong>Proficient (22&ndash;26 points):</strong> Strong visual alignment with the archival references. The grid is present and mostly respected. Typographic hierarchy is clear, though minor spacing or scale inconsistencies may occur when the system is pushed. The selected Google Fonts adequately represent the neo-grotesque structural requirements.</li>
+        <li><strong>Developing (15&ndash;21 points):</strong> The output resembles generic AI-generated design rather than strict Swiss Typography. Centered layouts, muddled type scales, or inappropriate font substitutions override the historical constraints. The tool fails to consistently enforce the archival aesthetic rules.</li>
+        <li><strong>Insufficient (0&ndash;14 points):</strong> No clear relationship to the sourced visual history. Complete breakdown of grid logic and typographic proportion.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">03</span>Generative Inventiveness</p>
+      <p class="note">30 points</p>
+    </div>
+    <div class="main">
+      <p><strong>Core Question:</strong> How inventively did the student stretch the rules? Did they build a tool that just clones one specific poster, or did they design a dynamic system capable of producing unexpected, creative variations that still feel authentic to the movement?</p>
+      <ul>
+        <li><strong>Exceptional (27&ndash;30 points):</strong> The application acts as a true design engine. It generates surprising, dynamic visual compositions that push the boundaries of the original archival constraints without breaking the underlying logic. The user inputs yield highly inventive, parametric variations (e.g., brilliant handling of image-to-color-palette extraction or novel typographic disruption inspired by Weingart).</li>
+        <li><strong>Proficient (22&ndash;26 points):</strong> The tool produces good variations, but they may feel somewhat repetitive or safe. The system handles standard inputs well but lacks the parametric flexibility to truly surprise the user with inventive layout combinations.</li>
+        <li><strong>Developing (15&ndash;21 points):</strong> The tool is essentially a static template. Inputs change the text or an image, but the structural layout remains rigidly identical every time. It lacks systemic flexibility and generative design thinking.</li>
+        <li><strong>Insufficient (0&ndash;14 points):</strong> The tool does not generate variable outcomes or breaks entirely when novel inputs are introduced.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">04</span>Vector Architecture &amp; Export Cleanliness</p>
+      <p class="note">10 points</p>
+    </div>
+    <div class="main">
+      <p><strong>Core Question:</strong> Is the human-testable output (SVG/PDF) materially sound? Can it be utilized in a professional post-production workflow?</p>
+      <ul>
+        <li><strong>Exceptional (9&ndash;10 points):</strong> The exported SVG/PDF is flawless pure-vector math. When opened in Adobe Illustrator, the file features logical grouping, intact paths (especially if integrating custom Fontra paths), pristine typography rendering, and zero rasterization of vector elements.</li>
+        <li><strong>Proficient (7&ndash;8 points):</strong> The export is usable and mostly editable in Adobe software. Some minor cleanup may be required (e.g., clipping masks behaving strangely, or text broken into individual lines rather than paragraphs), but the vector integrity is generally maintained.</li>
+        <li><strong>Developing (5&ndash;6 points):</strong> The export has significant structural issues. Text may be outlined unnecessarily, CSS styling from the web app fails to translate to the vector export, or bounding boxes are misaligned.</li>
+        <li><strong>Insufficient (0&ndash;4 points):</strong> The tool fails to export a valid SVG/PDF, or the output is completely rasterized/uneditable in vector software.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">05</span>AI Orchestration &amp; Repository Logic</p>
+      <p class="note">20 points</p>
+    </div>
+    <div class="main">
+      <p><strong>Core Question:</strong> Do the orchestration files (<code>skills.md</code>, <code>handoff.md</code>) within the GitHub repo demonstrate a clear, rigorous command of AI prompting to achieve these specific visual results?</p>
+      <ul>
+        <li><strong>Exceptional (18&ndash;20 points):</strong> The repository documentation reveals a deep understanding of typographic pedagogy used to govern the LLM. The explicit constraints in <code>skills.md</code> strictly map to the visual successes of the tool. The context handoffs are clean, showing targeted iterative debugging of the CSS/SVG math.</li>
+        <li><strong>Proficient (14&ndash;17 points):</strong> The markdown framework is complete and generally effective. The prompts guide the AI well, though some visual corrections may have been brute-forced rather than solved systematically via rules in the <code>skills.md</code>.</li>
+        <li><strong>Developing (10&ndash;13 points):</strong> The documentation is sparse or disorganized. The prompts rely on vague aesthetic requests (e.g., &ldquo;make it look Swiss&rdquo;) rather than absolute grid coordinates and typographic math.</li>
+        <li><strong>Insufficient (0&ndash;9 points):</strong> Missing markdown orchestration files, or the prompts show no attempt to systematically constrain the AI&rsquo;s output.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">06</span>Total</p>
+    </div>
+    <div class="main">
+      <p><strong>Total Score: ___ / 100</strong></p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="full">
+      <p class="note">ART 3041 · A.I. for Designers · Fall 2026 · with Prof. Mirko Velimirovi&#263;</p>
+    </div>
+  </div>
+</main>
+
+<script src="../../../shared/core.js"></script>
+
+</body></html>

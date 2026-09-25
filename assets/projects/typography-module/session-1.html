@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-frame="on" data-subtitle="Typography · Session 1" data-docname="art3041-typography-session-1"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 1: Deconstruction, Typographic Hierarchy &amp; AI Sourcing — A.I. for Designers</title>
+
+
+<link rel="stylesheet" href="../../../shared/font.css">
+<link rel="stylesheet" href="../../../shared/core.css">
+<style>
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main .note,.main .sec,.main .tag,
+.rail .sec,.rail .note,
+.full .sec,.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+h1 .fill{color:var(--accent);}
+
+@media (min-width:768px){
+  .pair{columns:2;column-gap:var(--s4);}
+  .pair li{break-inside:avoid;}
+}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}
+}
+
+@media (max-width:599px){
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+</style>
+<link rel="stylesheet" href="../../../shared/print.css">
+</head>
+<body>
+
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <svg class="cols" contenteditable="false" aria-hidden="true"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true">
+    <polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline>
+    <g id="frame-dots"></g>
+  </svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1><span>Session 1: <span class="fill">Deconstruction, Typographic Hierarchy &amp; AI Sourcing</span></span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;"><strong>Goal:</strong> Reverse-engineer the rules of Swiss Style, recognize hierarchical structures, and establish an AI communication framework.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>Module</p>
+      <p class="note">Designing With AI: Generative Pedagogy &amp; Swiss Typography</p>
+    </div>
+    <div class="main">
+      <p>This four-session module guides students from researching foundational Swiss International Typographic Style through developing their own programmatic poster-generating web application. The core objective is teaching AI orchestration&mdash;how to structure prompts, separate concerns (<code>skills.md</code>, <code>handoff.md</code>), and evaluate generative output against established graphic design rigor.</p>
+      <p>Sketching your own ideas and having them &ldquo;upcycled&rdquo; by ai might be something you leverage. Are the &ldquo;upcycled&rdquo; images as useful as the sketches? Do they reinforce one another?</p>
+      <p><a href="grading-rubric.html">Grading rubric</a></p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">02</span>Overview</p>
+      <p class="note">5.1 · Mon Sep 28 · online</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li><strong>Archival Research &amp; Analysis:</strong> Analyze the mathematical grid, sans-serif rigor, and asymmetric compositions of Josef M&uuml;ller-Brockmann, Wolfgang Weingart, <em>Typographische Monatsbl&auml;tter</em>, David Rudnick, and Willi Kunz through close analysis.
+          <ul class="pair">
+            <li><a href="http://www.tm-research-archive.ch/">TM Research Archive</a></li>
+            <li><a href="https://www.sfmoma.org/artist/Willi_Kunz/">SFMOMA Willi Kunz</a></li>
+            <li><a href="https://www.moma.org/artists/4154-josef-muller-brockmann">MoMA M&uuml;ller-Brockmann</a></li>
+            <li><a href="https://sgustokdesign.com/josef-muller-brockmann-posters">Sgustok Design</a></li>
+            <li><a href="https://davidrudnick.org/tag/posters/">David Rudnick</a></li>
+            <li><a href="https://tschicholdarchive.com/">Tschichold Archive</a></li>
+            <li><a href="https://www.moma.org/artists/6289-wolfgang-weingart">MoMA Weingart</a></li>
+          </ul>
+        </li>
+        <li><strong>Visual Hierarchy Description:</strong> Describe the visual hierarchy/layout of the chosen poster.
+          <ul>
+            <li>Identify shapes and color themes</li>
+            <li>Describe visual relationships and themes</li>
+            <li>Describe an overall mood or description of the poster</li>
+          </ul>
+        </li>
+        <li><strong>Typographic Hierarchy Recognition &amp; AI Sourcing:</strong>
+          <ol>
+            <li>Identify the specific typographic DNA of the historical references&mdash;x-height, stroke contrast, spatial rhythms, and unitized cadencing.</li>
+            <li>Upload reference posters to an AI vision model. Prompt it to analyze the typographic hierarchy (H1, H2, body copy ratios) and structural characteristics.</li>
+            <li>Instruct the AI to cross-reference the Google Fonts library and recommend similar open-source typefaces that match these precise proportions.</li>
+          </ol>
+        </li>
+        <li><strong>Typography &amp; Custom Lettering:</strong> Download the AI-recommended structurally similar fonts. Alternatively, students can utilize Fontra to build out custom lettering, applying curve harmonization and path rationalization to their own pure-vector letterforms for use in the final project. In this case they would have to also be good at drawing type already! A problem in itself!</li>
+        <li><strong>The Orchestration Protocol:</strong> Introduce the two markdown files used to manage the AI. Both are pasted into Gemini at the start of a session, and both are updated as the work goes on:
+          <ul>
+            <li><code>skills.md</code>: The grid system math, the typographic scale, and the explicit rules (e.g., &ldquo;Left-align text,&rdquo; &ldquo;Restrict color palette,&rdquo; &ldquo;Apply 12-column grid,&rdquo; &ldquo;Enforce modular typographic scale&rdquo;).</li>
+            <li><code>handoff.md</code>: Where the project stands, so a new chat can pick it up when the old one loses the thread.</li>
+          </ul>
+        </li>
+        <li><strong>Task:</strong>
+          <ol>
+            <li>Sketch a paper UI for the poster-generator tool.</li>
+            <li>Feed reference images, font selections, and the sketch to an AI to rewrite the initial project scope into the two Markdown files.</li>
+          </ol>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">03</span>In class</p>
+      <p class="note">100 minutes</p>
+    </div>
+    <div class="main">
+      <p>Choose one poster from the archives to build a tool around. You are choosing a poster you like in order to build a tool that allows you to design in a similar manner. The processes of engaging with work, deconstructing it, evaluating it, and finding a way to make similar outputs are the core of this exercise.</p>
+      <ul>
+        <li>25 min: Archival research, analysis, and historical lecture on Swiss Style and unitized spacing.</li>
+        <li>25 min: <strong>Typographic Recognition Exercise:</strong>
+          <ol>
+            <li>Identify the hierarchy (scale, weight, spatial rhythm) on historical posters.</li>
+            <li>Write down your analysis of the type, the color, the hierarchy, the kind of grid, the tone, everything you notice about the poster into a stream of consciousness/ natural language text document.</li>
+            <li>Feed this document to ai to produce a skills.md.</li>
+          </ol>
+        </li>
+        <li>25 min: Introduction to the <code>skills.md</code> / <code>handoff.md</code> Markdown orchestration protocol.</li>
+        <li>25 min: Paper UI sketching.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">04</span>Homework</p>
+      <p class="note">4&ndash;5 hours</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li>1&ndash;2 hours: <strong>AI-Assisted Type Sourcing:</strong>
+          <ol>
+            <li>Upload reference posters to an AI.</li>
+            <li>Prompt it to analyze the type characteristics and find similar open-source fonts on Google Fonts.</li>
+            <li>Download and organize these files.</li>
+          </ol>
+        </li>
+        <li>2 hours: Iterating with the AI to finalize the two core Markdown orchestration files. Ensure your <code>skills.md</code> explicitly defines the typographic scale and hierarchy rules you discovered.</li>
+        <li>1 hour: Creating a local project folder and organizing all downloaded fonts, and inspiration images.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="full">
+      <p class="note">ART 3041 · A.I. for Designers · Fall 2026 · with Prof. Mirko Velimirovi&#263;</p>
+    </div>
+  </div>
+</main>
+
+<script src="../../../shared/core.js"></script>
+
+</body></html>

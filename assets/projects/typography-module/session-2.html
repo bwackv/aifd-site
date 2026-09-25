@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-frame="on" data-subtitle="Typography · Session 2" data-docname="art3041-typography-session-2"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 2: Prototyping &amp; Generating the Web Engine — A.I. for Designers</title>
+
+
+<link rel="stylesheet" href="../../../shared/font.css">
+<link rel="stylesheet" href="../../../shared/core.css">
+<style>
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main .note,.main .sec,.main .tag,
+.rail .sec,.rail .note,
+.full .sec,.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+h1 .fill{color:var(--accent);}
+
+@media (min-width:768px){
+  .pair{columns:2;column-gap:var(--s4);}
+  .pair li{break-inside:avoid;}
+}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}
+}
+
+@media (max-width:599px){
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+</style>
+<link rel="stylesheet" href="../../../shared/print.css">
+</head>
+<body>
+
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <svg class="cols" contenteditable="false" aria-hidden="true"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true">
+    <polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline>
+    <g id="frame-dots"></g>
+  </svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1><span>Session 2: <span class="fill">Prototyping &amp; Generating the Web Engine</span></span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;"><strong>Goal:</strong> Translate design rules and typographic hierarchy into programmatic logic using AI as a co-developer, exclusively focusing on cross-platform web technologies.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>Overview</p>
+      <p class="note">5.2 · Wed Sep 30 · in person</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li><strong>UI/UX Refinement:</strong> Prompt the AI to upgrade the initial paper sketches into high-fidelity working example thumbnails for the web app interface.</li>
+        <li><strong>Prompting the Build:</strong>
+          <ol>
+            <li>Use your prompt to direct the AI to code the frontend of the web application.</li>
+            <li>Prototype early parametric layouts directly in the browser using HTML/CSS/JavaScript or web-based code sandboxes to ensure cross-platform compatibility (PC/Mac).</li>
+          </ol>
+        </li>
+        <li><strong>Input vs. Output Paradigm:</strong> Define how the tool functions. Will it take text and randomize a grid? Will the user upload an image and have the tool extract a color palette?</li>
+        <li><strong>Format Selection &amp; Export:</strong> The application MUST support human-testable output formats (SVG and/or PDF). This ensures that the AI-generated layouts are not dead-ends, but rather scalable, pure-vector math that can be opened, manually edited, and refined later in Adobe Illustrator or other professional post-production software.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">02</span>In class</p>
+      <p class="note">100 minutes</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li>20 min: Reviewing and critiquing the generated Markdown plans.</li>
+        <li>40 min: Utilizing browser-based environments (local HTML/css/JS single page file) to validate programmatic layout and typographic scaling assumptions, ensuring full compatibility for both PC and Mac users. no code snippets. Full page html please.</li>
+        <li>40 min: <strong>Initiating the AI code generation for the web application frontend:</strong>
+          <ol>
+            <li>Write your prompt in natural language.</li>
+            <li>Upload the natural language prompt to Gemini and have it reformatted as an llm prompt.</li>
+            <li>Have gemini work up your project based on your two markdown files, poster image, and the refined prompt.</li>
+          </ol>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">03</span>Homework</p>
+      <p class="note">5&ndash;6 hours</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li>2 hours: Passing code back and forth with the AI to establish basic functionality (e.g., uploading an image or inputting text).</li>
+        <li>2 hours: <strong>Implementing robust export functionality:</strong>
+          <ol>
+            <li>Ensure the app exports valid SVG or PDF files.</li>
+            <li>Download test files.</li>
+            <li>Open them in Adobe Illustrator to verify they are editable.</li>
+          </ol>
+        </li>
+        <li>1&ndash;2 hours: Identifying and documenting the first wave of structural bugs or visual failures in the output, paying special attention to typography rendering in the browser versus the exported vector file.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="full">
+      <p class="note">ART 3041 · A.I. for Designers · Fall 2026 · with Prof. Mirko Velimirovi&#263;</p>
+    </div>
+  </div>
+</main>
+
+<script src="../../../shared/core.js"></script>
+
+</body></html>

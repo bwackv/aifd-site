@@ -387,37 +387,11 @@ a{--dot-size:4px;}
       <button class="btn-outline" type="button" contenteditable="false" aria-expanded="false" onclick="toggleWeek(this)">Show week</button>
       <div class="week-body" hidden>
       <p class="note">Designing with A.I. &mdash; generative pedagogy and Swiss typography. A four session module running across weeks 5 and 6, ending in a poster-generating web app of your own.</p>
+      <p class="note"><a href="assets/projects/typography-module/grading-rubric.html">Grading rubric</a></p>
       <p class="tag">5.1 &middot; Mon Sep 28 &middot; online</p>
-      <p class="note">Session 1 &mdash; deconstruction, typographic hierarchy and A.I. sourcing</p>
-      <ul>
-        <li>Archival research and analysis &mdash; the mathematical grid, sans-serif rigor and asymmetric compositions of Josef M&uuml;ller-Brockmann, Wolfgang Weingart, <em>Typographische Monatsbl&auml;tter</em>, David Rudnick and Willi Kunz.
-          <ul>
-            <li><a href="http://www.tm-research-archive.ch/">TM Research Archive</a></li>
-            <li><a href="https://www.moma.org/artists/4154-josef-muller-brockmann">MoMA &middot; Josef M&uuml;ller-Brockmann</a></li>
-            <li><a href="https://sgustokdesign.com/josef-muller-brockmann-posters">Sgustok Design &middot; M&uuml;ller-Brockmann posters</a></li>
-            <li><a href="https://www.moma.org/artists/6289-wolfgang-weingart">MoMA &middot; Wolfgang Weingart</a></li>
-            <li><a href="https://www.sfmoma.org/artist/Willi_Kunz/">SFMOMA &middot; Willi Kunz</a></li>
-            <li><a href="https://davidrudnick.org/tag/posters/">David Rudnick &middot; posters</a></li>
-            <li><a href="https://tschicholdarchive.com/">Tschichold Archive</a></li>
-          </ul>
-        </li>
-        <li>Choose one poster from the archives to build a tool around. You are choosing a poster you like in order to build a tool that lets you design in a similar manner.</li>
-        <li>Typographic recognition exercise &mdash; write down your analysis of the type, the color, the hierarchy, the kind of grid, the tone, everything you notice about the poster, into a stream of consciousness text document. Feed that document to the a.i. to produce a skills.md.</li>
-        <li>Upload your reference posters to an a.i. vision model. Have it analyze the typographic hierarchy (H1, H2, body copy ratios), then cross-reference the Google Fonts library and recommend open-source typefaces that match those proportions.</li>
-        <li>The orchestration protocol &mdash; two markdown files. <strong>skills.md</strong> holds the grid system math, the typographic scale and the explicit rules (&ldquo;left-align text,&rdquo; &ldquo;restrict the color palette,&rdquo; &ldquo;apply a 12-column grid&rdquo;). <strong>handoff.md</strong> holds where the project stands, so a new chat can pick it up when the old one loses the thread. Both are pasted into Gemini at the start of a session, and both are updated as the work goes on.</li>
-        <li>Sketch a paper UI for the poster-generator tool.</li>
-      </ul>
-      <p class="note hw"><strong>HW</strong>4 &ndash; 5 hours. Source and download the fonts (1 &ndash; 2 hrs). Iterate with the a.i. to finalize skills.md and handoff.md, with the typographic scale and hierarchy rules you found spelled out (2 hrs). Make a local project folder and organize the fonts and the inspiration images (1 hr).</p>
+      <p class="note"><a href="assets/projects/typography-module/session-1.html">Session 1 &mdash; deconstruction, typographic hierarchy and A.I. sourcing</a></p>
       <p class="tag">5.2 &middot; Wed Sep 30 &middot; in person</p>
-      <p class="note">Session 2 &mdash; prototyping and generating the web engine</p>
-      <ul>
-        <li>Review and critique the markdown files you generated.</li>
-        <li>Prototype in the browser &mdash; a single full page of HTML / CSS / JS to check that the layout math and the typographic scale hold up. No code snippets, full page please. It has to run the same on a PC and a Mac.</li>
-        <li>Start the build. Hand Gemini your two markdown files, your poster image, and a prompt you wrote in plain language and then had Gemini reformat as an llm prompt.</li>
-        <li>Decide what the tool actually does. Does it take text and randomize a grid? Does the user upload an image and have the tool pull a color palette out of it?</li>
-        <li>Export. The app must produce SVG or PDF you can open and edit in Illustrator &mdash; scalable vector math, not a dead end.</li>
-      </ul>
-      <p class="note hw"><strong>HW</strong>5 &ndash; 6 hours. Pass code back and forth with the a.i. until the basics work (2 hrs). Build the export and verify it &mdash; download test files and open them in Illustrator to confirm they are editable (2 hrs). Document the first wave of failures, especially where the type renders one way in the browser and another way in the exported vector (1 &ndash; 2 hrs).</p>
+      <p class="note"><a href="assets/projects/typography-module/session-2.html">Session 2 &mdash; prototyping and generating the web engine</a></p>
       </div>
     </div>
   </div>
@@ -433,24 +407,9 @@ a{--dot-size:4px;}
       <button class="btn-outline" type="button" contenteditable="false" aria-expanded="false" onclick="toggleWeek(this)">Show week</button>
       <div class="week-body" hidden>
       <p class="tag">6.1 &middot; Mon Oct 5 &middot; online</p>
-      <p class="note">Session 3 &mdash; human in the loop, evaluation and debugging</p>
-      <ul>
-        <li>Stress test. Run your app and try to recreate a M&uuml;ller-Brockmann Tonhalle concert poster.</li>
-        <li>Visual debugging in small groups &mdash; share the failed outputs and find the math or logic error behind them. Is the contrast between the display type and the text sizes muddled? Did the a.i. override your sourced Google Fonts with its defaults?</li>
-        <li>A.I. self-correction. Feed the failure screenshots to a separate chat and have it rewrite the prompt and skills.md to fix the structural math and enforce the typographic scale.</li>
-        <li>Write correction prompts that isolate one variable: &ldquo;the font-size scaling is incorrect, leave the grid alone and fix only the clamp() values.&rdquo;</li>
-        <li>Export a test SVG or PDF, open it in Illustrator, and check the vector paths survived.</li>
-      </ul>
-      <p class="note hw"><strong>HW</strong>4 &ndash; 5 hours. Deep iteration &mdash; the app moves from barely working to stylistically accurate. Expect to reset the chat with your updated handoff.md at least twice (3 hrs). Generate the final series of test posters, tune the hierarchy, and validate the exports in Illustrator (1 &ndash; 2 hrs).</p>
+      <p class="note"><a href="assets/projects/typography-module/session-3.html">Session 3 &mdash; human in the loop, evaluation and debugging</a></p>
       <p class="tag">6.2 &middot; Wed Oct 7 &middot; in person</p>
-      <p class="note">Session 4 &mdash; final output and system critique</p>
-      <ul>
-        <li>Generate a final series of posters with the finished tool.</li>
-        <li>Present the web app and the posters.</li>
-        <li>Critique &mdash; the tool, the export pipeline, the output. Does it hold the typographic hierarchy you identified in session 1? Are the exported files cleanly structured for Illustrator?</li>
-        <li>Reflection &mdash; the difference between designing a poster and designing a system that designs a poster.</li>
-      </ul>
-      <p class="note hw"><strong>HW</strong>1 &ndash; 2 hours. Clean up the repository so the markdown files, the code and the Illustrator-ready posters are all packaged together, and send the GitHub Pages link.</p>
+      <p class="note"><a href="assets/projects/typography-module/session-4.html">Session 4 &mdash; final output and system critique</a></p>
       </div>
     </div>
   </div>

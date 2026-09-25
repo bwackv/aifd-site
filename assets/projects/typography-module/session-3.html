@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-frame="on" data-subtitle="Typography · Session 3" data-docname="art3041-typography-session-3"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 3: Human-in-the-Loop Evaluation &amp; Debugging — A.I. for Designers</title>
+
+
+<link rel="stylesheet" href="../../../shared/font.css">
+<link rel="stylesheet" href="../../../shared/core.css">
+<style>
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main .note,.main .sec,.main .tag,
+.rail .sec,.rail .note,
+.full .sec,.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+h1 .fill{color:var(--accent);}
+
+@media (min-width:768px){
+  .pair{columns:2;column-gap:var(--s4);}
+  .pair li{break-inside:avoid;}
+}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}
+}
+
+@media (max-width:599px){
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+</style>
+<link rel="stylesheet" href="../../../shared/print.css">
+</head>
+<body>
+
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <svg class="cols" contenteditable="false" aria-hidden="true"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true">
+    <polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline>
+    <g id="frame-dots"></g>
+  </svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1><span>Session 3: <span class="fill">Human-in-the-Loop Evaluation &amp; Debugging</span></span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;"><strong>Goal:</strong> Test the AI&rsquo;s output, identify failure points, and refine the orchestration files.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>Overview</p>
+      <p class="note">6.1 · Mon Oct 5 · online</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li><strong>Stress Testing:</strong> Run the generated web app. Attempt to recreate a M&uuml;ller-Brockmann Tonhalle concert poster layout.</li>
+        <li><strong>Visual Debugging &amp; Hierarchy Check:</strong>
+          <ol>
+            <li>Take screenshots of layout failures.</li>
+            <li>Analyze where the AI failed to respect the typographic hierarchy&mdash;is the contrast between the display type and text sizes muddled? Did the AI override the carefully sourced Google Fonts with defaults?</li>
+          </ol>
+        </li>
+        <li><strong>AI Self-Correction:</strong>
+          <ol>
+            <li>Feed the failure screenshots back to a separate AI chat.</li>
+            <li>Ask it to analyze the problem areas and rewrite the prompt and <code>skills.md</code> to fix structural math and enforce the typographic scale.</li>
+          </ol>
+        </li>
+        <li><strong>Task:</strong>
+          <ol>
+            <li>Implement fixes.</li>
+            <li>Export a test SVG/PDF.</li>
+            <li>Open it in Adobe Illustrator to verify vector path integrity.</li>
+            <li>Evaluate if the output moves closer to the historical reference material.</li>
+          </ol>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">02</span>In class</p>
+      <p class="note">100 minutes</p>
+    </div>
+    <div class="main">
+      <p>small group visual debugging session. Have students collaboratively critique one another&rsquo;s approaches to the project.</p>
+      <ul>
+        <li>40 min: Group visual debugging session. Sharing failed outputs and identifying the math/logic errors in the AI&rsquo;s CSS or SVG generation, specifically focusing on broken typographic hierarchies.</li>
+        <li>60 min: Practicing &ldquo;AI Self-Correction&rdquo;&mdash;feeding screenshots back to the LLM to rewrite the broken logic and enforce rigid font sizing and cadencing.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">03</span>Homework</p>
+      <p class="note">4&ndash;5 hours</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li>3 hours: Deep iteration. The application must move from &ldquo;barely working&rdquo; to &ldquo;stylistically accurate.&rdquo; You will likely need to reset the AI context window using your updated <code>handoff.md</code> at least twice.</li>
+        <li>1&ndash;2 hours: Generating the final series of test posters using the refined tool. Tuning typographic hierarchies, testing SVG/PDF exports in Adobe software, and validating spatial rhythms.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="full">
+      <p class="note">ART 3041 · A.I. for Designers · Fall 2026 · with Prof. Mirko Velimirovi&#263;</p>
+    </div>
+  </div>
+</main>
+
+<script src="../../../shared/core.js"></script>
+
+</body></html>
