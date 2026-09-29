@@ -21,11 +21,11 @@ h1,.fit,.masthead .note,
 
 h1 .fill{color:var(--accent);}
 
-/* A band that continues the list above it, so a rail note can stand beside a later item. */
-.band.cont::before{display:none;}
-.band.cont{border-top:0;}
-.band.cont > *{padding-top:0;}
-.band:has(+ .band.cont) > *{padding-bottom:0;}
+/* A rail note beside one list item: pinned to the item, pushed back across the main's padding, the
+   list indent and the rail's padding into the rail's content box. cqw is the band's width. */
+.band:has(.aside){container-type:inline-size;}
+.aside{position:absolute;top:0;right:calc(100% + 40px + 2 * var(--s3));width:calc(25cqw - 2 * var(--s3));margin:0;}
+li:has(> .aside){position:relative;}
 
 @media (min-width:768px){
   .pair{columns:2;column-gap:var(--s4);}
@@ -33,6 +33,7 @@ h1 .fill{color:var(--accent);}
 }
 
 @media (max-width:767px){
+  .aside{position:static;width:auto;margin-top:var(--s1);}
   .masthead{grid-column:1 / -1;}
   .band:has(.rail)::after{display:none;}
   .rail{grid-column:1 / -1;padding-bottom:0;}
@@ -82,17 +83,8 @@ h1 .fill{color:var(--accent);}
       <ol>
         <li><strong>Pick a poster.</strong> Choose one poster from the archives, save it in your class folder and upload it to your GitHub repo.</li>
         <li><strong>Write your analysis.</strong> In a plain text document, write everything you notice about the poster in your own words, both technical (type, grid, hierarchy, spacing, color) and how it feels. <em>Hierarchy is the order in which your eye reads things, set by size, weight and position.</em></li>
-      </ol>
-    </div>
-  </div>
-
-  <div class="band cont">
-    <div class="rail">
-      <p class="note"><strong>Markdown file (.md):</strong> a plain text file that uses simple marks, like <code>#</code> for a heading and <code>-</code> for a list item, to give text structure. A.I. reads and writes markdown easily, so it is the usual format for giving an a.i. instructions and context to keep.</p>
-    </div>
-    <div class="main">
-      <ol start="3">
-        <li><strong>Make a <code>skills.md</code>.</strong> Give the a.i. your analysis and the poster image and have it write a <code>skills.md</code>. <em>A <code>skills.md</code> is a markdown file of instructions that tells an a.i. how to do one specific kind of task: here, design in the manner of your poster.</em> Talk it through with the a.i. until it matches what you saw.</li>
+        <li><strong>Make a <code>skills.md</code>.</strong> Give the a.i. your analysis and the poster image and have it write a <code>skills.md</code>. <em>A <code>skills.md</code> is a markdown file of instructions that tells an a.i. how to do one specific kind of task: here, design in the manner of your poster.</em> Talk it through with the a.i. until it matches what you saw.
+          <p class="note aside"><strong>Markdown file (.md):</strong> a plain text file that uses simple marks, like <code>#</code> for a heading and <code>-</code> for a list item, to give text structure. A.I. reads and writes markdown easily, so it is the usual format for giving an a.i. instructions and context to keep.</p></li>
         <li><strong>Source fonts.</strong> Have the a.i. find open-source typefaces close to the poster&rsquo;s type, from <a href="https://www.velvetyne.fr/">Velvetyne</a>, <a href="https://fonts.google.com/">Google Fonts</a> or <a href="https://open-foundry.com/">Open Foundry</a>, then download and organize them.</li>
         <li><strong>Plan and sketch the tool.</strong> Decide what the user can change and what the tool produces, then sketch the interface on paper. <em>Parameters are the settings the user changes before clicking &ldquo;generate,&rdquo; such as the text, colors or grid.</em></li>
         <li><strong>Prompt the build.</strong> Write what you want in plain language, have Gemini rewrite it as an a.i. prompt, then give Gemini that prompt, your <code>skills.md</code> and the poster image. Ask for one full HTML page, not code snippets.</li>
