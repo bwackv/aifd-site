@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-frame="on" data-subtitle="Typography · Overview" data-docname="art3041-typography-overview"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overview of Poster Generator Web App — A.I. for Designers</title>
+
+
+<link rel="stylesheet" href="../../../shared/font.css">
+<link rel="stylesheet" href="../../../shared/core.css">
+<style>
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main .note,.main .sec,.main .tag,
+.rail .sec,.rail .note,
+.full .sec,.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+h1 .fill{color:var(--accent);}
+
+@media (min-width:768px){
+  .pair{columns:2;column-gap:var(--s4);}
+  .pair li{break-inside:avoid;}
+}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}
+}
+
+@media (max-width:599px){
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+</style>
+<link rel="stylesheet" href="../../../shared/print.css">
+</head>
+<body>
+
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <svg class="cols" contenteditable="false" aria-hidden="true"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true">
+    <polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline>
+    <g id="frame-dots"></g>
+  </svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1><span>Overview of <span class="fill">Poster Generator Web App</span></span></h1>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>Overview</p>
+      <p class="note">Weeks 5 &ndash; 6</p>
+    </div>
+    <div class="main">
+      <p>You&rsquo;re doing a deep analysis of a poster from one of the provided archives as a basis for building a poster generator web app. This app will generate new posters in the style of the original poster, or at least in the style as you described it. To be very literal: in this web app you click &ldquo;generate&rdquo; (after tweaking parameters such as the text, colors, or grid) and it will generate a unique poster, every time.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">02</span>Steps</p>
+    </div>
+    <div class="main">
+      <ol>
+        <li><strong>Pick a poster.</strong> Choose one poster from the archives, save it in your class folder and upload it to your GitHub repo.</li>
+        <li><strong>Write your analysis.</strong> In a plain text document, write everything you notice about the poster in your own words, both technical (type, grid, hierarchy, spacing, color) and how it feels. <em>Hierarchy is the order in which your eye reads things, set by size, weight and position.</em></li>
+        <li><strong>Make a <code>skills.md</code>.</strong> Give the a.i. your analysis and the poster image and have it write a <code>skills.md</code>. <em>A <code>skills.md</code> is a markdown file of instructions that tells an a.i. how to do one specific kind of task: here, design in the manner of your poster.</em> Talk it through with the a.i. until it matches what you saw.</li>
+        <li><strong>Source fonts.</strong> Have the a.i. find open-source typefaces close to the poster&rsquo;s type, from <a href="https://www.velvetyne.fr/">Velvetyne</a>, <a href="https://fonts.google.com/">Google Fonts</a> or <a href="https://open-foundry.com/">Open Foundry</a>, then download and organize them.</li>
+        <li><strong>Plan and sketch the tool.</strong> Decide what the user can change and what the tool produces, then sketch the interface on paper. <em>Parameters are the settings the user changes before clicking &ldquo;generate,&rdquo; such as the text, colors or grid.</em></li>
+        <li><strong>Prompt the build.</strong> Write what you want in plain language, have Gemini rewrite it as an a.i. prompt, then give Gemini that prompt, your <code>skills.md</code> and the poster image. Ask for one full HTML page, not code snippets.</li>
+        <li><strong>Get it working.</strong> Pass code back and forth with the a.i. until the basics work. Add export to SVG or PDF and open the files in Illustrator to confirm they&rsquo;re editable. <em>SVG is a vector file, so every shape stays editable.</em></li>
+        <li><strong>Start a <code>handoff.md</code>.</strong> Long chats lose track of earlier decisions. <em>A <code>handoff.md</code> is a markdown file that records where the project stands: what&rsquo;s done, what was decided and why, and what comes next.</em> When a chat starts going wrong, open a new one with your <code>handoff.md</code> and <code>skills.md</code>.</li>
+        <li><strong>Stress test and debug.</strong> Try to recreate a M&uuml;ller-Brockmann Tonhalle poster with your tool. Screenshot what breaks, give the screenshots to a separate chat, and have it rewrite your prompt and <code>skills.md</code>.</li>
+        <li><strong>Refine.</strong> Iterate until the tool goes from &ldquo;barely working&rdquo; to &ldquo;stylistically accurate,&rdquo; then generate your final series of posters.</li>
+        <li><strong>Present and hand in.</strong> Present the app and your posters, then submit the repo, the poster files, your markdown files and your GitHub Pages link.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="full">
+      <p class="note">ART 3041 · A.I. for Designers · Fall 2026 · with Prof. Mirko Velimirovi&#263;</p>
+    </div>
+  </div>
+</main>
+
+<script src="../../../shared/core.js"></script>
+
+</body></html>
