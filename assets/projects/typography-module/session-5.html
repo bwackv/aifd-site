@@ -2,7 +2,7 @@
 <html lang="en" data-public data-theme="light" data-frame="on" data-subtitle="Typography · Session 5" data-docname="art3041-typography-session-5"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Session 5: Design Challenge — Connecting to Live Data Streams — A.I. for Designers</title>
+<title>Design Challenge: Connecting to Live Data Streams — A.I. for Designers</title>
 
 
 <link rel="stylesheet" href="../../../shared/font.css">
@@ -54,7 +54,7 @@ h1 .fill{color:var(--accent);}
 
   <div class="band">
     <div class="masthead">
-      <h1><span>Session 5: <span class="fill">Design Challenge &mdash; Connecting to live data streams</span></span></h1>
+      <h1><span>Design Challenge: <span class="fill">Connecting to Live Data Streams</span></span></h1>
     </div>
   </div>
 
@@ -70,6 +70,32 @@ h1 .fill{color:var(--accent);}
         <li>Then formalize the data and the aesthetic into a new website that shows this information.</li>
         <li>Assess for yourself whether this presentation &ldquo;works&rdquo; &mdash; meaning is the data &ldquo;Readable&rdquo;? Does this make sense?</li>
         <li>You can ask typographic questions &mdash; does the typography fit the data? Is the data impacting the type? It goes both ways.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">02</span>Live data streams</p>
+      <p class="note">No credentials required</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li><a href="https://github.com/bluesky-social/jetstream">Bluesky Jetstream</a> &mdash; every public post as it happens, ~40 per second (WebSocket)</li>
+        <li><a href="https://stream.wikimedia.org/v2/stream/recentchange">Wikipedia edits</a> &mdash; every edit worldwide, several per second (EventSource)</li>
+        <li><a href="https://api.wheretheiss.at/v1/satellites/25544">ISS position</a> &mdash; where the space station is, about once a second</li>
+        <li><a href="https://gbfs.citibikenyc.com/gbfs/en/station_status.json">Citi Bike</a> &mdash; bikes and docks free at every station</li>
+        <li><a href="https://data.cityofnewyork.us/resource/erm2-nwe9.json?$limit=50&amp;$order=created_date%20DESC">NYC 311</a> &mdash; the latest complaints filed across the city</li>
+        <li><a href="https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/camsys%2Fsubway-alerts.json">MTA subway alerts</a> &mdash; delays and suspensions</li>
+        <li><a href="https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?station=8518750&amp;product=water_level&amp;date=latest&amp;datum=MLLW&amp;units=english&amp;time_zone=lst_ldt&amp;format=json">NOAA tides</a> &mdash; water level at the Battery, every 6 minutes</li>
+        <li><a href="https://api.open-meteo.com/v1/forecast?latitude=40.74&amp;longitude=-73.98&amp;current=temperature_2m,wind_speed_10m,precipitation">Open-Meteo weather</a> &mdash; temperature, wind, precipitation for any latitude/longitude</li>
+        <li><a href="https://air-quality-api.open-meteo.com/v1/air-quality?latitude=40.74&amp;longitude=-73.98&amp;current=us_aqi,pm2_5">Open-Meteo air quality</a> &mdash; AQI and PM2.5</li>
+        <li><a href="https://api.weather.gov/alerts/active?area=NY">National Weather Service alerts</a> &mdash; active warnings for New York</li>
+        <li><a href="https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson">USGS earthquakes</a> &mdash; every quake worldwide in the past hour</li>
+        <li><a href="https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json">NOAA space weather</a> &mdash; geomagnetic storm index</li>
+        <li><a href="https://api.sunrise-sunset.org/json?lat=40.74&amp;lng=-73.98&amp;formatted=0">Sunrise/sunset</a> &mdash; today's light times for any latitude/longitude</li>
+        <li><a href="https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&amp;vs_currencies=usd">CoinGecko</a> &mdash; live crypto prices</li>
+        <li><a href="https://hacker-news.firebaseio.com/v0/topstories.json">Hacker News</a> &mdash; current top stories</li>
       </ul>
     </div>
   </div>
