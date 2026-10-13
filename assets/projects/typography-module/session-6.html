@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-frame="on" data-subtitle="Typography · Session 6" data-docname="art3041-typography-session-6"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Final Workshop: Variable Type &amp; Custom Expressive Lettering Breakout — A.I. for Designers</title>
+
+
+<link rel="stylesheet" href="../../../shared/font.css">
+<link rel="stylesheet" href="../../../shared/core.css">
+<style>
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main .note,.main .sec,.main .tag,
+.rail .sec,.rail .note,
+.full .sec,.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+h1 .fill{color:var(--accent);}
+
+.prompt{border-left:1px solid currentColor;padding-left:var(--s2);font-style:italic;}
+
+@media (min-width:768px){
+  .pair{columns:2;column-gap:var(--s4);}
+  .pair li{break-inside:avoid;}
+}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}
+}
+
+@media (max-width:599px){
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+</style>
+<link rel="stylesheet" href="../../../shared/print.css">
+</head>
+<body>
+
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <svg class="cols" contenteditable="false" aria-hidden="true"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true">
+    <polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline>
+    <g id="frame-dots"></g>
+  </svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1><span>Final Workshop: <span class="fill">Variable Type &amp; Custom Expressive Lettering Breakout</span></span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;"><strong>Context:</strong> Designed for the final session of the Typography Module in <em>ART 3041: A.I. for Designers</em> (<a href="https://aifordesigners.net">aifordesigners.net</a>).</p>
+      <p class="note" style="margin-bottom:0;"><strong>Prerequisites:</strong> Students have live GitHub Pages sites and working poster engines with dynamic data streams (API/JSON data feeds, time-based updates, or interactive controls built during <a href="session-5.html">Session 5</a>).</p>
+      <p class="note" style="margin-bottom:0;"><strong>Objective:</strong> Replace passive screen-share critique with hands-on breakout sprints. Students will modify their existing poster generators and live sites by injecting expressive variable fonts (<code>font-variation-settings</code>), kinetic CSS animations, and custom AI/vectorized hand-drawn letterforms.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>Session architecture</p>
+      <p class="note">7.2 · Wed Oct 14 · in person</p>
+      <p class="note">90&ndash;120 minutes</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li><strong>01. Briefing &amp; Axis Demo &mdash; 15 min.</strong> Demystifying standard vs. custom variable font axes (<code>wght</code>, <code>wdth</code>, <code>opsz</code>, <code>CASL</code>, <code>CRSV</code>, <code>GRAD</code>, <code>XROT</code>, <code>WONK</code>) + high-octane <a href="https://fonts.google.com/?vfonly=true">Google Variable Fonts</a> showcase.</li>
+        <li><strong>02. Breakout Lab Sprints &mdash; 50 min.</strong> Hands-on coding/prompting in student repos (Choice of Sprint A, B, or C).</li>
+        <li><strong>03. &ldquo;Speed-Dating&rdquo; Split Crit &mdash; 20 min.</strong> Group A runs live interactive pages on laptops; Group B tests and manipulates; swap roles halfway through. Instructors circulate.</li>
+        <li><strong>04. Push to Production &mdash; 10 min.</strong> Git commit &amp; push live to <code>username.github.io/aifordesigners.net</code>.</li>
+      </ul>
+      <p>Students select one of the following 3 activities to integrate directly into their live project repository.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">02</span>Sprint A</p>
+      <p class="note">The Variable Data Stream Engine</p>
+    </div>
+    <div class="main">
+      <p><strong>Goal:</strong> Connect live data streams (from <a href="session-5.html">Session 5</a>, e.g., weather, time, scroll position, audio input, cursor coordinates) directly to custom variable font axes instead of static CSS properties.</p>
+      <ol>
+        <li><strong>Font Selection:</strong> Select a highly responsive variable font from <a href="https://fonts.google.com/?vfonly=true">Google Fonts</a> featuring unique custom axes:
+          <ul>
+            <li><a href="https://fonts.google.com/specimen/Recursive">Recursive</a> (<code>CASL</code> Casual, <code>CRSV</code> Cursive, <code>MONO</code>, <code>slnt</code>)</li>
+            <li><a href="https://fonts.google.com/specimen/Fraunces">Fraunces</a> (<code>WONK</code> Wonkiness, <code>SOFT</code> Softness, <code>opsz</code> Optical Size)</li>
+            <li><a href="https://fonts.google.com/specimen/Tilt+Warp">Tilt Warp</a> / <a href="https://fonts.google.com/specimen/Tilt+Neon">Tilt Neon</a> / <a href="https://fonts.google.com/specimen/Tilt+Prism">Tilt Prism</a> (<code>XROT</code> X-Rotation, <code>YROT</code> Y-Rotation)</li>
+            <li><a href="https://fonts.google.com/specimen/Bitcount">Bitcount</a> (Pixel size &amp; grid variation axes)</li>
+            <li><a href="https://fonts.google.com/specimen/Roboto+Flex">Roboto Flex</a> (12+ fine-grained parametric axes like <code>XTRA</code>, <code>YOPQ</code>, <code>GRAD</code>)</li>
+          </ul>
+        </li>
+        <li><strong>AI Co-Coding Prompting:</strong> Instruct <a href="https://gemini.google.com">Gemini</a>/<a href="https://claude.ai">Claude</a> to refactor (rewrite existing code so it does something new, without starting over) their Session 5 JS engine:
+          <p class="prompt">&ldquo;Refactor my existing event listener / data fetch function so that as [API Value / Mouse X Pos / Time / Scroll %] changes, it dynamically updates <code>document.documentElement.style.setProperty('--font-axis-val', value)</code> to control CSS <code>font-variation-settings: 'CASL' var(--font-axis-val)</code> on my poster headline.&rdquo;</p>
+        </li>
+        <li><strong>Refinement:</strong> Ensure transitions are smooth using CSS <code>transition: font-variation-settings 0.1s ease-out</code>.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">03</span>Sprint B</p>
+      <p class="note">Kinetic Typography &amp; CSS Keyframe Loops</p>
+    </div>
+    <div class="main">
+      <p><strong>Goal:</strong> Build keyframed kinetic typography that loops continuously or triggers on hover/click state, creating expressive typographic motion purely through code (no video rendering or After Effects).</p>
+      <ol>
+        <li><strong>Selection:</strong> Import expressively dynamic variable fonts like <a href="https://github.com/googlefonts/amstelvar-beta">Amstelvar</a>, <a href="https://github.com/googlefonts/decovar">Decovar</a>, Anor, or <a href="https://fonts.google.com/specimen/Tilt+Prism">Tilt Prism</a>.</li>
+        <li><strong>Prompting the AI:</strong> Have students prompt their AI co-developer:
+          <p class="prompt">&ldquo;Write CSS <code>@keyframes</code> that smoothly loop through the font&rsquo;s custom variation settings over 4 seconds, varying weight from 100 to 900, optical size from 12 to 144, and slant from 0 to -15. Apply this to my hero typographic section on hover.&rdquo;</p>
+        </li>
+        <li><strong>Critical Design Check:</strong> Discuss legibility vs. spectacle: <em>When does movement add expressive narrative context, and when does it degrade functional hierarchy?</em></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">04</span>Sprint C</p>
+      <p class="note">The Analog-to-Digital Hybrid Glyphs Engine</p>
+    </div>
+    <div class="main">
+      <p><strong>Goal:</strong> Convert physical hand-drawn letterforms or custom sketches into SVG vector assets and embed them alongside responsive variable body type.</p>
+      <ol>
+        <li><strong>Draw (10 mins):</strong> Draw 1&ndash;3 words or letters on paper with markers, highlighters, tape, or torn paper. Thick, high-contrast marks trace best.</li>
+        <li><strong>Photograph (2 mins):</strong> Take a photo of the drawing with your phone and get it onto your laptop.</li>
+        <li><strong>Trace to SVG (3 mins):</strong> Open <a href="https://svgco.de">SVGcode</a> (free, no account), drop in the photo, and download the SVG. It traces in black and white. In Illustrator, Image Trace &rarr; Expand &rarr; Export as SVG does the same.</li>
+        <li><strong>AI Web Integration (20 mins):</strong> Prompt <a href="https://gemini.google.com">Gemini</a>/<a href="https://claude.ai">Claude</a> to embed the SVG code directly into their live poster web markup:
+          <p class="prompt">&ldquo;Help me integrate this raw inline <code>&lt;svg&gt;</code> for my headline into my poster generator. Style it to dynamically resize with the browser viewport while pairing it with an expressive Google Variable Font for the body text.&rdquo;</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">05</span>Split critique</p>
+      <p class="note">&ldquo;Peer-Testing Fair&rdquo;</p>
+    </div>
+    <div class="main">
+      <p>To avoid student fatigue during large-group presentations:</p>
+      <ol>
+        <li><strong>Setup:</strong> Divide class into <strong>Group A</strong> and <strong>Group B</strong>.</li>
+        <li><strong>Round 1 (10 mins):</strong>
+          <ul>
+            <li><strong>Group A</strong> opens their live GitHub Pages sites on their laptops and stays at their station.</li>
+            <li><strong>Group B</strong> acts as interactive testers, moving around the room, playing with the controls, dragging sliders, or triggering API hooks.</li>
+            <li><strong>Instructors (Broderick &amp; Mirko)</strong> split the room to conduct targeted, 2-minute micro-critiques with each student.</li>
+          </ul>
+        </li>
+        <li><strong>Round 2 (10 mins):</strong> Swap roles. Group B presents, Group A tests.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">06</span>Variable fonts</p>
+      <p class="note">Curated cheat sheet</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li><strong><a href="https://fonts.google.com/specimen/Recursive">Recursive</a></strong> &mdash; <code>wght</code>, <code>CASL</code>, <code>CRSV</code>, <code>MONO</code>, <code>slnt</code> &mdash; Expressive tech UI, casual vs. strict code, interactive hero text</li>
+        <li><strong><a href="https://fonts.google.com/specimen/Fraunces">Fraunces</a></strong> &mdash; <code>wght</code>, <code>opsz</code>, <code>WONK</code>, <code>SOFT</code> &mdash; Warm editorial, eccentric headlines, dynamic optical contrast</li>
+        <li><strong><a href="https://fonts.google.com/specimen/Tilt+Neon">Tilt Neon</a> / <a href="https://fonts.google.com/specimen/Tilt+Warp">Tilt Warp</a> / <a href="https://fonts.google.com/specimen/Tilt+Prism">Tilt Prism</a></strong> &mdash; <code>XROT</code>, <code>YROT</code>, <code>wght</code> &mdash; 3D-feeling kinetic banners, hover-reactive typography</li>
+        <li><strong><a href="https://fonts.google.com/specimen/Bitcount">Bitcount</a></strong> &mdash; Pixel size, grid variations, stem options &mdash; Algorithmic posters, retro/gaming interfaces, data feeds</li>
+        <li><strong><a href="https://fonts.google.com/specimen/Roboto+Flex">Roboto Flex</a></strong> &mdash; 12+ fine-grained parametric axes &mdash; Precision typographic tuning across screens</li>
+        <li><strong><a href="https://github.com/googlefonts/decovar">Decovar</a></strong> &mdash; Multi-axis modular geometric deformations &mdash; Wild display experiments, generative decorative type</li>
+      </ul>
+      <p class="note">More variable fonts: <a href="https://fonts.google.com/?vfonly=true">Google Fonts</a> &middot; <a href="https://v-fonts.com">v-fonts.com</a></p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">07</span>Deliverables</p>
+      <p class="note">For Wednesday</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li>Updated poster engine / landing page deployed live on GitHub Pages.</li>
+        <li>At least <strong>one</strong> variable font properly imported via Google Fonts or <code>@font-face</code>.</li>
+        <li>Active implementation of <code>font-variation-settings</code> controlled via CSS keyframes or JS event listeners.</li>
+        <li>(Optional) Custom SVG letterform/glyph integration.</li>
+        <li>Short inline code comment explaining why the chosen font axis supports the design intent.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="full">
+      <p class="note">ART 3041 · A.I. for Designers · Fall 2026 · with Prof. Mirko Velimirovi&#263;</p>
+    </div>
+  </div>
+</main>
+
+<script src="../../../shared/core.js"></script>
+
+</body></html>
