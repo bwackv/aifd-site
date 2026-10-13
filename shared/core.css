@@ -174,20 +174,20 @@ h1 > span,.fit > span{display:inline-block;white-space:nowrap;}
 
 h2{
   width:fit-content;
-  overflow-wrap:break-word;
+  overflow-wrap:anywhere;
   font-size:var(--h2size);
   font-variation-settings:"wdth" 100,"wght" 400,"ROND" 55;
   line-height:1.1;
   margin:0 0 var(--s2);
 }
 
-p{margin:0 0 var(--s3);width:fit-content;overflow-wrap:break-word;}
+p{margin:0 0 var(--s3);width:fit-content;overflow-wrap:anywhere;}
 
 p:last-child{margin-bottom:0;}
 
 ul{margin:0 0 var(--s3);width:fit-content;padding-left:var(--s3);}
 
-li{margin:0 0 calc(var(--s1) / 2);overflow-wrap:break-word;}
+li{margin:0 0 calc(var(--s1) / 2);overflow-wrap:anywhere;}
 
 /* A nested list ends inside its parent item, so its --s3 bottom margin collapses out through the
    parent li and the following item sits a full paragraph gap away instead of a list gap. */
@@ -298,7 +298,7 @@ a::after{
 
 .note{
   width:fit-content;
-  overflow-wrap:break-word;
+  overflow-wrap:anywhere;
   color:var(--dim);
   font-size:0.875rem;
   font-variation-settings:"wdth" 100,"wght" 400,"ROND" 25;
