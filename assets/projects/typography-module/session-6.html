@@ -108,6 +108,7 @@ h1 .fill{color:var(--accent);}
     <div class="rail">
       <p class="sec"><span class="num">03</span>Sprint B</p>
       <p class="note">Kinetic Typography &amp; CSS Keyframe Loops</p>
+      <button class="btn-outline" type="button" contenteditable="false" onclick="document.getElementById('font-sheet').showModal();if(window.measureLinks)measureLinks()">GitHub font download instructions</button>
     </div>
     <div class="main">
       <p><strong>Goal:</strong> Build keyframed kinetic typography that loops continuously or triggers on hover/click state, creating expressive typographic motion purely through code (no video rendering or After Effects).</p>
@@ -206,8 +207,32 @@ h1 .fill{color:var(--accent);}
       <p class="note">ART 3041 · A.I. for Designers · Fall 2026 · with Prof. Mirko Velimirovi&#263;</p>
     </div>
   </div>
+
+  <dialog class="sheet" id="font-sheet" contenteditable="false" aria-labelledby="font-sheet-title">
+    <div class="sheet-head">
+      <p class="sec" id="font-sheet-title">GitHub font download instructions</p>
+      <button class="btn-outline" type="button" onclick="this.closest('dialog').close()">Close</button>
+    </div>
+    <ol>
+      <li>Click the font's "on GitHub" link.</li>
+      <li>Open the <code>fonts</code> folder (for Tilt Prism: <code>fonts</code> &rarr; <code>variable</code>).</li>
+      <li>Click the font file:
+        <ul>
+          <li>Amstelvar: <code>Amstelvar-Roman[&hellip;].ttf</code></li>
+          <li>Decovar: <code>DecovarAlpha-VF.ttf</code></li>
+          <li>Tilt Prism: <code>TiltPrism[XROT,YROT].ttf</code></li>
+        </ul>
+      </li>
+      <li>Click the download button (&darr;) at the top right of the file view.</li>
+      <li>Move the downloaded <code>.ttf</code> into your project repo folder.</li>
+    </ol>
+  </dialog>
+
 </main>
 
 <script src="../../../shared/core.js"></script>
 
+<script>
+document.getElementById('font-sheet').addEventListener('click',function(e){if(e.target===this)this.close();});
+</script>
 </body></html>

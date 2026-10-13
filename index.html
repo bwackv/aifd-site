@@ -141,35 +141,6 @@ a{--dot-size:4px;}
     margin-top:var(--s2);padding:var(--s2) 0 0;border:0;border-top:1px solid var(--line);}
   .nav-drop[data-open="true"] .nav-panel::before{content:none;}
 }
-/* --- Introductory statement ----------------------------------------------------
-   A modal sheet over the field. It lives inside .page so measureLinks decorates the
-   links in it; contenteditable="false" so those links stay clickable while the
-   document itself is editable. */
-
-.sheet{
-  width:min(48rem,calc(100vw - 2rem));
-  max-height:min(85vh,54rem);
-  padding:var(--s4);
-  background:var(--bg);color:var(--fg);
-  border:1px solid var(--line);
-  overflow-y:auto;
-  overscroll-behavior:contain;
-}
-
-.sheet::backdrop{background:rgba(0,0,0,.55);}
-[data-theme="dark"] .sheet::backdrop{background:rgba(0,0,0,.8);}
-
-.sheet-head{
-  display:flex;align-items:baseline;justify-content:space-between;gap:var(--s3);
-  margin-bottom:var(--s4);padding-bottom:var(--s2);
-  border-bottom:2px solid var(--line);
-}
-
-.sheet-head .sec{margin:0;}
-.sheet p,.sheet .info{max-width:var(--measure);}
-.sheet .info{margin:var(--s4) 0;}
-.sheet > :last-child{margin-bottom:0;}
-
 /* Quoted matter: set in from the measure on both sides, and stepped down 2px from the body. The subset has no italic
    face, so the quote is marked by tighter spacing and a flat ROND instead. */
 
@@ -185,10 +156,6 @@ a{--dot-size:4px;}
 .quote p{max-width:none;}
 .quote > :last-child{margin-bottom:0;}
 
-@media (max-width:599px){
-  .sheet{width:calc(100vw - 1.5rem);padding:var(--s3);}
-  .sheet-head{flex-direction:column;align-items:flex-start;gap:var(--s2);}
-}
 
 /* The week's subject, in the rail under the number and the dates. The dates stay
    quiet; this is what you are looking for when you scan the column. */
