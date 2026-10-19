@@ -213,6 +213,11 @@ a{
   --u-band:6px;                         /* hover wave band height (JS overrides to match the generated wave) */
 }
 
+/* The line and the point are one box under the link, so a link split across two lines left the
+   underline spanning neither and the point stranded. inline-block keeps a link on one line and moves
+   it down whole; only a link longer than the line breaks, and then the line runs under its last row. */
+.page a{display:inline-block;max-width:100%;}
+
 /* The line: drawn, not text-decoration, so it starts at the first letter's stem (--u-left, set by
    script) and, at rest, ends --u-gap short of the terminus so the point stands free. Flat 1px at rest;
    on hover it runs the full width (right:0) and grows just enough to carry the travelling wave, 1px stroke. */
