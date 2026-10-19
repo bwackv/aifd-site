@@ -1,0 +1,252 @@
+/* ============================================================================
+   SLIDE SYSTEM — the slide IS the browser window
+   Loads AFTER shared/core.css (font + palette tokens only).
+
+   THERE IS NO STAGE. Every earlier version drew a 16:9 box centred in the
+   window, so "full bleed" filled half of that box and the window kept a white
+   band above and below. A slide is now position:fixed inset:0 — the window.
+
+   1920x1080 is an EXPORT TARGET (Figma, PDF), not the layout. Set
+   data-export="1920" on <html> when capturing; normal viewing is unaffected.
+
+   Layout uses percentages of the real viewport: half = 50%, margin = 5%.
+   Type uses --u so it stays proportional on any window shape.
+   ============================================================================ */
+
+:root{
+  --slides-css:21;
+  /* 1u behaves like 1% of the width of a 16:9 frame at this height, so type does
+     not explode on a very wide window. Reference px -> u is px / 19.2. */
+  --u: min(1vw, 1.7778vh);
+
+  --t-deck:8.333;   /* 160 */
+  --t-title:5;      /*  96 */
+  --t-head:3.333;   /*  64 */
+  --t-body:1.667;   /*  32 */
+  --t-note:1.25;    /*  24 */
+  --gap:2.5;        /*  48 */
+}
+
+[data-theme="light"]{ --accent:var(--accent-l,#1B69C8); }
+[data-theme="dark"] { --accent:var(--accent-d,#5A93E8); }
+
+html,body{height:100%;}
+body{
+  margin:0; padding:0; overflow:hidden;
+  background:var(--bg); color:var(--fg);
+}
+.page{max-width:none;}
+.stale-warn{display:none;}
+
+/* core.css's link underline is driven by measureLinks() in core.js, which decks
+   do not load; without it every link gets a stray dot. */
+a{color:var(--accent);text-decoration:underline;text-underline-offset:0.2em;}
+a::before,a::after{content:none;display:none;}
+
+/* The old stage markup is now inert — the deck HTML keeps working unchanged. */
+.stage-wrap,.stage{display:contents;}
+
+/* --- A slide is the window --------------------------------------------------- */
+.slide{
+  position:fixed;
+  inset:0;                       /* full width, full height. No letterbox. */
+  display:none;
+  background:var(--bg);
+  overflow:hidden;
+}
+.slide.on{display:block;}
+
+.pad{position:absolute; inset:5%;}          /* the 96/1920 margin, as a ratio */
+
+/* --- Type -------------------------------------------------------------------- */
+.slide h1,.slide h2,.slide h3,.slide p,.slide ul,.slide ol{margin:0;}
+
+.lecture-no,.deck-title{
+  font-size:calc(var(--t-deck) * var(--u));
+  font-variation-settings:"wdth" 108,"wght" 600,"ROND" 100;
+  text-transform:uppercase; line-height:0.92;
+}
+.slide h1{
+  font-size:calc(var(--t-title) * var(--u));
+  font-variation-settings:"wdth" 108,"wght" 600,"ROND" 100;
+  text-transform:uppercase; line-height:0.92;
+}
+.slide h2{
+  font-size:calc(var(--t-head) * var(--u));
+  font-variation-settings:"wdth" 100,"wght" 400,"ROND" 55;
+  line-height:1.1;
+}
+.slide p,.slide li{font-size:calc(var(--t-body) * var(--u)); line-height:1.35;}
+.slide p + p{margin-top:calc(var(--t-body) * var(--u));}
+.slide ul,.slide ol{padding-left:1.2em;}
+.slide li + li{margin-top:calc(0.833 * var(--u));}
+.slide li::marker{color:var(--accent);}
+.slide .note,.cap{font-size:calc(var(--t-note) * var(--u)); line-height:1.4; color:var(--dim);}
+.kick{
+  display:flex; align-items:baseline; gap:calc(1.667 * var(--u)); flex-wrap:wrap;
+  font-size:calc(var(--t-body) * var(--u));
+  font-variation-settings:"wdth" 100,"wght" 600,"ROND" 55;
+  letter-spacing:.04em; text-transform:uppercase; line-height:1.25;
+}
+.kick .num{color:var(--accent);}
+.slide .fill{color:var(--choice);}
+
+/* --- Title ------------------------------------------------------------------- */
+.s-title .pad{display:flex; flex-direction:column; justify-content:space-between;}
+.s-title .top,.s-title .bot{display:flex; justify-content:space-between; align-items:baseline; gap:calc(var(--gap) * var(--u));}
+.s-title .lecture-no{color:var(--accent);}
+/* The bar floats in the bottom-left corner. The byline is the only slide content
+   that reaches it, and only on a short window — lift it just clear. Export and
+   print drop the bar, so they drop the lift with it. */
+html:not([data-export]) .s-title .bot{padding-bottom:max(0px, calc(52px - 5vh));}
+
+/* --- Full -------------------------------------------------------------------- */
+.s-full .pad{display:flex; flex-direction:column; justify-content:safe center; gap:calc(var(--gap) * var(--u));
+  overflow-y:auto; overscroll-behavior:contain;}
+.s-full.media .pad{display:none;}
+.s-full.media .ph{position:absolute; inset:0;}          /* the whole window */
+.s-full.media .cap{
+  position:absolute; left:5%; bottom:5%;
+  background:var(--bg); padding:calc(0.833 * var(--u)) calc(1.667 * var(--u)); max-width:45%;
+}
+
+/* --- Split: each half is literally half the screen --------------------------- */
+.s-split .media-half{position:absolute; top:0; bottom:0; left:0;   width:50%; overflow:hidden;}
+.s-split .text-half {position:absolute; top:0; bottom:0; left:50%; width:50%;
+  padding:5%; display:flex; flex-direction:column; justify-content:safe center;
+  gap:calc(var(--gap) * var(--u));
+  overflow-y:auto; overscroll-behavior:contain;}
+.s-split.flip .media-half{left:50%;}
+.s-split.flip .text-half {left:0;}
+.s-split .ph{position:absolute; inset:0;}
+/* Empty slot shows the FIT box — inset from the half, never touching its edges. */
+.ph:not(.filled){inset:5%;}
+
+/* --- Media ------------------------------------------------------------------- */
+.ph{
+  position:relative; overflow:hidden;
+  display:grid; place-items:center;
+  border:2px solid var(--line);
+  background:
+    linear-gradient(to top right, transparent calc(50% - 1px), var(--line) calc(50% - 1px), var(--line) calc(50% + 1px), transparent calc(50% + 1px)),
+    linear-gradient(to bottom right, transparent calc(50% - 1px), var(--line) calc(50% - 1px), var(--line) calc(50% + 1px), transparent calc(50% + 1px));
+}
+.ph > span{
+  position:relative; font-size:calc(var(--t-note) * var(--u));
+  letter-spacing:.1em; text-transform:uppercase;
+  color:var(--dim); background:var(--bg);
+  padding:calc(0.833 * var(--u)) calc(1.667 * var(--u));
+}
+.ph.filled{border:none; background:none;}
+.ph iframe{position:absolute; inset:0; width:100%; height:100%; border:0;}
+
+/* A poster that opens the video in a tab. An embedded player needs an http origin, which a
+   deck opened from the filesystem does not have. */
+.ph.video{border:none; background:none;}
+.ph.video a{position:absolute; inset:0; display:grid; place-items:center;}
+.ph.video img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
+.ph.video .play{
+  position:relative; width:calc(10 * var(--u)); height:calc(7 * var(--u));
+  border-radius:calc(1.5 * var(--u));
+  background:var(--fg); opacity:.85;
+  clip-path:none;
+}
+.ph.video .play::after{
+  content:""; position:absolute; top:50%; left:50%; transform:translate(-45%,-50%);
+  border-style:solid; border-width:calc(1.6 * var(--u)) 0 calc(1.6 * var(--u)) calc(2.6 * var(--u));
+  border-color:transparent transparent transparent var(--bg);
+}
+.ph.video a:hover .play{opacity:1;}
+.ph.filled > span{display:none;}
+
+/* THREE MODES — standard meanings.
+     FIT        inset box, whole image visible, letterboxed. Touches no edge.
+     FILL       the SAME inset box, but the image COVERS it and crops. Fill fills.
+     FULL BLEED no margin at all: runs to the edges of the half / the slide.
+   Fit and Fill share a box and differ by object-fit; Full bleed drops the margin. */
+.ph img,.ph video{position:absolute; display:block;}
+
+.ph.fit img,.ph.fit video{
+  inset:auto; left:5%; top:5%; width:90%; height:90%; object-fit:contain;
+}
+.ph.fill img,.ph.fill video{
+  inset:auto; left:5%; top:5%; width:90%; height:90%; object-fit:cover;
+}
+.ph.bleed img,.ph.bleed video{
+  inset:0; left:0; top:0; width:100%; height:100%; object-fit:cover; transform:none;
+}
+
+.ph.over{outline:4px solid var(--accent); outline-offset:-4px;}
+
+.ph-tools{position:absolute; top:16px; right:16px; display:none; gap:6px; z-index:2;}
+.ph:hover .ph-tools{display:flex;}
+.ph-tools button{
+  font:inherit; font-size:13px; line-height:1; padding:7px 10px;
+  background:var(--bg); color:var(--fg);
+  border:1px solid var(--line); border-radius:0; cursor:pointer;
+}
+.ph-tools button:hover:not(:disabled){background:var(--fg); color:var(--bg);}
+.ph-tools button.on{background:var(--fg); color:var(--bg);}
+.ph-tools button:disabled{opacity:.35; cursor:default;}
+
+/* --- Chrome ------------------------------------------------------------------ */
+/* Bottom left on every slide. It used to follow Flip onto whichever half held
+   the text, which moved it under the pointer between slides. */
+.deck-bar{
+  position:fixed; left:0; bottom:0;
+  display:flex; align-items:center; gap:16px;
+  padding:8px 16px; font-size:12px; color:var(--dim);
+  background:var(--bg); border-top:1px solid var(--line);
+  border-right:1px solid var(--line); z-index:10;
+  transition:transform .18s ease;
+}
+/* Full screen: the slide runs to the bottom edge and the bar gets out of the way.
+   It slides back up when the pointer comes near the bottom (see slides.js). */
+html:fullscreen .deck-bar{transform:translateY(110%);}
+html:fullscreen .deck-bar.peek{transform:none;}
+.deck-bar .tools{display:flex; align-items:center; gap:8px;}
+.deck-bar .btn{
+  font:inherit; font-size:12px; padding:5px 10px;
+  background:transparent; color:var(--fg);
+  border:1px solid var(--line); border-radius:0; cursor:pointer;
+}
+.deck-bar .btn:hover{background:var(--fg); color:var(--bg);}
+#build,#readout{font-size:11px; color:var(--dim);}
+.counter{font-variant-numeric:tabular-nums; letter-spacing:.08em;}
+
+[data-edit="on"] .slide [contenteditable="true"]:focus{outline:2px solid var(--accent); outline-offset:4px;}
+
+/* --- The text menu ----------------------------------------------------------
+   Right-click while editing. Sized in px like the deck bar, not in --u: it is a
+   control, not part of the slide. */
+.text-menu{
+  position:fixed; z-index:20; min-width:150px;
+  padding:4px 0; font-size:12px;
+  background:var(--bg); color:var(--fg);
+  border:1px solid var(--line);
+}
+.text-menu button{
+  display:block; width:100%; text-align:left;
+  font:inherit; font-size:12px; padding:6px 12px;
+  background:transparent; color:inherit; border:0; cursor:pointer;
+}
+.text-menu button:hover{background:var(--fg); color:var(--bg);}
+.text-menu hr{margin:4px 0; border:0; border-top:1px solid var(--line);}
+
+@media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important;} }
+
+/* --- Export to a 1920x1080 frame --------------------------------------------- */
+/* Only for capture. data-export="1920" on <html>, or printing. */
+[data-export="1920"] .slide{
+  position:relative; width:1920px; height:1080px; inset:auto;
+}
+[data-export="1920"] body{overflow:auto;}
+
+@media print{
+  html,body{height:auto; overflow:visible;}
+  .s-title .bot{padding-bottom:0;}
+  .deck-bar{display:none;}
+  .slide{position:relative; width:1920px; height:1080px; inset:auto;
+         display:block !important; break-after:page;}
+  .slide:last-child{break-after:auto;}
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!-- Brightspace copy: upload with the shared/ folder beside it. Built on the shared design system: 12-column field, numbered bands, shared/ framework. -->
+<html lang="en" data-public data-theme="light" data-frame="on" data-subtitle="Homework · Week 8" data-public data-docname="di-homework-week-08"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homework: Week 8 — Digital Illustration</title>
+<!-- Load order from the style guide: font, core, page style, print (last), then scripts. -->
+<link rel="stylesheet" href="shared/font.css">
+<link rel="stylesheet" href="shared/core.css">
+<style>
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main .note,.main .sec,.main .tag,
+.rail .sec,.rail .note,
+.full .sec,.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+h1 .fill{color:var(--accent);}
+
+@media (min-width:768px){
+  .pair{columns:2;column-gap:var(--s4);}
+  .pair li{break-inside:avoid;}
+}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}
+}
+
+@media (max-width:599px){
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+
+/* Embedded video: full width of the main column, 16:9. Hidden when printing. */
+.video{margin:0 0 var(--s3);}
+.video iframe{display:block;width:100%;aspect-ratio:16/9;border:0;}
+.video .poster{position:relative;display:block;}
+.video .poster::before,.video .poster::after{content:none !important;}
+.video img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;}
+.video .poster span{position:absolute;left:var(--s2);bottom:var(--s2);background:var(--bg);color:var(--fg);padding:var(--s1) var(--s2);font-size:.875rem;}
+@media print{.video{display:none;}}
+
+/* Keep the section number on one line; the label wraps beside it instead. */
+.sec .num{flex:none;white-space:nowrap;}
+</style>
+<link rel="stylesheet" href="shared/print.css">
+</head>
+<body>
+
+<!-- The page: a 12-column grid. Each band is one row; rail = label, main = content. -->
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <!-- Column lines and the perimeter frame, drawn by shared/core.js. -->
+  <svg class="cols" contenteditable="false" aria-hidden="true"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true">
+    <polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline>
+    <g id="frame-dots"></g>
+  </svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1><span>Homework: <span class="fill">Week 8</span></span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;">Due Tue Nov 3</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>Project 2</p>
+      <p class="note">Final · 80%</p>
+    </div>
+    <div class="main">
+      <p><a href="project-2-personal-logo.html">Project 2: Personal Logo</a></p>
+      <p>Select the 3 strongest sketches from your set. Produce 10 digital iterations of each (30 total), then designate one final mark.</p>
+      <p><strong>Post:</strong></p>
+      <ul>
+        <li>The iteration sheets</li>
+        <li>The final mark at multiple sizes (small, medium, large)</li>
+        <li>A brief write-up on your process</li>
+      </ul>
+      <p><strong>Graded.</strong></p>
+    </div>
+  </div>
+
+</main>
+
+<!-- Shared behaviour: navbar, footer, frame, link treatment, Save, theme, print. -->
+<script src="shared/core.js"></script>
+
+</body></html>

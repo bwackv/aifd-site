@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<!-- Brightspace copy: upload with the shared/ folder beside it. Built on the shared design system: 12-column field, numbered bands, shared/ framework. -->
+<html lang="en" data-public data-theme="light" data-frame="on" data-subtitle="Project 2" data-public data-docname="di-project-2-personal-logo"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project 2: Personal Logo — Digital Illustration</title>
+<!-- Load order from the style guide: font, core, page style, print (last), then scripts. -->
+<link rel="stylesheet" href="shared/font.css">
+<link rel="stylesheet" href="shared/core.css">
+<style>
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main .note,.main .sec,.main .tag,
+.rail .sec,.rail .note,
+.full .sec,.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+h1 .fill{color:var(--accent);}
+
+@media (min-width:768px){
+  .pair{columns:2;column-gap:var(--s4);}
+  .pair li{break-inside:avoid;}
+}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}
+}
+
+@media (max-width:599px){
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+
+/* Embedded video: full width of the main column, 16:9. Hidden when printing. */
+.video{margin:0 0 var(--s3);}
+.video iframe{display:block;width:100%;aspect-ratio:16/9;border:0;}
+.video .poster{position:relative;display:block;}
+.video .poster::before,.video .poster::after{content:none !important;}
+.video img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;}
+.video .poster span{position:absolute;left:var(--s2);bottom:var(--s2);background:var(--bg);color:var(--fg);padding:var(--s1) var(--s2);font-size:.875rem;}
+@media print{.video{display:none;}}
+
+/* Keep the section number on one line; the label wraps beside it instead. */
+.sec .num{flex:none;white-space:nowrap;}
+
+/* Hero image: full width of the page field, cropped to a wide rectangle. */
+.hero{display:block;width:100%;aspect-ratio:21/9;object-fit:cover;object-position:center;}   /* wide crop; edges of the image may be cut off */
+.hero-cap{padding:var(--s2) var(--s3) var(--s3);margin:0;}
+</style>
+<link rel="stylesheet" href="shared/print.css">
+</head>
+<body>
+
+<!-- The page: a 12-column grid. Each band is one row; rail = label, main = content. -->
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <!-- Column lines and the perimeter frame, drawn by shared/core.js. -->
+  <svg class="cols" contenteditable="false" aria-hidden="true"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true">
+    <polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline>
+    <g id="frame-dots"></g>
+  </svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1><span>Project 2: <span class="fill">Personal Logo</span></span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;">Concept Development 20% · Final 80%</p>
+    </div>
+
+  <div class="band bleed">
+    <div class="full">
+      <div contenteditable="false"><img class="hero" src="images/saulbass-logos.webp" alt="Logos designed by Saul Bass"></div>
+      <p class="note hero-cap">Logos by Saul Bass</p>
+    </div>
+  </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>Introduction</p>
+    </div>
+    <div class="main">
+      <p>We&rsquo;ve watched <a href="https://en.wikipedia.org/wiki/Logorama"><em>Logorama</em></a>, we&rsquo;ve discussed logos, and you&rsquo;ve done a design challenge to start to explore possible directions for your personal logo. Now it&rsquo;s time to <em>iterate</em>.</p>
+      <p>Instead of locking in to one path just yet, let your pencil guide you in multiple directions.</p>
+      <p>Remember that a logo must communicate at small sizes, so intricate detail may not register.</p>
+    </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">02</span>Discussion</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li><a href="https://www.paulrand.design/work/Logos.html">Paul Rand Logos</a>: IBM, ABC, UPS, Westinghouse and more, from the designer&rsquo;s archive.</li>
+        <li><a href="https://www.logodesignlove.com/saul-bass-logos">Saul Bass Logos</a>: AT&amp;T, United, Girl Scouts, Quaker and others, with their dates.</li>
+        <li><a href="https://about.nike.com/en/magazine/nike-swoosh-logo-history">Nike Swoosh Logo History</a>: how a $35 student commission became the Swoosh.</li>
+        <li><a href="https://www.fineprintart.com/history-of-the-apple-logo/">History of the Apple Logo</a>: from a Newton engraving to the bitten apple.</li>
+        <li><a href="https://www.paulrand.design/writing/articles/1991-logos-flags-and-escutcheons.html">Paul Rand, &ldquo;Logos, Flags, and Escutcheons&rdquo; (1991)</a>: Rand&rsquo;s essay on what a logo can and cannot do.</li>
+        <li><a href="https://www.logodesignlove.com/next-logo-paul-rand">Paul Rand&rsquo;s NeXT Logo Presentation</a>: the booklet Rand made to present one logo to Steve Jobs.</li>
+        <li><a href="https://www.themarginalian.org/2010/11/19/paula-scher-on-combinatorial-creativity/">Paula Scher on the Citi logo</a>: a short film of Scher explaining the logo she sketched on a napkin in seconds: &ldquo;done in a second and 34 years.&rdquo;</li>
+        <li><a href="https://www.csmonitor.com/Business/new-economy/2010/1012/New-Gap-logo-withdrawn-The-blue-box-lives-on">The Gap logo, 2010</a>: Gap replaced its blue box, the public revolted online, and the old logo was back within a week.</li>
+      </ul>
+    </div>
+  </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">03</span>Concept Development</p>
+      <p class="note">20% · Due Tue Oct 27</p>
+    </div>
+    <div class="main">
+      <p>Produce 30 sketches exploring your personal logo. Sketches may be drawn on paper or digitally, but must be posted as a single contact sheet.</p>
+      <ul>
+        <li>Black and white only</li>
+        <li>Original marks only</li>
+        <li>Readable at small size</li>
+        <li>On 8.5&times;11 or 11&times;17 paper, draw a grid of equal squares, one sketch per square. Use as many pages as you need for 30 squares. Keep each logo about the same size inside its square.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">04</span>Final</p>
+      <p class="note">80% · Due Tue Nov 3</p>
+    </div>
+    <div class="main">
+      <p>Select the 3 strongest sketches from your set. Produce 10 digital iterations of each (30 total), then designate one final mark.</p>
+      <p><strong>Post:</strong></p>
+      <ul>
+        <li>The iteration sheets</li>
+        <li>The final mark at multiple sizes (small, medium, large)</li>
+        <li>A brief write-up on your process</li>
+      </ul>
+      <p><strong>Graded.</strong></p>
+    </div>
+  </div>
+
+</main>
+
+<!-- Shared behaviour: navbar, footer, frame, link treatment, Save, theme, print. -->
+<script src="shared/core.js"></script>
+
+</body></html>

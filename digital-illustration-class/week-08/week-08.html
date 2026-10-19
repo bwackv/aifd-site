@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!-- Built on the shared design system: 12-column field, numbered bands, shared/ framework. -->
+<html lang="en" data-public data-theme="light" data-frame="on" data-subtitle="Week 8 · Iteration Phase" data-docname="di-week-08"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 8: Personal Logo, Iteration Phase — Digital Illustration</title>
+<!-- Load order from the style guide: font, core, page style, print (last), then scripts. -->
+<link rel="stylesheet" href="shared/font.css">
+<link rel="stylesheet" href="shared/core.css">
+<style>
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main .note,.main .sec,.main .tag,
+.rail .sec,.rail .note,
+.full .sec,.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+h1 .fill{color:var(--accent);}
+
+@media (min-width:768px){
+  .pair{columns:2;column-gap:var(--s4);}
+  .pair li{break-inside:avoid;}
+}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}
+}
+
+@media (max-width:599px){
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+
+/* Embedded video: full width of the main column, 16:9. Hidden when printing. */
+.video{margin:0 0 var(--s3);}
+.video iframe{display:block;width:100%;aspect-ratio:16/9;border:0;}
+.video .poster{position:relative;display:block;}
+.video .poster::before,.video .poster::after{content:none !important;}
+.video img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;}
+.video .poster span{position:absolute;left:var(--s2);bottom:var(--s2);background:var(--bg);color:var(--fg);padding:var(--s1) var(--s2);font-size:.875rem;}
+@media print{.video{display:none;}}
+
+/* Keep the section number on one line; the label wraps beside it instead. */
+.sec .num{flex:none;white-space:nowrap;}
+</style>
+<link rel="stylesheet" href="shared/print.css">
+</head>
+<body>
+
+<!-- The page: a 12-column grid. Each band is one row; rail = label, main = content. -->
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <!-- Column lines and the perimeter frame, drawn by shared/core.js. -->
+  <svg class="cols" contenteditable="false" aria-hidden="true"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true">
+    <polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline>
+    <g id="frame-dots"></g>
+  </svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1><span>Week 8: <span class="fill">Personal Logo, Iteration Phase</span></span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;">Tue Oct 27 · 9:00–11:50 · Project 2: Personal Logo</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>Critique</p>
+      <p class="note">Concept Development due</p>
+    </div>
+    <div class="main">
+      <p>In-class critique of sketch sets. <a href="../week-07/project-2-personal-logo.html">Project 2: Personal Logo</a>.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">02</span>Vector-thinking in Photoshop</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li>Shape layers</li>
+        <li>Paths</li>
+        <li>Pen tool</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">03</span>Refinement</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li>Spacing</li>
+        <li>Weight</li>
+        <li>Optical correction</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">04</span>Milton Glaser</p>
+      <p class="note">Movie</p>
+    </div>
+    <div class="main">
+      <p><a href="https://kinolorberedu.com/film/MiltonGlaser"><em>Milton Glaser: To Inform &amp; Delight</em></a></p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">05</span>Paula Scher</p>
+      <p class="note">Movie</p>
+    </div>
+    <div class="main">
+      <div class="video" contenteditable="false" data-yt="LCfBYE97rFk"><a class="poster" href="https://www.youtube.com/watch?v=LCfBYE97rFk"><img src="https://i.ytimg.com/vi/LCfBYE97rFk/hqdefault.jpg" alt="Paula Scher: Graphic Design on YouTube"><span>&#9654; Watch on YouTube</span></a></div>
+      <p><em>Abstract: The Art of Design</em>, &ldquo;Paula Scher: Graphic Design&rdquo; (<a href="https://www.dezeen.com/2020/04/30/netflix-abstract-the-art-of-design-series-watch-free/">about</a>)</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">06</span>Design challenge</p>
+    </div>
+    <div class="main">
+      <p>Design Challenge: Re-design I &hearts; NY</p>
+      <p class="note">[challenge details]</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">07</span>Homework</p>
+      <p class="note">Due Tue Nov 3</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li><a href="../week-07/project-2-personal-logo.html">Project 2: Personal Logo</a>, Final (80%): Select the 3 strongest sketches from your set. Produce 10 digital iterations of each (30 total), then designate one final mark. Post the iteration sheets, the final mark at multiple sizes, and a brief write-up on your process. Graded.</li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+
+<!-- Shared behaviour: navbar, footer, frame, link treatment, Save, theme, print. -->
+<script src="shared/core.js"></script>
+<script>
+// Swap the poster for the live YouTube player when the page is served over the web (e.g. Brightspace).
+// Opened as a local file, YouTube refuses to play (error 153), so the poster link stays instead.
+if(location.protocol.indexOf('http')===0){
+  document.querySelectorAll('.video[data-yt]').forEach(function(v){
+    v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v.getAttribute('data-yt')+'" title="Paula Scher: Graphic Design" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+  });
+}
+</script>
+
+</body></html>

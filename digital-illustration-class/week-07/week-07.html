@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<!-- Built on the shared design system: 12-column field, numbered bands, shared/ framework. -->
+<html lang="en" data-public data-theme="light" data-frame="on" data-subtitle="Week 7 · Logos" data-docname="di-week-07"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Week 7: Logos — Digital Illustration</title>
+<!-- Load order from the style guide: font, core, page style, print (last), then scripts. -->
+<link rel="stylesheet" href="shared/font.css">
+<link rel="stylesheet" href="shared/core.css">
+<style>
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main .note,.main .sec,.main .tag,
+.rail .sec,.rail .note,
+.full .sec,.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+h1 .fill{color:var(--accent);}
+
+@media (min-width:768px){
+  .pair{columns:2;column-gap:var(--s4);}
+  .pair li{break-inside:avoid;}
+}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}
+}
+
+@media (max-width:599px){
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+
+/* Embedded video: full width of the main column, 16:9. Hidden when printing. */
+.video{margin:0 0 var(--s3);}
+.video iframe{display:block;width:100%;aspect-ratio:16/9;border:0;}
+.video .poster{position:relative;display:block;}
+.video .poster::before,.video .poster::after{content:none !important;}
+.video img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;}
+.video .poster span{position:absolute;left:var(--s2);bottom:var(--s2);background:var(--bg);color:var(--fg);padding:var(--s1) var(--s2);font-size:.875rem;}
+@media print{.video{display:none;}}
+
+/* Keep the section number on one line; the label wraps beside it instead. */
+.sec .num{flex:none;white-space:nowrap;}
+</style>
+<link rel="stylesheet" href="shared/print.css">
+</head>
+<body>
+
+<!-- The page: a 12-column grid. Each band is one row; rail = label, main = content. -->
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <!-- Column lines and the perimeter frame, drawn by shared/core.js. -->
+  <svg class="cols" contenteditable="false" aria-hidden="true"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true">
+    <polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline>
+    <g id="frame-dots"></g>
+  </svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1><span>Week 7: <span class="fill">Logos</span></span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;">Tue Oct 20 · 9:00–11:50 · Project 2: Personal Logo</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>Logorama</p>
+      <p class="note">17 min</p>
+    </div>
+    <div class="main">
+      <div class="video" contenteditable="false" data-yt="zAKopCwGlcc"><a class="poster" href="https://www.youtube.com/watch?v=zAKopCwGlcc"><img src="https://i.ytimg.com/vi/zAKopCwGlcc/hqdefault.jpg" alt="Logorama on YouTube"><span>&#9654; Watch on YouTube</span></a></div>
+      <p><a href="https://en.wikipedia.org/wiki/Logorama"><em>Logorama</em></a></p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">02</span>Discussion</p>
+      <p class="note">Talking points, on the projector</p>
+    </div>
+    <div class="main">
+      <p><strong>A. Visual + Cultural</strong></p>
+      <ul>
+        <li>What struck you first &mdash; story or logos? Which logos stood out to you?</li>
+        <li>Were you overwhelmed? Depressed? Laughing? What feelings did you experience while watching and directly after?</li>
+      </ul>
+      <p><strong>B. Social / Environmental</strong></p>
+      <ul>
+        <li>What does a disaster-filled, branded world suggest?</li>
+        <li>What role did nature play? It seems to have had the final word&hellip; what would that word be?</li>
+      </ul>
+      <p><strong>C. You</strong></p>
+      <ul>
+        <li>What brands define your visual world?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">03</span>Logo systems discussion</p>
+      <p class="note">Introductory definitions to get us going before we move into the design challenge.</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li><strong>Logo system:</strong> related marks (logo, monogram, icon, wordmark, variants). Continuity exists between all the related marks.
+          <ul><li>What is the relationship between a style guide and a logo system?</li></ul>
+        </li>
+        <li><strong>Reduction:</strong> stripping a mark to its fewest essential forms so it holds at small size and in one color.</li>
+        <li><strong>Mark-making:</strong> lines, shapes and textures whose gesture carries character.</li>
+        <li><strong>Keyword generation:</strong> listing words to set the concept before drawing.
+          <ul><li>Have you ever made a mind map?</li></ul>
+        </li>
+        <li><strong>Abstraction:</strong> translating an idea or aspect of the company/brand into something non-literal.</li>
+        <li><strong>Initials (monogram):</strong> a mark built from your letters.</li>
+        <li><strong>Negative space:</strong> the empty area around and within a form, used to make a second shape.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">04</span>Design challenge</p>
+      <p class="note">75 min</p>
+    </div>
+    <div class="main">
+      <p><a href="design-challenge-explore-your-personal-logo.html">Design Challenge: Explore Your Personal Logo</a>.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">05</span>Project 2: Personal Logo</p>
+      <p class="note">Concept Development · 20% · Due Oct 27</p>
+    </div>
+    <div class="main">
+      <p><a href="project-2-personal-logo.html">Project 2: Personal Logo</a></p>
+      <p>Produce 30 sketches exploring your personal logo. Sketches may be drawn on paper or digitally, but must be posted as a single contact sheet. Black and white only, original marks only, readable at small size.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">06</span>Homework</p>
+      
+    </div>
+    <div class="main">
+      <ul>
+        <li>Project 2, Personal Logo: 30 sketches, one contact sheet, post to BS</li>
+        <li>Movie Response 2: 3–4 sentences about <a href="https://en.wikipedia.org/wiki/Logorama"><em>Logorama</em></a></li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+
+<!-- Shared behaviour: navbar, footer, frame, link treatment, Save, theme, print. -->
+<script src="shared/core.js"></script>
+<script>
+// Swap the poster for the live YouTube player when the page is served over the web (e.g. Brightspace).
+// Opened as a local file, YouTube refuses to play (error 153), so the poster link stays instead.
+if(location.protocol.indexOf('http')===0){
+  document.querySelectorAll('.video[data-yt]').forEach(function(v){
+    v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v.getAttribute('data-yt')+'" title="Logorama" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+  });
+}
+</script>
+
+</body></html>

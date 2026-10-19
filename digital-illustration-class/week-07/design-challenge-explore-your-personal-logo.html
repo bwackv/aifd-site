@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<!-- Built on the shared design system: 12-column field, numbered bands, shared/ framework. -->
+<html lang="en" data-public data-theme="light" data-frame="on" data-subtitle="Design Challenge" data-docname="di-design-challenge-personal-logo"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design Challenge: Explore Your Personal Logo — Digital Illustration</title>
+<!-- Load order from the style guide: font, core, page style, print (last), then scripts. -->
+<link rel="stylesheet" href="shared/font.css">
+<link rel="stylesheet" href="shared/core.css">
+<style>
+
+.rail > :last-child{margin-bottom:0;}
+
+h1,.fit,.masthead .note,
+.main h2,.main p,.main ul,.main .note,.main .sec,.main .tag,
+.rail .sec,.rail .note,
+.full .sec,.full .note{
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+
+h1 .fill{color:var(--accent);}
+
+@media (min-width:768px){
+  .pair{columns:2;column-gap:var(--s4);}
+  .pair li{break-inside:avoid;}
+}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}
+}
+
+@media (max-width:599px){
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+
+/* Embedded video: full width of the main column, 16:9. Hidden when printing. */
+.video{margin:0 0 var(--s3);}
+.video iframe{display:block;width:100%;aspect-ratio:16/9;border:0;}
+.video .poster{position:relative;display:block;}
+.video .poster::before,.video .poster::after{content:none !important;}
+.video img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;}
+.video .poster span{position:absolute;left:var(--s2);bottom:var(--s2);background:var(--bg);color:var(--fg);padding:var(--s1) var(--s2);font-size:.875rem;}
+@media print{.video{display:none;}}
+
+/* Keep the section number on one line; the label wraps beside it instead. */
+.sec .num{flex:none;white-space:nowrap;}
+</style>
+<link rel="stylesheet" href="shared/print.css">
+</head>
+<body>
+
+<!-- The page: a 12-column grid. Each band is one row; rail = label, main = content. -->
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <!-- Column lines and the perimeter frame, drawn by shared/core.js. -->
+  <svg class="cols" contenteditable="false" aria-hidden="true"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true">
+    <polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline>
+    <g id="frame-dots"></g>
+  </svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1><span>Design Challenge: <span class="fill">Explore Your Personal Logo</span></span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;">Personal Logo Exploration/Ideation Challenge (75 minutes)</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>Logorama</p>
+    </div>
+    <div class="main">
+      <div class="video" contenteditable="false" data-yt="zAKopCwGlcc"><a class="poster" href="https://www.youtube.com/watch?v=zAKopCwGlcc"><img src="https://i.ytimg.com/vi/zAKopCwGlcc/hqdefault.jpg" alt="Logorama on YouTube"><span>&#9654; Watch on YouTube</span></a></div>
+      <p><a href="https://en.wikipedia.org/wiki/Logorama"><em>Logorama</em></a> builds a world made entirely of existing (corporate) logos. Did it make you consider how much of our visual culture is shaped by corporate branding and imagery? Or perhaps how context shapes our feelings of a given brand? And what did nature have to say to this logoscape?</p>
+      <p>This leads me to ask you a question: if you were to participate in this visual world of logos (and natural disaster), how would your logo look? For this assignment, you&rsquo;re going to explore that question.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">02</span>Step 1</p>
+      <p class="note">5 minutes</p>
+    </div>
+    <div class="main">
+      <p><strong>Write 10 words about yourself</strong></p>
+      <p>Fast list. Don&rsquo;t overthink.</p>
+      <p class="note">Examples: calm, energetic, geometric, chaotic, precise, bold, soft, introverted, loud, playful.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">03</span>Step 2</p>
+      <p class="note">10 minutes</p>
+    </div>
+    <div class="main">
+      <p><strong>Turn 3 of those words into simple shapes</strong></p>
+      <p>Pick 3 of the words you wrote down. Represent each one as a simple symbol or shape.</p>
+      <p class="note">Examples: &ldquo;Calm&rdquo; &rarr; smooth circle &middot; &ldquo;Energetic&rdquo; &rarr; zig-zag &middot; &ldquo;Precise&rdquo; &rarr; square &middot; &ldquo;Playful&rdquo; &rarr; wiggly line</p>
+      <p>These are NOT logos &mdash; just abstract shapes based on your personality words.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">04</span>Step 3</p>
+      <p class="note">15 minutes</p>
+    </div>
+    <div class="main">
+      <p><strong>Draw your initials in 6 different ways</strong></p>
+      <p>Try: stacked, merged, overlapping, broken apart, mirrored, rotated, or carved into negative space (one letter formed by the empty space around or inside another). Black and white only.</p>
+      <p>Goal: Explore multiple ways your initials could become symbols.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">05</span>Step 4</p>
+      <p class="note">30 minutes</p>
+    </div>
+    <div class="main">
+      <p><strong>Combine shapes + initials &rarr; create 6 rough logo sketches</strong></p>
+      <p>Each sketch = 1 initials idea + 1 shape idea combined. It doesn&rsquo;t have to be an exact match to the initial idea or shape, but don&rsquo;t stray too far.</p>
+      <p class="note">Examples: a circle form containing your initials &middot; initials broken into geometric pieces from your shapes &middot; a symbol sitting next to a monogram &middot; initials stylized to match the energy of your shapes (sharp, rounded, messy)</p>
+      <p>Fast. Rough. No polishing.</p>
+      <p>If you find yourself with extra time, do 4 more for a total of ten.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">06</span>Step 5</p>
+      <p class="note">15 minutes</p>
+    </div>
+    <div class="main">
+      <p><strong>Pick your strongest direction</strong></p>
+      <p>Circle it.</p>
+      <p>Reduce it: redraw your mark at thumbnail size (about 1 inch) using the fewest possible shapes, removing any detail that disappears when small.</p>
+      <p>Write 3 sentences:</p>
+      <ol>
+        <li>Why it works visually</li>
+        <li>How it represents you</li>
+        <li>How you would refine it next</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">07</span>Constraints</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li>Black and white</li>
+        <li>Original (not based on an existing brand)</li>
+        <li>Must be readable at very small size</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">08</span>Deliverables</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li>6 rough logo sketches</li>
+        <li>1 sentence per sketch explaining the idea</li>
+        <li>Final direction, its reduced thumbnail version, and a 3-sentence rationale</li>
+      </ul>
+      <p class="note">These sketches are a starting point for Project 2: Personal Logo. They do not count toward the 30.</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- Shared behaviour: navbar, footer, frame, link treatment, Save, theme, print. -->
+<script src="shared/core.js"></script>
+<script>
+// Swap the poster for the live YouTube player when the page is served over the web (e.g. Brightspace).
+// Opened as a local file, YouTube refuses to play (error 153), so the poster link stays instead.
+if(location.protocol.indexOf('http')===0){
+  document.querySelectorAll('.video[data-yt]').forEach(function(v){
+    v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v.getAttribute('data-yt')+'" title="Logorama" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+  });
+}
+</script>
+
+</body></html>
