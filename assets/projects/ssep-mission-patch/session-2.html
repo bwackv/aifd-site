@@ -111,7 +111,17 @@ h1 .fill{color:var(--accent);}
       <p><strong>NOTE:</strong> Recall that we did this same process to build our poster generator tool. You&rsquo;re describing your patch and then feeding that into Gemini in order to build a <code>skills.md</code>.</p>
       <ul>
         <li>30 min: <strong>Written description:</strong> Write down your analysis of the shapes, the color, the type, the hierarchy, the composition, the tone, everything you notice about your patch into a stream of consciousness/natural language text document. Go into as much detail as you can about every aspect of the patch that you can think of.</li>
-        <li>30 min: <strong><code>skills.md</code>:</strong> Feed this natural language document, which encompasses everything about the patch that you can observe, both technical and artistic/feeling, to AI along with a photo of the patch itself to produce a <code>skills.md</code>. This skills document will be the basis of the patch generator tool that you will build. Discuss this document with AI so that it knows the purpose of the document. Be explicit:
+        <li>30 min: <strong>Build your <code>skills.md</code>:</strong> Feed this natural language document, which encompasses everything about the patch that you can observe, both technical and artistic/feeling, to AI along with a photo of the patch itself to produce a <code>skills.md</code>. This skills document will be the basis of the patch generator tool that you will build. Discuss this document with AI so that it knows the purpose of the document.
+          <p>Things to feed the AI in the prompt for building the <code>skills.md</code>:</p>
+          <ul>
+            <li>Your sketch</li>
+            <li>Your description</li>
+            <li>The text of <a href="session-1.html">Session 1</a> and Session 2 (the page you&rsquo;re on)</li>
+            <li>Your poster generator app</li>
+          </ul>
+          <p>Be sure to tell the AI:</p>
+          <p class="note">&ldquo;We are building a mission patch generator tool. The poster generator is something we built earlier. I&rsquo;m giving it to you only as context to help build the <code>skills.md</code>, not as something to copy.&rdquo;</p>
+          <p>Be explicit:</p>
           <ul>
             <li>The final output is 3.5&Prime; &times; 3.5&Prime;, every time.</li>
             <li>It answers one question: <em>What message would Baruch send into space?</em></li>
@@ -125,7 +135,6 @@ h1 .fill{color:var(--accent);}
               <li>What is your color palette?</li>
             </ul>
             <p>For these and any other questions you think of, consider how the tool <em>generates endless variations on your initial conditions</em>.</p>
-            <p><strong>NOTE:</strong> You can also feed the AI both <a href="session-1.html">Session 1</a> and Session 2 (this page) to help it understand.</p>
             <p><strong>NOTE:</strong> Do not have AI write your artist statement.</p>
           </div>
         </li>
