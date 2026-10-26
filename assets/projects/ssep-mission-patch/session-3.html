@@ -20,6 +20,18 @@ h1,.fit,.masthead .note,
 }
 
 h1 .fill{color:var(--accent);}
+/* Card, from session-1.html: image beside the text, stacked on phones */
+.cell{
+  display:flex;
+  margin:var(--s2) 0 var(--s3);
+  border:1px solid var(--line);
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+  overflow:hidden;
+}
+.card-img{display:block;width:40%;flex:none;aspect-ratio:1;object-fit:cover;}
+.card-body{flex:1;padding:var(--s3);}
+.card-body > :last-child{margin-bottom:0;}
 
 @media (min-width:768px){
   .pair{columns:2;column-gap:var(--s4);}
@@ -31,6 +43,8 @@ h1 .fill{color:var(--accent);}
   .band:has(.rail)::after{display:none;}
   .rail{grid-column:1 / -1;padding-bottom:0;}
   .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cell{flex-direction:column;}
+  .card-img{width:100%;}
   .cols{display:none;}
   #frame-nodes{display:none;}
 }
@@ -68,7 +82,7 @@ h1 .fill{color:var(--accent);}
     <div class="main">
       <ul>
         <li><strong>Explore:</strong> Make lots of versions. Look for ideas you didn&rsquo;t draw.</li>
-        <li><strong>Reference:</strong> The <a href="https://www.creativeapplications.net/project/mit-media-lab-identity-processing/">MIT Media Lab identity</a> (2011, TheGreenEyl and E Roon Kang). Three shapes and twelve colors made about 40,000 logos, one per person at the lab. All of them read as the same identity.</li>
+        <li><strong>Cool reference:</strong> The <a href="https://www.creativeapplications.net/project/mit-media-lab-identity-processing/">MIT Media Lab identity</a> (2011, TheGreenEyl and E Roon Kang). Three shapes and twelve colors made about 40,000 logos.</li>
         <li><strong>Choose:</strong> Up to three different ideas, one per entry. Not three versions of one idea.</li>
       </ul>
     </div>
@@ -81,8 +95,15 @@ h1 .fill{color:var(--accent);}
     </div>
     <div class="main">
       <ul>
-        <li>40 min: Make versions with your tool.</li>
-        <li>40 min: <strong>Group critique:</strong> Your thumbnails next to your tool versions.
+        <li>40 min: <strong>Ideating:</strong> Isolate three new designs that your tool generates and use them to go back to pen and paper and explore new themes/variations on your original patch idea. Write about these new directions (2&ndash;3 sentences for each).
+          <div class="cell">
+            <img class="card-img" src="klein-acme.jpg" alt="Patricia Klein&rsquo;s ACME patch: blue and orange stitched rings and ovals forming a sphere, with the letters ACME in white across the middle.">
+            <div class="card-body">
+              <p>Say your tool generated a patch like this one: rings and ovals around a center. Redraw it by hand and ask where else it could go. The rings could become orbits, a planet or a Baruch B, and each one is a new direction for your patch. <a href="https://eos.patriciaklein.de/acme">Patricia Klein</a></p>
+            </div>
+          </div>
+        </li>
+        <li>40 min: <strong>Small group critiques:</strong> Your thumbnails next to your tool versions.
           <ol>
             <li>What message do you see?</li>
             <li>What feels distinctly Baruch?</li>
