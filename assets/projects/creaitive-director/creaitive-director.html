@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-frame="on" data-subtitle="Crea(i)tive Director" data-docname="art3041-creaitive-director">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Become a Crea(i)tive Director — A.I. for Designers</title>
+
+<link rel="stylesheet" href="../../../shared/font.css">
+<link rel="stylesheet" href="../../../shared/core.css">
+<style>
+/* --- Page-specific: the brief's own components -------------------------------- */
+
+h3{
+  font-size:1.125rem;
+  font-variation-settings:"wdth" 100,"wght" 600,"ROND" 55;
+  line-height:1.25;
+  margin:var(--s3) 0 var(--s1);
+}
+
+ol{margin:0 0 var(--s3);width:fit-content;padding-left:1.4em;}
+.main ol{background:var(--bg);box-shadow:0 0 var(--fade) var(--hold) var(--bg);}
+.main ol li{margin:0 0 var(--s2);}
+.main ol li::marker,.main ul li::marker{color:var(--accent);}
+
+/* A deliverable is subordinate to its phase: marked by a rule, not a box, so it does
+   not fight the field lines running behind it. */
+.deliverable{
+  border-left:1px solid var(--line);
+  padding-left:var(--s2);
+  margin:0 0 var(--s3);
+  max-width:var(--measure);
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+.deliverable > strong:first-child{display:block;margin-bottom:var(--s1);}
+.deliverable p:last-child,.deliverable ul:last-child{margin-bottom:0;}
+
+/* No fill — a tinted box would read as a different colour in the dark theme. */
+.callout{
+  border-left:3px solid var(--accent);
+  padding-left:var(--s2);
+  margin:0 0 var(--s3);
+  max-width:var(--measure);
+  background:var(--bg);
+  box-shadow:0 0 var(--fade) var(--hold) var(--bg);
+}
+.callout p:last-child{margin-bottom:0;}
+
+code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:0.875rem;
+  padding:1px 4px;
+  border:1px solid var(--line);
+}
+
+/* Wide content scrolls inside its own container; the page never scrolls sideways. */
+.scroll-x{overflow-x:auto;margin:0 0 var(--s3);background:var(--bg);}
+table{border-collapse:collapse;width:100%;min-width:34rem;}
+th,td{text-align:left;padding:var(--s1) var(--s2);border-bottom:1px solid var(--line);vertical-align:top;}
+th{
+  font-size:0.875rem;
+  font-variation-settings:"wdth" 100,"wght" 600,"ROND" 55;
+  text-transform:uppercase;letter-spacing:.04em;
+  border-bottom-width:2px;
+}
+td.weight{font-variation-settings:"wdth" 100,"wght" 600,"ROND" 55;white-space:nowrap;width:12%;color:var(--accent);}
+td.component{font-variation-settings:"wdth" 100,"wght" 500,"ROND" 55;width:28%;}
+
+/* --- Collapse ----------------------------------------------------------------
+   The field stays twelve columns. The rail stops being a column and becomes the
+   header of the band it belongs to, so a section reads title, note, body in one
+   run instead of leaving a number stranded beside empty space.
+   The 768–899 rail widening lives in shared/core.css, not here. */
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}   /* no rail column, no boundary */
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}   /* field is hidden here, so nothing sits at a crossing */
+}
+
+@media (max-width:599px){
+  /* Mobile: tighten the side padding to 12px — the field 12px off the screen edge, the type 12px inside it. */
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+  table{min-width:26rem;}
+}
+</style>
+<link rel="stylesheet" href="../../../shared/print.css">
+</head>
+<body>
+
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <svg class="cols" contenteditable="false" aria-hidden="true" viewBox="0 0 1147 1289"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true" viewBox="0 0 1147 1289"><polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline><g id="frame-dots"></g></svg>
+
+  <div class="band">
+    <div class="masthead">
+      <!-- core.css sets h1 > span to white-space:nowrap — the heading is one scaled line,
+           so breaks are authored here rather than left to wrapping. -->
+      <h1><span>Become a<br>Crea(i)tive Director</span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;">Working with A.I. — <span class="fill">[length]</span> Brand Overhaul Project</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>The Brief</p>
+      <p class="note">You direct. The A.I. executes.</p>
+    </div>
+    <div class="main">
+      <p>You are a creative director at a marketing/advertising firm. Your client needs a full brand makeover to launch an upcoming ad campaign. You are in a senior position and no longer get your hands dirty in the software suite. Instead, you will use <strong>Copilot</strong> as your text/image/file/video worker to execute a full-scale brand overhaul plus ad campaign for a major client.</p>
+
+      <p>You choose the brand. You develop the campaign. This doesn't need to be an NYC-based brand. It just has to be a product launch for NYC, which means your print and digital campaign assets are NYC-focused. This is broad, so if you're doing an airline, it can be in an NYC airport. Maybe it is a new sneaker for Supreme, a new frame for Warby Parker, a new class of airplane for JetBlue, or a new flavor for Chobani. It is up to you to do the research and choose the brand. Think about what you are into — music, fashion, sports, arts. The more you are interested in the brand, the more engaging this will be.</p>
+
+      <p><strong>A.I. is the worker. You are the director.</strong> Every asset in this project — brand brief, style guide, logomark, logotype, campaign imagery, mockup environments, experimental piece — should be generated by A.I. under your direction. You are not producing these assets by hand. Your role is to prompt, evaluate, and iterate until the A.I. produces something that meets your direction.</p>
+
+      <p>The A.I. will not produce what you want on the first attempt. Expect inconsistent imagery, misread instructions, drifted color palettes, and outputs that miss the brief. Iteration and specificity are how you correct course. Your grade reflects how effectively you direct the tools to produce a coherent brand package.</p>
+
+      <p>Some inconsistency across assets is acceptable. The strength of the system you build and the clarity of your direction are what matter.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">02</span>Phase 1</p>
+      <p class="note">Brand Foundation &nbsp;·&nbsp; Due <span class="fill">[date]</span></p>
+    </div>
+    <div class="main">
+      <p class="note">Learning Goal: Develop a coherent brand identity and a documented work plan, both directed by you and produced through A.I. collaboration.</p>
+
+      <p><strong>What you must produce:</strong></p>
+
+      <div class="deliverable">
+        <strong>1. Work Plan</strong>
+        A document outlining the full project, generated and formatted by Copilot under your direction. A website or a PDF — your choice. Should include all deliverables, a detailed style guide breakdown, and step-by-step plans for accomplishing each task.
+      </div>
+
+      <div class="deliverable">
+        <strong>2. Brand Brief + Style Guide</strong>
+        A multi-page document that presents your brand foundation. <strong>Format is your choice: a website (HTML/CSS/JS, single file or multi-page) or a PDF.</strong> Either way, it must be A.I.-generated under your direction. Must include:
+        <ul>
+          <li><strong>Brand brief</strong> — a written description of the brand overhaul concept (A.I.-generated)</li>
+          <li><strong>Moodboard</strong> — a minimum of twenty images</li>
+          <li><strong>Logomark</strong> — the graphical logo, generated with an A.I. image tool. Light editing in Photoshop is acceptable if needed for cleanup.</li>
+          <li><strong>Logotype</strong> — the company name set in the specified font family. May be stylized.</li>
+          <li><strong>Font usage guide</strong> — what fonts are used and where (e.g., headline font vs. body font)</li>
+          <li><strong>Color guide</strong> — primary and any secondary brand colors with hex/RGB codes</li>
+          <li>Consistent visual system across all pages or screens</li>
+        </ul>
+      </div>
+
+      <div class="deliverable">
+        <strong>3. Written Response to "Oy, A.I." by Jaron Lanier</strong>
+        A short written response to the essay. See the Reading &amp; Research section for details.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">03</span>Phase 2</p>
+      <p class="note">Campaign Production &nbsp;·&nbsp; Due <span class="fill">[date]</span></p>
+    </div>
+    <div class="main">
+      <p class="note">Learning Goal: Translate brand foundation into multi-channel advertising assets. Demonstrate facility in finishing A.I.-generated imagery into polished mockups in Photoshop.</p>
+
+      <p><strong>What you must produce:</strong></p>
+
+      <div class="deliverable">
+        <strong>1. Print Ad Campaign</strong>
+        Three (3) A.I.-generated campaign images placed into three (3) NYC-based mockups. At least one mockup must be "out in the world" (billboard, subway car, bus shelter, building wrap, etc.). Do not just mock up three tote bags or T-shirts. Think broad. Generate the images with Copilot, then take them into Photoshop and finish them there using generative fill and generative expand.
+        <p style="margin-top:var(--s1);">Past student campaigns have included <span class="fill">[example]</span>, <span class="fill">[example]</span>, and <span class="fill">[example]</span>. Think outside of the box when you develop the ad campaign for the brand you overhauled.</p>
+      </div>
+
+      <div class="deliverable">
+        <strong>2. Digital/Social Ad Suite</strong>
+        Three (3) A.I.-generated social or digital ads, presented on appropriate device frames (phone screens for Instagram/TikTok, laptop screens for web banners, etc.). Finish these in Photoshop, placing them onto the device frames.
+      </div>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">04</span>Phase 3</p>
+      <p class="note">Experimental Piece + Final Submission &nbsp;·&nbsp; Due <span class="fill">[date]</span></p>
+    </div>
+    <div class="main">
+      <p class="note">Learning Goal: Push beyond the standard deliverables into something that sets the brand apart. Demonstrate the full arc of A.I. collaboration through documentation.</p>
+
+      <p><strong>What you must produce:</strong></p>
+
+      <div class="deliverable">
+        <strong>1. Experimental Piece</strong>
+        One experimental brand asset. Options include an interactive animation, a one-page promotional website, a web-based interactive built in HTML/CSS/JavaScript, or a short motion graphic. This is the most challenging and least predictable deliverable. We will talk about animation techniques in class. Resilience and iteration matter more than polish here.
+      </div>
+
+      <div class="deliverable">
+        <strong>2. Full Conversation Log PDF</strong>
+        A cumulative PDF of your entire Copilot conversation history across the project. Maintained throughout.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">05</span>Grading Criteria</p>
+      <p class="note">Graded holistically on consistency.</p>
+    </div>
+    <div class="main">
+      <div class="callout">
+        <p><strong>Weekly work counts toward your final grade.</strong> Each phase has a firm due date. <strong>Missing a weekly deliverable will drop your project one full grade level. Each additional missed deliverable drops it another grade level.</strong> The work is structured to progress week by week and cannot be completed entirely in the final week.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="full">
+      <div class="scroll-x">
+        <table>
+          <thead>
+            <tr>
+              <th>Weight</th>
+              <th>Component</th>
+              <th>What It Measures</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="weight">25%</td>
+              <td class="component">Brand Foundation (Phase 1)</td>
+              <td>Strength and clarity of the brand concept; quality of the style guide; completeness of the work plan</td>
+            </tr>
+            <tr>
+              <td class="weight">35%</td>
+              <td class="component">Campaign Production (Phase 2)</td>
+              <td>Visual cohesion across print + digital; mockup quality and execution; consistency with the established brand identity</td>
+            </tr>
+            <tr>
+              <td class="weight">25%</td>
+              <td class="component">Experimental Piece + Final Outcome (Phase 3)</td>
+              <td>Ambition and execution of the experimental piece; overall power and impact of the full brand package</td>
+            </tr>
+            <tr>
+              <td class="weight">15%</td>
+              <td class="component">A.I. Direction Quality</td>
+              <td>Evidence of skilled prompting and iteration in the conversation log. Reviewed continuously across all phases.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The package will be graded holistically on consistency. All assets must feel like they belong to the same brand.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">06</span>Submission</p>
+      <p class="note">The presentation is the deliverable.</p>
+    </div>
+    <div class="main">
+      <div class="callout">
+        <p><strong>The whole project is presented as a website, published with GitHub Pages.</strong> That site links out to every deliverable — the work plan, the brand brief and style guide, the print campaign, the ad suite, the experimental piece, and the conversation log. The presentation itself is the final deliverable, and it is what gets graded.</p>
+      </div>
+
+      <ul>
+        <li>Publish it the way you published your course landing page — one <code>index.html</code> in a repository, served by <a href="../../course-setup/github-pages.html">GitHub Pages</a>.</li>
+        <li><strong>The site should look like the brand it presents.</strong> It is the last piece of the campaign, not a file index.</li>
+        <li>Link out to anything that is a PDF. Images and the experimental piece can live on the page itself.</li>
+        <li>Hand in the URL.</li>
+      </ul>
+
+      <h3>Working with Copilot</h3>
+
+      <div class="callout">
+        <p><strong>Start every A.I. session by pasting in your plan document.</strong> The five foundations from <span class="fill">[session]</span> (comment the code, direct tone, locked tech stack where applicable, style guide adherence, conversation log maintenance) plus your brand-specific additions. The A.I. has no memory between sessions — without the plan, the A.I. is starting without context each time.</p>
+      </div>
+
+      <ul>
+        <li>Stay in <strong>one Copilot conversation</strong> for as long as you can — memory and reference live inside a single thread. Start a new one only if you hit a length limit, and paste your plan back in when you do.</li>
+        <li>Copilot is free through your CUNY Login. You do not need to pay for anything.</li>
+        <li><strong>Drop both this assignment PDF and your plan document into the A.I. at the start of the session.</strong> Ask the A.I. to help you develop a step-by-step plan for accomplishing each deliverable.</li>
+        <li>Be thoughtful with your inquiries. Message counts are limited.</li>
+              </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">07</span>Reading &amp; Research</p>
+      <p class="note">One required. The rest is extra credit.</p>
+    </div>
+    <div class="main">
+      <p><strong>Required:</strong> Read <strong>"Oy, A.I."</strong> by Jaron Lanier. A short written response is due <span class="fill">[date]</span>.</p>
+
+      <p><strong>Optional / Extra Credit:</strong> A written response on any of the following — or another serious article, podcast, book, or essay about A.I. of your choosing — may be submitted by <span class="fill">[date]</span> for extra credit.</p>
+
+      <ul>
+        <li><strong>The Interdependence Podcast</strong> — Holly Herndon &amp; Matt Dryhurst, <em>Optimistic about the 21st Century</em></li>
+        <li><strong>A Cyborg Manifesto</strong> — Donna Haraway</li>
+        <li><strong>NY Times</strong> — <em>A guide to the best books about artificial intelligence</em></li>
+        <li><strong>Stephen Wolfram's writings on A.I.</strong></li>
+        <li><strong>"As We May Think"</strong> — Vannevar Bush</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">08</span>Tips</p>
+      <p class="note">Specific direction beats general direction.</p>
+    </div>
+    <div class="main">
+      <ul>
+        <li>Specific direction produces better results than general direction. "Make it cooler" leaves the A.I. to guess. "Increase the contrast on the typography, shift the palette toward warm tones, and tighten the kerning on the logotype" gives the A.I. something concrete to work with.</li>
+        <li>If the A.I. drifts off-brand, paste your style guide back into the conversation.</li>
+        <li>If a tool produces the same wrong output after three attempts, rephrase the request from scratch or switch tools rather than continuing to retry the same prompt.</li>
+        <li>You may create deliverables beyond what is listed here, or develop new ideas in collaboration with the A.I. Treat this brief as a starting point.</li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+
+<script src="../../../shared/core.js"></script>
+<script>
+// This document arranges nothing of its own; the shared layout pass is enough.
+</script>
+
+</body>
+</html>
