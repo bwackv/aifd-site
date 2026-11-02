@@ -299,7 +299,7 @@ a::after{
   line-height:1.25;
 }
 
-.sec .num{color:var(--accent);}
+.sec .num{flex:none;color:var(--accent);}   /* a long label wraps itself, never the number */
 
 .note{
   width:fit-content;
