@@ -11,13 +11,18 @@
 blockquote{margin:0 0 var(--s3);padding-left:var(--s3);border-left:1px solid var(--line);max-width:var(--measure);background:var(--bg);}
 blockquote p:last-child{margin-bottom:0;}
 .main ul li::marker{color:var(--accent);}
-.shot{display:block;width:100%;height:auto;border:1px solid var(--line);margin:0 0 var(--s3);}
+.set{grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s3);padding:var(--s3);}
+.cell{display:flex;flex-direction:column;border:1px solid var(--line);background:var(--bg);box-shadow:0 0 var(--fade) var(--hold) var(--bg);overflow:hidden;}
+.card-img{display:block;width:100%;aspect-ratio:480 / 272;object-fit:cover;}
+.card-body{display:flex;flex-direction:column;flex:1;padding:var(--s3);overflow-wrap:break-word;}
+.card-body > :last-child{margin-bottom:0;}
 
 @media (max-width:767px){
   .masthead{grid-column:1 / -1;}
   .band:has(.rail)::after{display:none;}
   .rail{grid-column:1 / -1;padding-bottom:0;}
   .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .set{grid-template-columns:1fr;}
   .cols{display:none;}
   #frame-nodes{display:none;}
 }
@@ -53,13 +58,25 @@ blockquote p:last-child{margin-bottom:0;}
   </div>
 
   <div class="band">
-    <div class="rail">
+    <div class="full">
       <p class="sec"><span class="num">02</span>Example</p>
     </div>
-    <div class="main">
-      <p>Made in Brik, exported as video:</p>
-      <video class="shot" src="sample-brik-hero.webm" autoplay muted loop playsinline controls></video>
-      <p>Rebuilt as a tool: <a href="brik-rebuild.html">Hero generator</a></p>
+    <div class="set">
+
+      <div class="cell">
+        <img class="card-img" src="brik-hero.gif" alt="The Brik hero: a white glove at bottom left fires gold pixel coins inside a brick frame; coins pop into photo cards that pile on the floor.">
+        <div class="card-body">
+          <p><a href="https://brik.space/tools/golden-coin-hero-mvzjzkf4">Custom hero image generator tool made in brik.space</a>, <a href="sample-brik-hero.webm">exported as a video</a> to show a.i.</p>
+        </div>
+      </div>
+
+      <div class="cell">
+        <img class="card-img" src="hero-generator.gif" alt="The rebuilt hero generator: the same glove, coins and brick frame, with jewelry cards tumbling into a pile against the right wall.">
+        <div class="card-body">
+          <p><a href="brik-rebuild.html">Rebuilt it in Claude</a> by pasting video plus my entire chat in brik.space.</p>
+        </div>
+      </div>
+
     </div>
   </div>
 
