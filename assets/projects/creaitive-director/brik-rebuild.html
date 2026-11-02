@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hero generator</title>
+<style>
+:root{--bg:#111;--panel:#1b1b1b;--line:#333;--fg:#eee;--dim:#999;--accent:#ffd400;}
+html,body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.4 system-ui,sans-serif;}
+.tool{display:grid;gap:16px;padding:16px;}
+@media (min-width:1100px){.tool{grid-template-columns:1fr 300px;align-items:start;}}
+.hero{display:block;width:100%;aspect-ratio:480 / 272;image-rendering:pixelated;}
+.panel{display:grid;gap:16px;}
+fieldset{margin:0;padding:12px;border:1px solid var(--line);background:var(--panel);display:grid;gap:10px;}
+legend{padding:0 4px;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;font-size:12px;}
+.row{display:grid;grid-template-columns:1fr auto;gap:2px 8px;align-items:center;}
+.row input[type=range]{grid-column:1 / -1;width:100%;accent-color:var(--accent);}
+.row output{color:var(--dim);font-variant-numeric:tabular-nums;}
+.row input[type=color]{width:44px;height:24px;border:1px solid var(--line);background:none;padding:0;}
+.drop{display:block;padding:20px 12px;border:1px dashed var(--dim);text-align:center;color:var(--dim);cursor:pointer;}
+.drop.over,body.over .drop{border-color:var(--accent);color:var(--accent);}
+button{font:inherit;color:var(--fg);background:none;border:1px solid var(--line);padding:6px 10px;cursor:pointer;}
+button:hover{border-color:var(--accent);}
+.count{margin:0;color:var(--dim);font-size:12px;}
+</style>
+</head>
+<body>
+
+<div class="tool">
+  <canvas class="hero" id="hero" width="960" height="544"></canvas>
+  <form class="panel" id="panel" onsubmit="return false">
+    <fieldset id="physics"><legend>Physics</legend></fieldset>
+    <fieldset id="look"><legend>Look</legend></fieldset>
+    <fieldset><legend>Images</legend>
+      <label class="drop" id="drop"><input type="file" id="files" accept="image/*" multiple hidden>Drop images here or click to choose</label>
+      <p class="count" id="count"></p>
+      <button type="button" id="clear">Use placeholders</button>
+    </fieldset>
+  </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+<script>
+// The world is 480×272. Everything but the photos is drawn at that size and scaled up with
+// image-rendering:pixelated, which is the pixel look; the canvas itself is 2×, so the photos on
+// the cards get twice the pixel density and stay readable.
+const W = 480, H = 272, DPR = 2;
+const FPS = 30, STEP = 1000 / 60;
+
+const SET = {
+  spawnMs: 650,
+  power: 440,
+  gravity: 420,
+  bounce: 0.15,
+  bombChance: 0.08,
+  blastRadius: 42,
+  maxCards: 18,
+  cardScale: 1,
+  motion: 1,
+  sky: '#1a7cc4',
+  brick: '#ffb98a',
+};
+
+// Every control is declared here once; the panel is generated from it.
+const CONTROLS = [
+  { key: 'spawnMs',     group: 'physics', label: 'Spawn rate (ms)',   min: 150, max: 2000, step: 10 },
+  { key: 'power',       group: 'physics', label: 'Shoot power',       min: 150, max: 560,  step: 5 },
+  { key: 'gravity',     group: 'physics', label: 'Gravity',           min: 150, max: 1500, step: 10, then: () => setGravity() },
+  { key: 'bounce',      group: 'physics', label: 'Bounciness',        min: 0,   max: 0.8,  step: 0.01, fmt: v => v.toFixed(2) },
+  { key: 'bombChance',  group: 'physics', label: 'Bomb chance',       min: 0,   max: 0.5,  step: 0.01, fmt: v => Math.round(v * 100) + '%' },
+  { key: 'blastRadius', group: 'physics', label: 'Blast radius',      min: 10,  max: 110,  step: 1 },
+  { key: 'maxCards',    group: 'physics', label: 'Max cards',         min: 3,   max: 40,   step: 1 },
+  { key: 'cardScale',   group: 'look',    label: 'Card size',         min: 0.6, max: 1.8,  step: 0.05, fmt: v => v.toFixed(2) + '×', then: () => resizeCards() },
+  { key: 'motion',      group: 'look',    label: 'Background motion', min: 0,   max: 3,    step: 0.1,  fmt: v => v.toFixed(1) + '×' },
+  { key: 'sky',         group: 'look',    label: 'Background',        color: true, then: () => paintLayers() },
+  { key: 'brick',       group: 'look',    label: 'Brick frame',       color: true, then: () => paintLayers() },
+];
+
+const C = {
+  outline: '#1a0d06',
+  gold: '#ffd400', goldDark: '#c98a00',
+};
+
+const BORDER = 15;
+const FLOOR = H - BORDER - 2;
+const WATER_TOP = FLOOR - 15;
+const BAND = 64;                                   // period of the drifting light bands
+const HAND = { x: 26, y: FLOOR - 12, clear: 8 };   // 8 world px ≈ 30 screen px
+let CARD_W = 30, CARD_H = 28;
+
+const cv = document.getElementById('hero');
+const ctx = cv.getContext('2d');
+
+/* ---------- colour ---------- */
+
+// Mix a hex colour toward white (t > 0) or black (t < 0).
+function shade(hex, t) {
+  const n = parseInt(hex.slice(1), 16), to = t < 0 ? 0 : 255, k = Math.abs(t);
+  const ch = s => Math.round(((n >> s) & 255) + (to - ((n >> s) & 255)) * k);
+  return '#' + ((1 << 24) | (ch(16) << 16) | (ch(8) << 8) | ch(0)).toString(16).slice(1);
+}
+
+/* ---------- static layers, drawn once per colour change ---------- */
+
+function layer(w, h, draw) {
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  draw(c.getContext('2d'));
+  return c;
+}
+
+let sky, frame;
+
+function paintLayers() {
+  C.skyA = shade(SET.sky, -0.25); C.skyB = SET.sky; C.skyC = shade(SET.sky, 0.18);
+  C.cloud = shade(SET.sky, 0.6);
+  C.water = shade(SET.sky, 0.12); C.waterLine = shade(SET.sky, 0.45);
+  C.brick = SET.brick; C.brickHi = shade(SET.brick, 0.35); C.mortar = shade(SET.brick, -0.4);
+  sky = layer(W + BAND, H, paintSky);
+  frame = layer(W, H, paintFrame);
+}
+
+// The dither, with diagonal bands where one of its two tones lifts — one band period wider than
+// the view, so sliding it by up to a period loops seamlessly.
+function paintSky(g) {
+  for (let y = 0; y < WATER_TOP; y++) for (let x = 0; x < W + BAND; x++) {
+    const lit = ((x + y) % BAND) < BAND / 2;
+    g.fillStyle = (x + y) & 1 ? C.skyA : (lit ? C.skyC : C.skyB);
+    g.fillRect(x, y, 1, 1);
+  }
+}
+
+function paintFrame(g) {
+  const bw = 30, bh = 15;
+  function brick(x, y, w, h) {
+    g.fillStyle = C.outline; g.fillRect(x, y, w, h);
+    g.fillStyle = C.mortar;  g.fillRect(x + 1, y + 1, w - 2, h - 2);
+    g.fillStyle = C.brick;   g.fillRect(x + 1, y + 1, w - 3, h - 3);
+    g.fillStyle = C.brickHi; g.fillRect(x + 1, y + 1, w - 3, 1);
+  }
+  for (let x = 0; x < W; x += bw) { brick(x, 0, bw, bh); brick(x, H - bh, bw, bh); }
+  // The side run is stretched to divide evenly, so no brick overlaps the bottom row.
+  const n = Math.round((H - 2 * bh) / bh);
+  for (let i = 0; i < n; i++) {
+    const y0 = bh + Math.round(i * (H - 2 * bh) / n), y1 = bh + Math.round((i + 1) * (H - 2 * bh) / n);
+    brick(0, y0, bh, y1 - y0); brick(W - bh, y0, bh, y1 - y0);
+  }
+}
+
+// Glove and bomb are drawn once at world size, so they scale up as chunky pixels like the rest.
+const glove = layer(40, 40, g => {
+  g.translate(20, 20);
+  g.rotate(-Math.PI / 4);
+  g.fillStyle = C.outline; g.fillRect(-15, -5, 12, 10);
+  g.fillStyle = '#e8141c'; g.fillRect(-14, -4, 10, 8);
+  g.fillStyle = C.outline; g.beginPath(); g.arc(3, 0, 8, 0, Math.PI * 2); g.fill();
+  g.fillStyle = '#fff';    g.beginPath(); g.arc(3, 0, 7, 0, Math.PI * 2); g.fill();
+  for (let k = -1; k <= 1; k++) {
+    g.fillStyle = C.outline; g.beginPath(); g.arc(10, k * 4, 3.4, 0, Math.PI * 2); g.fill();
+    g.fillStyle = '#fff';    g.beginPath(); g.arc(10, k * 4, 2.6, 0, Math.PI * 2); g.fill();
+  }
+});
+
+const bomb = layer(18, 18, g => {
+  g.fillStyle = '#000'; g.beginPath(); g.arc(10, 10, 6, 0, Math.PI * 2); g.fill();
+  g.fillStyle = '#555'; g.fillRect(11, 7, 2, 2);
+  g.fillStyle = '#c9a36a'; g.fillRect(4, 4, 3, 1);
+});
+
+/* ---------- pictures ---------- */
+
+// Placeholder jewelry: rings and necklaces in gold on a few backgrounds.
+function jewel(i) {
+  const c = document.createElement('canvas');
+  c.width = 48; c.height = 44;
+  const g = c.getContext('2d');
+  g.scale(2, 2);
+  const bgs = ['#1f5a3c', '#202020', '#9fb7c4', '#5a2340', '#e9e1d3'];
+  g.fillStyle = bgs[i % bgs.length]; g.fillRect(0, 0, 24, 22);
+  g.lineWidth = 2;
+  if (i % 2 === 0) {
+    g.strokeStyle = C.goldDark; g.beginPath(); g.ellipse(12, 13, 7, 5, 0, 0, Math.PI * 2); g.stroke();
+    g.strokeStyle = C.gold;     g.beginPath(); g.ellipse(12, 12, 7, 5, 0, Math.PI, Math.PI * 2); g.stroke();
+    g.fillStyle = ['#e03a5a', '#4fd1ff', '#ffffff'][i % 3]; g.fillRect(10, 5, 4, 3);
+  } else {
+    g.strokeStyle = C.gold; g.beginPath(); g.arc(12, 0, 11, 0.15 * Math.PI, 0.85 * Math.PI); g.stroke();
+    g.fillStyle = C.gold; g.fillRect(10, 11, 4, 5);
+    g.fillStyle = ['#e03a5a', '#4fd1ff', '#7cff7a'][i % 3]; g.fillRect(11, 12, 2, 3);
+  }
+  return c;
+}
+
+const placeholders = Array.from({ length: 6 }, (_, i) => jewel(i));
+let sources = placeholders;   // what the cards show: placeholders, or images dropped in
+let pics = [];                // sources cropped to the card window once, so each frame only blits
+
+// Cover-crop each source into the card's picture window, at 2× the world's pixel density.
+function buildPics() {
+  const w = (CARD_W - 6) * DPR, h = (CARD_H - 6) * DPR;
+  pics = sources.map(src => {
+    const c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    const sw = src.naturalWidth || src.width, sh = src.naturalHeight || src.height;
+    const k = Math.max(w / sw, h / sh);
+    c.getContext('2d').drawImage(src, (sw - w / k) / 2, (sh - h / k) / 2, w / k, h / k, 0, 0, w, h);
+    return c;
+  });
+}
+
+/* ---------- physics: Matter.js ---------- */
+
+const { Engine, Bodies, Body, Composite, Events } = Matter;
+const engine = Engine.create({ enableSleeping: true });
+const world = engine.world;
+
+const CAT = { wall: 1, card: 2, shot: 4, hand: 8 };
+
+function setGravity() { engine.gravity.y = 1; engine.gravity.scale = SET.gravity / 1e6; }
+
+// Walls are thick and sit outside the visible edge, so nothing tunnels through them.
+const T = 60;
+const wall = (x, y, w, h, label) => Bodies.rectangle(x, y, w, h, {
+  isStatic: true, label, friction: 0.8, collisionFilter: { category: CAT.wall },
+});
+Composite.add(world, [
+  wall(W / 2, FLOOR + T / 2, W, T, 'floor'),
+  wall(BORDER - T / 2, H / 2, T, H, 'side'),
+  wall(W - BORDER + T / 2, H / 2, T, H, 'side'),
+  wall(W / 2, BORDER - T / 2, W, T, 'side'),
+  // The clear zone around the hand: cards land against it, shots pass through.
+  Bodies.circle(HAND.x, HAND.y, 12 + HAND.clear, {
+    isStatic: true, label: 'hand', collisionFilter: { category: CAT.hand, mask: CAT.card },
+  }),
+]);
+
+const cards = [], shots = [], bits = [], blasts = [];
+let shake = 0, spawnClock = 0, picIx = 0;
+
+function fire() {
+  const ang = (-Math.PI / 4) + (Math.random() - 0.5) * 0.35;
+  const v = SET.power * (0.6 + Math.random() * 0.4) / 60;   // px per 60 Hz step
+  const isBomb = Math.random() < SET.bombChance;
+  const b = Bodies.circle(HAND.x + 14, HAND.y - 14, isBomb ? 6 : 5, {
+    label: isBomb ? 'bomb' : 'coin', restitution: 0.6, frictionAir: 0,
+    // Coins fly behind the pile and pop where they reach the floor, so cards spread along the
+    // whole arc instead of walling up by the hand. Bombs hit the pile.
+    collisionFilter: { category: CAT.shot, mask: isBomb ? CAT.wall | CAT.card : CAT.wall },
+  });
+  b.seed = Math.random() * 6;
+  Body.setVelocity(b, { x: Math.cos(ang) * v, y: Math.sin(ang) * v });
+  Composite.add(world, b);
+  shots.push(b);
+}
+
+function addCard(x, y, vx) {
+  const b = Bodies.rectangle(x, y, CARD_W, CARD_H, {
+    label: 'card', restitution: SET.bounce, friction: 0.6, frictionStatic: 0.9, density: 0.002,
+    angle: (Math.random() - 0.5) * 0.8,
+    collisionFilter: { category: CAT.card, mask: CAT.wall | CAT.card | CAT.shot | CAT.hand },
+  });
+  b.pic = picIx++; b.fade = 1; b.w = CARD_W; b.h = CARD_H;
+  Body.setVelocity(b, { x: vx * 0.3, y: -2 });
+  Body.setAngularVelocity(b, (Math.random() - 0.5) * 0.2);
+  Composite.add(world, b);
+  cards.push(b);
+  const live = cards.filter(c => !c.dying);
+  if (live.length > SET.maxCards) live[0].dying = true;
+}
+
+function burst(x, y, n, speed, cols, life) {
+  for (let i = 0; i < n; i++) {
+    const a = Math.random() * Math.PI * 2, s = speed * (0.4 + Math.random() * 0.6);
+    bits.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life, col: cols[i % cols.length] });
+  }
+}
+
+function explode(x, y) {
+  shake = 0.3;
+  blasts.push({ x, y, r: 2, life: 0.4 });
+  burst(x, y, 26, 160, ['#ff3b1f', '#ffd400', '#ffffff', '#222'], 0.5);
+  for (const c of cards) {
+    const dx = c.position.x - x, dy = c.position.y - y, d = Math.hypot(dx, dy) || 1;
+    if (d < SET.blastRadius) c.dying = true;
+    else if (d < SET.blastRadius * 2.2) {
+      const k = (1 - d / (SET.blastRadius * 2.2)) * 7;
+      Body.setVelocity(c, { x: c.velocity.x + dx / d * k, y: c.velocity.y + dy / d * k - 2 });
+      Body.setAngularVelocity(c, (Math.random() - 0.5) * 0.4);
+    }
+  }
+}
+
+// A shot resolves on its first touch of the floor (or, for a bomb, a card). Removal waits until after the
+// engine step, so the solver never meets a body that vanished mid-update.
+const hits = new Set();
+Events.on(engine, 'collisionStart', e => {
+  for (const { bodyA, bodyB } of e.pairs) {
+    for (const [s, o] of [[bodyA, bodyB], [bodyB, bodyA]]) {
+      if ((s.label === 'coin' || s.label === 'bomb') && (o.label === 'floor' || o.label === 'card')) hits.add(s);
+    }
+  }
+});
+
+function resolveHits() {
+  for (const s of hits) {
+    Composite.remove(world, s);
+    shots.splice(shots.indexOf(s), 1);
+    const { x, y } = s.position;
+    if (s.label === 'bomb') explode(x, y);
+    else {
+      burst(x, y, 8, 60, [C.gold], 0.35);
+      const cx = Math.max(BORDER + CARD_W / 2 + 2, Math.min(W - BORDER - CARD_W / 2 - 2, x));
+      addCard(cx, pileTop(cx) - CARD_H / 2 - 2, s.velocity.x);
+    }
+  }
+  hits.clear();
+}
+
+// The highest card edge over x, so a new card drops onto the pile rather than inside it.
+function pileTop(x) {
+  let top = FLOOR;
+  for (const c of cards) {
+    if (c.bounds.min.x < x + CARD_W / 2 && c.bounds.max.x > x - CARD_W / 2) top = Math.min(top, c.bounds.min.y);
+  }
+  return top;
+}
+
+function resizeCards() {
+  const nw = Math.round(30 * SET.cardScale), nh = Math.round(28 * SET.cardScale);
+  for (const c of cards) {
+    Body.scale(c, nw / c.w, nh / c.h);
+    c.w = nw; c.h = nh;
+    Matter.Sleeping.set(c, false);
+  }
+  CARD_W = nw; CARD_H = nh;
+  buildPics();
+}
+
+/* ---------- step ---------- */
+
+let skyT = 0;
+
+function step(dt) {
+  spawnClock += dt * 1000;
+  if (spawnClock > SET.spawnMs) { spawnClock = 0; fire(); }
+
+  for (let n = Math.round(dt * 1000 / STEP); n > 0; n--) {
+    Engine.update(engine, STEP);
+    resolveHits();
+  }
+
+  for (let i = cards.length - 1; i >= 0; i--) {
+    const c = cards[i];
+    c.restitution = SET.bounce;
+    if (!c.dying) continue;
+    c.fade -= dt * 4;
+    if (c.fade <= 0) { Composite.remove(world, c); cards.splice(i, 1); }
+  }
+  // Removing a card can leave others resting on nothing; sleeping bodies would hang there.
+  if (cards.some(c => c.fade <= 0.25)) for (const c of cards) Matter.Sleeping.set(c, false);
+
+  for (let i = bits.length - 1; i >= 0; i--) {
+    const b = bits[i];
+    b.life -= dt; if (b.life <= 0) { bits.splice(i, 1); continue; }
+    b.vy += SET.gravity * 0.4 * dt; b.x += b.vx * dt; b.y += b.vy * dt;
+  }
+  for (let i = blasts.length - 1; i >= 0; i--) {
+    const b = blasts[i];
+    b.life -= dt; b.r += dt * SET.blastRadius * 3;
+    if (b.life <= 0) blasts.splice(i, 1);
+  }
+  shake = Math.max(0, shake - dt);
+  skyT += dt * SET.motion;
+}
+
+/* ---------- render ---------- */
+
+const CLOUDS = Array.from({ length: 5 }, (_, i) => ({ x: i * 110 + 30, y: 30 + (i * 37) % 120, s: 6 + (i % 3) * 3 }));
+
+function drawBackground() {
+  ctx.drawImage(sky, -Math.floor(skyT * 8) % BAND, 0);
+  ctx.fillStyle = C.cloud;
+  for (const c of CLOUDS) {
+    const x = Math.round((c.x + skyT * c.s) % (W + 60)) - 40, y = c.y;
+    ctx.fillRect(x, y, 30, 4); ctx.fillRect(x + 6, y - 4, 16, 4); ctx.fillRect(x + 10, y - 7, 6, 3);
+  }
+  ctx.fillStyle = C.water;
+  ctx.fillRect(0, WATER_TOP, W, FLOOR - WATER_TOP + 2);
+  ctx.fillStyle = C.waterLine;
+  const o1 = Math.floor(skyT * 12) % 8, o2 = Math.floor(skyT * 7) % 8;
+  for (let x = -8; x < W; x += 8) { ctx.fillRect(x + o1, WATER_TOP + 5, 4, 1); ctx.fillRect(x + 4 - o2, WATER_TOP + 9, 4, 1); }
+}
+
+function drawCoin(b, t) {
+  const w = Math.max(1, Math.round(Math.abs(Math.cos(t * 9 + b.seed)) * 4));
+  const x = Math.round(b.position.x), y = Math.round(b.position.y);
+  ctx.fillStyle = C.outline; ctx.fillRect(x - w - 1, y - 5, w * 2 + 2, 10);
+  ctx.fillStyle = C.gold;    ctx.fillRect(x - w, y - 4, w * 2, 8);
+  if (w > 2) { ctx.fillStyle = C.outline; ctx.fillRect(x - 1, y - 2, 2, 4); }
+}
+
+function drawBomb(b, t) {
+  const x = Math.round(b.position.x), y = Math.round(b.position.y);
+  ctx.drawImage(bomb, x - 10, y - 10);
+  ctx.fillStyle = (t * 12 | 0) & 1 ? '#ff3b1f' : '#ffd400'; ctx.fillRect(x - 8, y - 8, 2, 2);
+}
+
+function drawCard(c) {
+  ctx.save();
+  ctx.globalAlpha = Math.max(0, c.fade);
+  ctx.translate(c.position.x, c.position.y);
+  ctx.rotate(c.angle);
+  const w = c.w, h = c.h;
+  ctx.fillStyle = C.outline; ctx.fillRect(-w / 2 - 1, -h / 2 - 1, w + 2, h + 2);
+  ctx.fillStyle = '#fff';    ctx.fillRect(-w / 2, -h / 2, w, h);
+  const p = pics[c.pic % pics.length];
+  if (p) ctx.drawImage(p, -w / 2 + 3, -h / 2 + 3, w - 6, h - 6);
+  ctx.restore();
+}
+
+function render(t) {
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  ctx.imageSmoothingEnabled = false;
+  if (shake > 0) ctx.translate((Math.random() - 0.5) * 6 * shake / 0.3 | 0, (Math.random() - 0.5) * 6 * shake / 0.3 | 0);
+  drawBackground();
+  for (const c of cards) drawCard(c);
+  for (const s of shots) s.label === 'bomb' ? drawBomb(s, t) : drawCoin(s, t);
+  for (const b of bits) { ctx.fillStyle = b.col; ctx.fillRect(Math.round(b.x), Math.round(b.y), 2, 2); }
+  for (const b of blasts) {
+    ctx.strokeStyle = (b.life * 20 | 0) & 1 ? '#ffd400' : '#ff3b1f';
+    ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.stroke();
+  }
+  ctx.drawImage(glove, HAND.x - 20, HAND.y - 20);
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  ctx.drawImage(frame, 0, 0);
+}
+
+/* ---------- loop: 30 fps, stops when hidden or scrolled away ---------- */
+
+let running = false, last = 0, acc = 0, visible = true;
+
+function tick(now) {
+  if (!running) return;
+  const dt = Math.min(0.1, (now - last) / 1000); last = now;
+  acc += dt;
+  if (acc >= 1 / FPS) {
+    step(acc); render(now / 1000); acc = 0;
+  }
+  requestAnimationFrame(tick);
+}
+
+function sync() {
+  const go = visible && !document.hidden;
+  if (go && !running) { running = true; last = performance.now(); requestAnimationFrame(tick); }
+  if (!go) running = false;
+}
+
+/* ---------- panel ---------- */
+
+for (const ctl of CONTROLS) {
+  const row = document.createElement('label');
+  row.className = 'row';
+  const out = document.createElement('output');
+  const input = document.createElement('input');
+  if (ctl.color) { input.type = 'color'; }
+  else { input.type = 'range'; input.min = ctl.min; input.max = ctl.max; input.step = ctl.step; }
+  input.value = SET[ctl.key];
+  const show = () => { if (!ctl.color) out.textContent = ctl.fmt ? ctl.fmt(SET[ctl.key]) : SET[ctl.key]; };
+  input.addEventListener('input', () => {
+    SET[ctl.key] = ctl.color ? input.value : +input.value;
+    show();
+    if (ctl.then) ctl.then();
+    if (!running) render(performance.now() / 1000);
+  });
+  row.append(ctl.label, ctl.color ? input : out);
+  if (!ctl.color) row.append(input);
+  show();
+  document.getElementById(ctl.group).append(row);
+}
+
+const count = document.getElementById('count');
+
+function useImages(files) {
+  const list = [...files].filter(f => f.type.startsWith('image/'));
+  if (!list.length) return;
+  let left = list.length;
+  const loaded = [];
+  for (const f of list) {
+    const im = new Image();
+    im.onload = im.onerror = () => {
+      if (im.naturalWidth) loaded.push(im);
+      if (--left || !loaded.length) return;
+      sources = (sources === placeholders ? [] : sources).concat(loaded);
+      buildPics();
+      count.textContent = sources.length + ' image' + (sources.length > 1 ? 's' : '') + ' in rotation';
+    };
+    im.src = URL.createObjectURL(f);
+  }
+}
+
+document.getElementById('files').addEventListener('change', e => useImages(e.target.files));
+document.getElementById('clear').addEventListener('click', () => {
+  sources = placeholders; buildPics(); count.textContent = '';
+});
+
+// Drop anywhere on the page, not only on the zone.
+document.addEventListener('dragover', e => { e.preventDefault(); document.body.classList.add('over'); });
+document.addEventListener('dragleave', e => { if (!e.relatedTarget) document.body.classList.remove('over'); });
+document.addEventListener('drop', e => {
+  e.preventDefault(); document.body.classList.remove('over');
+  useImages(e.dataTransfer.files);
+});
+
+paintLayers();
+buildPics();
+setGravity();
+
+new IntersectionObserver(([e]) => { visible = e.isIntersecting; sync(); }).observe(cv);
+document.addEventListener('visibilitychange', sync);
+render(0);
+sync();
+</script>
+</body>
+</html>

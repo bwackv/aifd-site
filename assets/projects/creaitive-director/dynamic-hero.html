@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" data-public data-theme="light" data-frame="on" data-subtitle="Crea(i)tive Director" data-docname="art3041-dynamic-hero">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design Challenge: Dynamic Hero — A.I. for Designers</title>
+
+<link rel="stylesheet" href="../../../shared/font.css">
+<link rel="stylesheet" href="../../../shared/core.css">
+<style>
+blockquote{margin:0 0 var(--s3);padding-left:var(--s3);border-left:1px solid var(--line);max-width:var(--measure);background:var(--bg);}
+blockquote p:last-child{margin-bottom:0;}
+.main ul li::marker{color:var(--accent);}
+.shot{display:block;width:100%;height:auto;border:1px solid var(--line);margin:0 0 var(--s3);}
+
+@media (max-width:767px){
+  .masthead{grid-column:1 / -1;}
+  .band:has(.rail)::after{display:none;}
+  .rail{grid-column:1 / -1;padding-bottom:0;}
+  .main{grid-column:1 / -1;padding-top:var(--s2);}
+  .cols{display:none;}
+  #frame-nodes{display:none;}
+}
+
+@media (max-width:599px){
+  body{padding-left:12px;padding-right:12px;}
+  .rail,.main,.masthead,.full{padding-left:12px;padding-right:12px;}
+}
+</style>
+<link rel="stylesheet" href="../../../shared/print.css">
+</head>
+<body>
+
+<main class="page" contenteditable="false" spellcheck="false">
+
+  <svg class="cols" contenteditable="false" aria-hidden="true" viewBox="0 0 1147 1289"><defs id="col-grads"></defs><g id="col-lines"></g></svg>
+  <svg class="frame" contenteditable="false" aria-hidden="true" viewBox="0 0 1147 1289"><polyline id="frame-line" fill="none" stroke="currentColor" stroke-width="1" points="0,0"></polyline><g id="frame-dots"></g></svg>
+
+  <div class="band">
+    <div class="masthead">
+      <h1><span>Dynamic Hero</span></h1>
+      <p class="note" style="margin-top:var(--s2);margin-bottom:0;">Design Challenge · Become a Crea(i)tive Director</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">01</span>The Challenge</p>
+    </div>
+    <div class="main">
+      <p>You&rsquo;re going to build a dynamic hero image generator tool. For inspiration, go on to <a href="https://brik.space">brik.space</a> and sign up and try to create one yourself or modify one of the ones from the community. Because this is a paid platform, you won&rsquo;t be able to embed it on your own creative director campaign site, so you need to go back into your own A.I. and build a similar tool yourself.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="rail">
+      <p class="sec"><span class="num">02</span>Example</p>
+    </div>
+    <div class="main">
+      <p>Made in Brik, exported as video:</p>
+      <video class="shot" src="sample-brik-hero.webm" autoplay muted loop playsinline controls></video>
+      <p>Rebuilt as a tool: <a href="brik-rebuild.html">Hero generator</a></p>
+    </div>
+  </div>
+
+</main>
+
+<script src="../../../shared/core.js"></script>
+<script>
+// This document arranges nothing of its own; the shared layout pass is enough.
+</script>
+
+</body>
+</html>
