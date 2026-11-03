@@ -10,8 +10,11 @@
 <style>
 h1 .fill{color:var(--accent);}
 .set{grid-column:1 / -1;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);padding:var(--s3);}
-.cell{display:flex;flex-direction:column;border:1px solid var(--line);background:var(--bg);box-shadow:0 0 var(--fade) var(--hold) var(--bg);padding:var(--s3);overflow-wrap:break-word;}
-.cell > :last-child{margin-bottom:0;}
+.cell{display:flex;flex-direction:column;border:1px solid var(--line);background:var(--bg);box-shadow:0 0 var(--fade) var(--hold) var(--bg);overflow:hidden;}
+.card-img{display:block;width:100%;aspect-ratio:1200 / 630;object-fit:cover;border-bottom:1px solid var(--line);}
+.card-body{display:flex;flex-direction:column;flex:1;padding:var(--s3);overflow-wrap:break-word;}
+.card-body > p{margin-bottom:var(--s1);}
+.card-body > :last-child{margin-top:auto;margin-bottom:0;}
 
 @media (max-width:767px){
   .masthead{grid-column:1 / -1;}
@@ -47,88 +50,172 @@ h1 .fill{color:var(--accent);}
   <div class="band">
     <div class="set">
       <div class="cell">
-        <p class="tag">Fashion</p>
-        <p><a href="https://www.zara.com/us/en/woman-evening-editorial-l20290.html?v1=2784446">Zara: Evening editorial</a></p>
+        <div class="card-img"></div>
+        <div class="card-body">
+          <p class="tag">Fashion</p>
+          <p>Zara: Evening editorial</p>
+          <p><a href="https://www.zara.com/us/en/woman-evening-editorial-l20290.html?v1=2784446">zara.com</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Fashion</p>
-        <p><a href="https://www.gentlemonster.com/us/en/stories/maison-margiela-2026">Gentle Monster &times; Maison Margiela 2026</a></p>
+        <img class="card-img" src="sc-gentlemonster.jpg" alt="">
+        <div class="card-body">
+          <p class="tag">Fashion</p>
+          <p>Gentle Monster &times; Maison Margiela 2026</p>
+          <p><a href="https://www.gentlemonster.com/us/en/stories/maison-margiela-2026">gentlemonster.com</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Fashion</p>
-        <p><a href="https://www.loewe.com/usa/en/stories-collection/ss27-precollection-campaign.html">Loewe: Spring Summer 2027 Precollection</a></p>
+        <div class="card-img"></div>
+        <div class="card-body">
+          <p class="tag">Fashion</p>
+          <p>Loewe: Spring Summer 2027 Precollection</p>
+          <p><a href="https://www.loewe.com/usa/en/stories-collection/ss27-precollection-campaign.html">loewe.com</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Fashion</p>
-        <p><a href="https://www.ganni.com/us/ganni-spring-summer-show.html">Ganni: Spring/Summer 2027, Just Like You</a></p>
+        <div class="card-img"></div>
+        <div class="card-body">
+          <p class="tag">Fashion</p>
+          <p>Ganni: Spring/Summer 2027, Just Like You</p>
+          <p><a href="https://www.ganni.com/us/ganni-spring-summer-show.html">ganni.com</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Tourism</p>
-        <p><a href="https://visitsweden.com/the-introvert-travel-agency/">Visit Sweden: The Introvert Travel Agency</a></p>
+        <img class="card-img" src="sc-sweden.jpg" alt="">
+        <div class="card-body">
+          <p class="tag">Tourism</p>
+          <p>Visit Sweden: The Introvert Travel Agency</p>
+          <p><a href="https://visitsweden.com/the-introvert-travel-agency/">visitsweden.com</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Tourism</p>
-        <p><a href="https://www.visiticeland.com/the-auroras">Visit Iceland: The A.U.R.O.R.A.S.</a></p>
+        <img class="card-img" src="sc-iceland.jpg" alt="">
+        <div class="card-body">
+          <p class="tag">Tourism</p>
+          <p>Visit Iceland: The A.U.R.O.R.A.S.</p>
+          <p><a href="https://www.visiticeland.com/the-auroras">visiticeland.com</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Tourism</p>
-        <p><a href="https://www.visitfinland.com/en/have-some-finnish/">Visit Finland: Have Some Finnish</a></p>
+        <img class="card-img" src="sc-finland.jpg" alt="">
+        <div class="card-body">
+          <p class="tag">Tourism</p>
+          <p>Visit Finland: Have Some Finnish</p>
+          <p><a href="https://www.visitfinland.com/en/have-some-finnish/">visitfinland.com</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Nike</p>
-        <p><a href="https://www.nike.com/mind">Nike Mind: Play Mind Games</a></p>
+        <div class="card-img"></div>
+        <div class="card-body">
+          <p class="tag">Nike</p>
+          <p>Nike Mind: Play Mind Games</p>
+          <p><a href="https://www.nike.com/mind">nike.com</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Nike</p>
-        <p><a href="https://www.nike.com/nikeskims">NikeSKIMS: Body Obsessed</a></p>
+        <div class="card-img"></div>
+        <div class="card-body">
+          <p class="tag">Nike</p>
+          <p>NikeSKIMS: Body Obsessed</p>
+          <p><a href="https://www.nike.com/nikeskims">nike.com</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Sports</p>
-        <p><a href="https://www.on.com/en-us/explore/soft-wins">On: Soft Wins</a></p>
+        <img class="card-img" src="sc-on.jpg" alt="">
+        <div class="card-body">
+          <p class="tag">Sports</p>
+          <p>On: Soft Wins</p>
+          <p><a href="https://www.on.com/en-us/explore/soft-wins">on.com</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Sports</p>
-        <p><a href="https://www.reebok.eu/en-lt/pages/classics-karol-g">Reebok: Classics ft. KAROL G</a></p>
+        <div class="card-img"></div>
+        <div class="card-body">
+          <p class="tag">Sports</p>
+          <p>Reebok: Classics ft. KAROL G</p>
+          <p><a href="https://www.reebok.eu/en-lt/pages/classics-karol-g">reebok.eu</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Music</p>
-        <p><a href="https://www.sonos.com/en-us/sonos-27">Sonos 27</a></p>
+        <div class="card-img"></div>
+        <div class="card-body">
+          <p class="tag">Music</p>
+          <p>Sonos 27</p>
+          <p><a href="https://www.sonos.com/en-us/sonos-27">sonos.com</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Music</p>
-        <p><a href="https://teenage.engineering/products/sinus-transmission-completed">Teenage Engineering: sinus transmission completed</a></p>
+        <img class="card-img" src="sc-te.jpg" alt="">
+        <div class="card-body">
+          <p class="tag">Music</p>
+          <p>Teenage Engineering: sinus transmission completed</p>
+          <p><a href="https://teenage.engineering/products/sinus-transmission-completed">teenage.engineering</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Art</p>
-        <p><a href="https://www.stellamccartney.com/stellas-world/stella-mccartney-jeff-koons.html">Stella McCartney &times; Jeff Koons</a></p>
+        <div class="card-img"></div>
+        <div class="card-body">
+          <p class="tag">Art</p>
+          <p>Stella McCartney &times; Jeff Koons</p>
+          <p><a href="https://www.stellamccartney.com/stellas-world/stella-mccartney-jeff-koons.html">stellamccartney.com</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Art</p>
-        <p><a href="https://www.labiennale.org/en/art/2026">La Biennale di Venezia 2026: In Minor Keys</a></p>
+        <div class="card-img"></div>
+        <div class="card-body">
+          <p class="tag">Art</p>
+          <p>La Biennale di Venezia 2026: In Minor Keys</p>
+          <p><a href="https://www.labiennale.org/en/art/2026">labiennale.org</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Food and drink</p>
-        <p><a href="https://www.oatly.com/things-we-do/brainwashing/nespresso">Oatly &times; Nespresso: It&rsquo;s a cool, cool summer</a></p>
+        <img class="card-img" src="sc-oatly.jpg" alt="">
+        <div class="card-body">
+          <p class="tag">Food and drink</p>
+          <p>Oatly &times; Nespresso: It&rsquo;s a cool, cool summer</p>
+          <p><a href="https://www.oatly.com/things-we-do/brainwashing/nespresso">oatly.com</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Food and drink</p>
-        <p><a href="https://liquiddeath.com/pages/peanutbuttercup">Liquid Death &times; Feastables: Peanut Butter Cup</a></p>
+        <div class="card-img"></div>
+        <div class="card-body">
+          <p class="tag">Food and drink</p>
+          <p>Liquid Death &times; Feastables: Peanut Butter Cup</p>
+          <p><a href="https://liquiddeath.com/pages/peanutbuttercup">liquiddeath.com</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Tech and cars</p>
-        <p><a href="https://www.apple.com/iphone-duo/">Apple: iPhone Duo</a></p>
+        <img class="card-img" src="sc-apple.jpg" alt="">
+        <div class="card-body">
+          <p class="tag">Tech and cars</p>
+          <p>Apple: iPhone Duo</p>
+          <p><a href="https://www.apple.com/iphone-duo/">apple.com</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Tech and cars</p>
-        <p><a href="https://www.fujifilm-x.com/en-us/products/cameras/x-hf1/">Fujifilm: X half</a></p>
+        <img class="card-img" src="sc-fujifilm.jpg" alt="">
+        <div class="card-body">
+          <p class="tag">Tech and cars</p>
+          <p>Fujifilm: X half</p>
+          <p><a href="https://www.fujifilm-x.com/en-us/products/cameras/x-hf1/">fujifilm-x.com</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Tech and cars</p>
-        <p><a href="https://www.polestar.com/us/polestar-5/">Polestar 5</a></p>
+        <img class="card-img" src="sc-polestar.jpg" alt="">
+        <div class="card-body">
+          <p class="tag">Tech and cars</p>
+          <p>Polestar 5</p>
+          <p><a href="https://www.polestar.com/us/polestar-5/">polestar.com</a></p>
+        </div>
       </div>
       <div class="cell">
-        <p class="tag">Tech and cars</p>
-        <p><a href="https://rivian.com/r2">Rivian R2</a></p>
+        <img class="card-img" src="sc-rivian.jpg" alt="">
+        <div class="card-body">
+          <p class="tag">Tech and cars</p>
+          <p>Rivian R2</p>
+          <p><a href="https://rivian.com/r2">rivian.com</a></p>
+        </div>
       </div>
     </div>
   </div>
