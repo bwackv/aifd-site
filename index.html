@@ -52,6 +52,11 @@ a{--dot-size:4px;}
 }
 .note.hw p{margin-bottom:var(--s1);}
 .note.hw ul{margin-bottom:0;}
+.hw-btn{display:inline-flex;align-items:center;gap:var(--s1);}
+.hw-arrow{display:inline-block;transition:transform .15s;}
+.hw-btn[aria-expanded="true"] .hw-arrow{transform:rotate(180deg);}
+.note.hw:has(.hw-btn){border-left:0;padding-left:0;}
+.hw-body{margin-top:-1px;padding:var(--s3);border:1px solid var(--line);background:var(--bg);box-shadow:0 0 var(--fade) var(--hold) var(--bg);}
 .note.hw strong{
   display:block;
   color:var(--accent);
@@ -320,16 +325,22 @@ a{--dot-size:4px;}
         <li>5 digital ads. Min. 2 animated for reels, 3 static, but any combination will do. Mock them up on phones / in phone format (i.e. if it&rsquo;s an Apple mockup, curve the edges and cut out for the Dynamic Island).</li>
         <li>Experimental tool: a brand asset built from a tool of your own creation. Remember how your poster generator tool generated a nearly endless stream of new posters? Well, what can you come up with for this brand campaign? And how will it present itself in the final website deliverable?</li>
       </ul>
-      <div class="note hw"><strong>HW</strong>
+      <div class="note hw">
+      <button class="btn-outline hw-btn" type="button" contenteditable="false" aria-expanded="false" onclick="toggleHW(this)">Homework <span class="hw-arrow" aria-hidden="true">&darr;</span></button>
+      <div class="hw-body" hidden>
       <p>Make a post to your index.html entitled &ldquo;Creative Director Pt. 5: Digital Ads&rdquo;. Post before the start of class Wednesday.</p>
+      </div>
       </div>
       <p class="tag">12.2 &middot; Wed Nov 18 &middot; in person</p>
       <ul>
         <li>One page showcasing the entire campaign. Think of this as your final deliverable to the client (the brand you chose).</li>
         <li>In class work time: experimental tool and campaign page.</li>
       </ul>
-      <div class="note hw"><strong>HW</strong>
+      <div class="note hw">
+      <button class="btn-outline hw-btn" type="button" contenteditable="false" aria-expanded="false" onclick="toggleHW(this)">Homework <span class="hw-arrow" aria-hidden="true">&darr;</span></button>
+      <div class="hw-body" hidden>
       <p>Finish your experimental tool and your one-page brand launch campaign page and link it on your index.html. Everything is due before the start of class Monday, Nov 23.</p>
+      </div>
       </div>
       </div>
     </div>
@@ -348,15 +359,21 @@ a{--dot-size:4px;}
       <ul>
         <li><a href="assets/projects/creaitive-director/creaitive-director.html">Prompt Builder + Compositor Tool</a>: You will create a <code>brand-skills.md</code> to create the tool. A brand lock compositor prompt generator: Uses your style guide specs to create image prompt descriptions for a.i. image generators. It should be versatile enough to give you multiple types of images / angles while staying within the specifications of your campaign. It should also let you drop in the images you generate and place them into your ad formats and mockups (billboard, subway poster, phone) using your brand&rsquo;s fonts and colors.</li>
       </ul>
-      <div class="note hw"><strong>HW</strong>
+      <div class="note hw">
+      <button class="btn-outline hw-btn" type="button" contenteditable="false" aria-expanded="false" onclick="toggleHW(this)">Homework <span class="hw-arrow" aria-hidden="true">&darr;</span></button>
+      <div class="hw-body" hidden>
       <p>Make a post to your index.html entitled &ldquo;Creative Director Pt. 3: Prompt Builder + Compositor Tool&rdquo;. Post before the start of class Wednesday.</p>
+      </div>
       </div>
       <p class="tag">11.2 &middot; Wed Nov 11 &middot; in person</p>
       <ul>
         <li>5 print ads. The ads design themselves and each one is mocked up somewhere in NYC. Can be billboard, subway posters, wheat-pasted posters, guerrilla campaign graffiti, NYC magazine ads, whatever.</li>
       </ul>
-      <div class="note hw"><strong>HW</strong>
+      <div class="note hw">
+      <button class="btn-outline hw-btn" type="button" contenteditable="false" aria-expanded="false" onclick="toggleHW(this)">Homework <span class="hw-arrow" aria-hidden="true">&darr;</span></button>
+      <div class="hw-body" hidden>
       <p>Make a post to your index.html entitled &ldquo;Creative Director Pt. 4: Print Ads&rdquo;. Post before the start of class Monday.</p>
+      </div>
       </div>
       </div>
     </div>
@@ -376,7 +393,9 @@ a{--dot-size:4px;}
         <li>During class: Conduct some research. Look at brands that intrigue you, dive into their product launch/product pages. Start saving images into a folder. If you&rsquo;re launching a new sneaker, research sneaker campaigns. If you&rsquo;re launching a new travel experience for JetBlue, research airline campaigns, etc. <strong>You must decide on your company and product launch during class today.</strong></li>
         <li>Design Challenge: <strong><a href="assets/projects/creaitive-director/moodboard.html">Moodboard</a></strong></li>
       </ul>
-      <div class="note hw"><strong>HW</strong>
+      <div class="note hw">
+      <button class="btn-outline hw-btn" type="button" contenteditable="false" aria-expanded="false" onclick="toggleHW(this)">Homework <span class="hw-arrow" aria-hidden="true">&darr;</span></button>
+      <div class="hw-body" hidden>
       <p>Make a post to your index.html entitled &ldquo;Creative Director Pt. 1: Style Guide&rdquo;. This is a document (PDF) or website that should include:</p>
       <ul>
         <li>The name of your campaign and a brief describing it.</li>
@@ -388,18 +407,22 @@ a{--dot-size:4px;}
         <li>Note: if you&rsquo;re not remembering, we did a <a href="assets/projects/style-guide/style-guide.html">style guide for your a.i.</a> in week 2. Also, paste the HW into your a.i. and tell it to help you generate it!</li>
       </ul>
       </div>
+      </div>
       <p class="tag">10.2 &middot; Wed Nov 4 &middot; in person</p>
       <ul>
         <li>Design Challenge: <strong><a href="assets/projects/creaitive-director/dynamic-hero.html">Dynamic Hero</a></strong></li>
         <li><a href="assets/projects/creaitive-director/sample-campaigns.html">A Selection of Brand Campaign Sites</a></li>
       </ul>
-      <div class="note hw"><strong>HW</strong>
+      <div class="note hw">
+      <button class="btn-outline hw-btn" type="button" contenteditable="false" aria-expanded="false" onclick="toggleHW(this)">Homework <span class="hw-arrow" aria-hidden="true">&darr;</span></button>
+      <div class="hw-body" hidden>
       <p>Make a post to your index.html entitled &ldquo;Creative Director Pt. 2: Logo + Dynamic Hero&rdquo;. It should include:</p>
       <ul>
         <li>Your graphical logo (remember, you must generate it, not make it yourself!).</li>
         <li>The dynamic hero image for your brand page.</li>
       </ul>
       <p>Post before the start of class Monday.</p>
+      </div>
       </div>
     </div>
   </div>
@@ -720,6 +743,15 @@ function closeIntro(){
 document.getElementById('intro-sheet').addEventListener('click', function(e){
   if(e.target===this) this.close();
 });
+
+function toggleHW(btn){
+  var body=btn.nextElementSibling;
+  var open=!body.hidden;
+  body.hidden=open;
+  btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+  refresh();
+  if(window.measureLinks) measureLinks();
+}
 
 function toggleWeek(btn){
   var body=btn.nextElementSibling;

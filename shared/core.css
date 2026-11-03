@@ -453,6 +453,7 @@ a::after{
 
 @media (hover:hover){
   .btn-outline:hover{border-color:transparent;}
+  .btn-outline[aria-expanded="true"]:hover{border-color:var(--line);}
 }
 
 /* An <svg> is a replaced element: inset alone does not size it, so it falls back to the default
@@ -462,6 +463,7 @@ a::after{
 
 @media (hover:hover){
   .btn-outline:hover .btn-frame{opacity:1;}
+  .btn-outline[aria-expanded="true"]:hover .btn-frame{opacity:0;}
 }
 
 /* Once the script draws the wavy, edge-connected band rules in the frame SVG, drop the flat CSS ones. */

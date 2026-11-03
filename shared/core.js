@@ -852,7 +852,7 @@ function measureLinks(){
   if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   function tick(dt){
     items.forEach(function(it){
-      if(!CAN_HOVER || !it.b.matches(':hover')){ if(it.hover){ it.hover=false; it.dot.setAttribute('opacity','0'); } return; }
+      if(!CAN_HOVER || !it.b.matches(':hover') || it.b.getAttribute('aria-expanded')==='true'){ if(it.hover){ it.hover=false; it.dot.setAttribute('opacity','0'); } return; }
       var W=it.b.offsetWidth, H=it.b.offsetHeight;
       it.svg.setAttribute('viewBox','0 0 '+W+' '+H);
       it.scroll+=WSPD*dt;
