@@ -11,7 +11,9 @@
 h1 .fill{color:var(--accent);}
 blockquote{margin:0 0 var(--s3);padding-left:var(--s3);border-left:1px solid var(--line);max-width:var(--measure);background:var(--bg);}
 blockquote p:last-child{margin-bottom:0;}
-.main ul li::marker{color:var(--accent);}
+.main ol{margin:0 0 var(--s3);padding-left:var(--s3);max-width:var(--measure);}
+.main ol li{margin-bottom:var(--s2);}
+.main li::marker{color:var(--accent);}
 .set{grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s3);padding:var(--s3);}
 .cell{display:flex;flex-direction:column;border:1px solid var(--line);background:var(--bg);box-shadow:0 0 var(--fade) var(--hold) var(--bg);overflow:hidden;}
 .card-img{display:block;width:100%;aspect-ratio:480 / 272;object-fit:cover;}
@@ -70,35 +72,23 @@ blockquote p:last-child{margin-bottom:0;}
 
   <div class="band">
     <div class="rail">
-      <p class="sec"><span class="num">01</span>brik.space</p>
+      <p class="sec">The Steps</p>
     </div>
     <div class="main">
-      <p>Go to <a href="https://brik.space">brik.space</a>, sign up, and take a look around. Find some hero images that you like. From there, try to create one yourself (you can also modify an existing one, but be sure to really make it your own).</p>
-    </div>
-  </div>
-
-  <div class="band">
-    <div class="rail">
-      <p class="sec"><span class="num">02</span>Export</p>
-    </div>
-    <div class="main">
-      <p>Because you can&rsquo;t export tools without paying a subscription on brik.space, you have to create your own version of this tool. Export a video of your creation + copy and paste your chat on brik.space into your a.i. of choice and create your custom image generator tool.</p>
-      <p>To include when building: your brand style guide, images that you want to use / use as reference. If you want multiple images, you&rsquo;ll need to have a way to drop images in to the tool.</p>
-    </div>
-  </div>
-
-  <div class="band">
-    <div class="rail">
-      <p class="sec"><span class="num">03</span>Iteration</p>
-    </div>
-    <div class="main">
-      <p>Iterate. Tweak until it matches your style guide. Your hero will go in your final deliverable, which is the website.</p>
+      <ol>
+        <li>Talk to your a.i. Tell it you want to make a plan for a dynamic hero image generator tool, and give it your campaign style guide and info about your campaign.</li>
+        <li>Go to <a href="https://brik.space">brik.space</a>, sign up, and take a look around. Find some hero images that you like.</li>
+        <li>Create one yourself. You can also modify an existing one, but be sure to really make it your own.</li>
+        <li>Export a video of your creation. You can&rsquo;t export tools from brik.space without paying for a subscription, so you&rsquo;ll build your own version.</li>
+        <li>Copy and paste your brik.space chat, along with the video, into your a.i. of choice and create your custom hero image generator tool. Include your brand style guide and the images you want to use or use as reference. If you want multiple images, you&rsquo;ll need a way to drop images into the tool.</li>
+        <li>Iterate. Tweak until it matches your style guide. Your hero will go in your final deliverable, which is the website.</li>
+      </ol>
     </div>
   </div>
 
   <div class="band">
     <div class="full">
-      <p class="sec"><span class="num">04</span>A quick example (you do better)</p>
+      <p class="sec">A quick example (you do better)</p>
     </div>
     <div class="set">
 
