@@ -371,6 +371,7 @@ a{--dot-size:4px;}
         <li><strong>Describe your brand in plain language.</strong> Write down everything about how your campaign should look: photography style, lighting, angles, settings, color, type, mood, and what is on brand and off brand. This is the same process we used for the poster generator and the mission patch tool.</li>
         <li><strong>Build your <code>brand-skills.md</code>.</strong> Feed that description and your style guide with moodboard to your a.i. Tell it you are building a prompt builder tool where every prompt it writes matches your brand, and that the <code>brand-skills.md</code> will be its basis. Discuss the document with it and refine it until it captures your campaign.</li>
         <li><strong>Build the prompt builder.</strong> Give your a.i. the <code>brand-skills.md</code> and have it build a tool that writes image prompts for a.i. image generators. It should let you choose different types of images and angles (product shot, lifestyle, detail, setting) while every prompt stays within your campaign&rsquo;s specifications.</li>
+        <li><strong>Add a size dropdown.</strong> Have your a.i. add a dropdown for different image sizes/ratios, such as billboard, Instagram ad, Instagram reel, NYC subway, magazine ad, etc. Each prompt then asks for the right dimensions for where the image will run.</li>
         <li><strong>Test the prompts.</strong> Paste prompts from your tool into an image generator and generate several images. If the results drift off brand, update the <code>brand-skills.md</code> and the tool, then try again.</li>
         <li><strong>Iterate.</strong> Keep tweaking until the tool reliably gives you on-brand images. You will use it for the print ads in 11.2.</li>
       </ol>
@@ -385,8 +386,20 @@ a{--dot-size:4px;}
       </div>
       <p class="tag">11.2 &middot; Wed Nov 11 &middot; in person</p>
       <ul>
-        <li>5 print ads. The ads design themselves and each one is mocked up somewhere in NYC. Can be billboard, subway posters, wheat-pasted posters, guerrilla campaign graffiti, NYC magazine ads, whatever.</li>
+        <li><strong>Print ads.</strong> Use your prompt builder tool to create a series of 5 print ads. This should all be one campaign, so consistency is key. They should appear in or around NYC: billboards, wheat paste/guerrilla advertising, subway, bus stops, projected on buildings (I&rsquo;ll consider this print), and other places I haven&rsquo;t listed here.</li>
       </ul>
+      <div class="note hw">
+      <button class="btn-outline hw-btn" type="button" contenteditable="false" aria-expanded="false" onclick="toggleHW(this)">Print ad steps <span class="hw-arrow" aria-hidden="true">&darr;</span></button>
+      <div class="hw-body" hidden>
+      <ol>
+        <li><strong>Look for inspiration.</strong> Look to your favorite brands for campaign imagery inspiration. Refer back to <a href="assets/projects/creaitive-director/sample-campaigns.html">A Selection of Brand Campaign Sites</a>.</li>
+        <li><strong>Decide where each ad will appear.</strong> Consider WHERE you want to see these ads before you generate them. A billboard ad needs billboard dimensions, and the NYC subway needs very different ones, as does an ad wrapped around a subway car (like they do on the Shuttle).</li>
+        <li><strong>Set the size.</strong> Make sure your prompt builder has the size dropdown from 11.1, with the sizes your placements need.</li>
+        <li><strong>Generate the 5 ads.</strong> Use your prompt builder to write the prompt for each ad, choosing the right size for its placement. They are one campaign, so keep them consistent.</li>
+        <li><strong>Show each ad in place.</strong> Each ad should appear in its location in or around NYC.</li>
+      </ol>
+      </div>
+      </div>
       <div class="note hw">
       <button class="btn-outline hw-btn" type="button" contenteditable="false" aria-expanded="false" onclick="toggleHW(this)">Homework <span class="hw-arrow" aria-hidden="true">&darr;</span></button>
       <div class="hw-body" hidden>
