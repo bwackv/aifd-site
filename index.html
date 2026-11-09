@@ -52,6 +52,10 @@ a{--dot-size:4px;}
 }
 .note.hw p{margin-bottom:var(--s1);}
 .note.hw ul{margin-bottom:0;}
+.hw-body ol{margin:0;padding-left:var(--s3);}
+.hw-body ol li{margin-bottom:var(--s2);}
+.hw-body ol li:last-child{margin-bottom:0;}
+.hw-body ol strong{display:inline;color:inherit;font-size:inherit;letter-spacing:normal;text-transform:none;}
 .hw-btn{display:inline-flex;align-items:center;gap:var(--s1);}
 .hw-arrow{display:inline-block;transition:transform .15s;}
 .hw-btn[aria-expanded="true"] .hw-arrow{transform:rotate(180deg);}
@@ -356,8 +360,23 @@ a{--dot-size:4px;}
     <div class="main">
       <p class="tag">11.1 &middot; Mon Nov 9 &middot; online</p>
       <ul>
+        <li>20 min: <strong>Submit one SSEP mission patch.</strong> You should already have your patch selected and your artist statement written. Submit them through the <a href="https://blogs.baruch.cuny.edu/ssep-mission-patch/">SSEP Mission Patch submission form</a>.</li>
         <li><a href="assets/projects/creaitive-director/creaitive-director.html">Prompt Builder + Compositor Tool</a>: You will create a <code>brand-skills.md</code> to create the tool. A brand lock compositor prompt generator: Uses your style guide specs to create image prompt descriptions for a.i. image generators. It should be versatile enough to give you multiple types of images / angles while staying within the specifications of your campaign. It should also let you drop in the images you generate and place them into your ad formats and mockups (billboard, subway poster, phone) using your brand&rsquo;s fonts and colors.</li>
       </ul>
+      <div class="note hw">
+      <button class="btn-outline hw-btn" type="button" contenteditable="false" aria-expanded="false" onclick="toggleHW(this)">Prompt Builder + Compositor steps <span class="hw-arrow" aria-hidden="true">&darr;</span></button>
+      <div class="hw-body" hidden>
+      <ol>
+        <li><strong>Gather your inputs.</strong> Your style guide (Pt. 1), your logo and dynamic hero (Pt. 2), your moodboard images and your campaign brief.</li>
+        <li><strong>Describe your brand in plain language.</strong> Write down everything about how your campaign should look: photography style, lighting, angles, settings, color, type, mood, and what is on brand and off brand. This is the same process we used for the poster generator and the mission patch tool.</li>
+        <li><strong>Build your <code>brand-skills.md</code>.</strong> Feed that description, your style guide and your reference images to your a.i. Tell it you are building a brand lock prompt builder + compositor tool, and that the <code>brand-skills.md</code> will be its basis. Discuss the document with it and refine it until it captures your campaign.</li>
+        <li><strong>Build the prompt builder.</strong> Give your a.i. the <code>brand-skills.md</code> and have it build a tool that writes image prompts for a.i. image generators. It should let you choose different types of images and angles (product shot, lifestyle, detail, setting) while every prompt stays within your campaign&rsquo;s specifications.</li>
+        <li><strong>Test the prompts.</strong> Paste prompts from your tool into an image generator and generate several images. If the results drift off brand, update the <code>brand-skills.md</code> and the tool, then try again.</li>
+        <li><strong>Add the compositor.</strong> Have your a.i. add a way to drop the images you generate into the tool and place them into your ad formats and mockups (billboard, subway poster, phone) using your brand&rsquo;s fonts, colors and logo.</li>
+        <li><strong>Iterate.</strong> Keep tweaking until the tool reliably gives you on-brand images and mockups. You will use it for the print ads in 11.2.</li>
+      </ol>
+      </div>
+      </div>
       <div class="note hw">
       <button class="btn-outline hw-btn" type="button" contenteditable="false" aria-expanded="false" onclick="toggleHW(this)">Homework <span class="hw-arrow" aria-hidden="true">&darr;</span></button>
       <div class="hw-body" hidden>
